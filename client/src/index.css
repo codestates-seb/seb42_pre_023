@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* 상세 컴포넌트에서 사용되는 에디터 */
+.ck-editor {
+  width: 100% !important;
+}
+
+.ck-content {
+  height: 200px !important;
+}
