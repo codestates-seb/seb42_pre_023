@@ -1,4 +1,4 @@
-package com.codestates.content.entity;
+package com.codestates.comment.entity;
 
-public class Content {
+public class Comment {
 }
