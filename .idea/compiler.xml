@@ -11,6 +11,5 @@
         <module name="preproject.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="11" />
   </component>
 </project>
