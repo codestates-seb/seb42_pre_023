@@ -1,4 +1,4 @@
-package com.codestates.member.controller;
+package com.codestates.preproject.slice.member.controller;
 
 import org.junit.jupiter.api.Test;
 

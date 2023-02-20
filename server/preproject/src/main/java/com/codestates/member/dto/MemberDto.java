@@ -11,7 +11,6 @@ public class MemberDto {
     @Getter
     @AllArgsConstructor
     public static class Post{
-
         @NotBlank
         @Email
         private String memberEmail;
@@ -21,7 +20,7 @@ public class MemberDto {
     }
 
     @Getter
-    public static class Patch{
+    public static class Patch {
         private long memberId;
         private String memberName;
         private String memberPwd;
@@ -30,6 +29,7 @@ public class MemberDto {
         public void setMemberId(long memberId) {
             this.memberId = memberId;
         }
+    }
 
         @AllArgsConstructor
         @Getter
@@ -42,4 +42,4 @@ public class MemberDto {
 //            private String memberPwd;
         }
     }
-}
+
