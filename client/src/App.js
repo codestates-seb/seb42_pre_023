@@ -1,6 +1,6 @@
 function App() {
   return (
-    <div>개발 시작!!</div>
+    <div>지금부터 작업을 시작합니다.</div>
   );
 }
 
