@@ -27,10 +27,7 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    <>
-      <GlobalStyle />
-      <div>개발 시작!!</div>
-    </>
+    <div>test</div>
   );
 }
 
