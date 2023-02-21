@@ -51,6 +51,8 @@ replay_pid*
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+# 상위폴더 문제 해결
+../../.idea/
 
 # Gradle
 .idea/**/gradle.xml
