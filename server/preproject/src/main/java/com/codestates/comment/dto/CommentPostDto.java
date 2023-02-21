@@ -1,12 +1,14 @@
 package com.codestates.comment.dto;
 
 import com.codestates.board.entity.Board;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 @Getter
+@AllArgsConstructor
 public class CommentPostDto {
 
     @Positive
