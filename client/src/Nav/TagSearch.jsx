@@ -1,17 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import { BiSearchAlt } from "react-icons/bi";
+import { BsTags } from "react-icons/bs";
 import { ImCancelCircle } from "react-icons/im";
 
-const SearchInput = styled.div`
-  flex: 7;
+const TagSearchInput = styled.div`
+  width: 90%;
+  margin-bottom: 10px;
   div{
     line-height: normal;
     padding: 1rem;
     border: none;
     background-color: #f5f5f5;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 3px 5px -1px, rgba(0, 0, 0, 0.2) 0px -2px 0px inset;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -24,12 +25,12 @@ const SearchInput = styled.div`
     font-size: 1.7rem;
     border: none;
     margin-left: 10px;
-    margin-right: 20px;
+    margin-right: 10px;
     background-color: #f5f5f5;
   }
 
   div:hover > input, div:hover {
-    background-color: #c2c2c2;
+    background-color: #ffeada;
   }
   div:focus-within {
     outline: none;
@@ -38,20 +39,20 @@ const SearchInput = styled.div`
 `;
 
 
-function Search() {
+function TagSearch() {
   return(
-    <SearchInput>
+    <TagSearchInput>
       <div>
         <span>
-          <BiSearchAlt size={25}></BiSearchAlt>
+          <BsTags size={25}></BsTags>
         </span>
-        <input type="text" placeholder="Search StackoverFlow..."/>
+        <input type="text" placeholder="Search tag"/>
         <span>
           <ImCancelCircle size={25} color="#ff5656"></ImCancelCircle>
         </span>
       </div>
-    </SearchInput>
+    </TagSearchInput>
   )
 }
 
-export default Search
+export default TagSearch

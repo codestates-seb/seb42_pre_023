@@ -1,3 +1,12 @@
+// 되돌리기
+function App() {
+  return (
+    <>
+      <GlobalStyle/>
+    </>
+  );
+}
+
 //백종우
 import Header from './Header/Header';
 import Logo from './Header/Logo';
