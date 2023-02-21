@@ -1,0 +1,23 @@
+//백종우
+import Header from './Header/Header';
+import Logo from './Header/Logo';
+import Search from './Header/Search';
+import Login from './Header/Login';
+
+function App() {
+  return (
+    <>
+      <GlobalStyle/>
+      <Header>
+        <Logo></Logo>
+        <Search></Search>
+        <Login></Login>
+      </Header>
+    </>
+  );
+}
+
+//이시온
+
+
+//조정인
