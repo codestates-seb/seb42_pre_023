@@ -6,8 +6,6 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
-@Data
-
 public class BoardDto {
     @Getter
     @Setter
