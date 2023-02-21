@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Header from './Header/Header';
-=======
-import React from "react";
-import {createGlobalStyle} from "styled-components";
->>>>>>> cbbb2add4a112f7b2825b604ffdbc495acbbb7d3
 
 const GlobalStyle = createGlobalStyle`
   /* reset CSS */
@@ -34,14 +29,9 @@ const GlobalStyle = createGlobalStyle`
 function App() {
 
   return (
-<<<<<<< HEAD
     <>
       <GlobalStyle/>
-      <Header/>
     </>
-=======
-    <div>test</div>
->>>>>>> cbbb2add4a112f7b2825b604ffdbc495acbbb7d3
   );
 }
 
