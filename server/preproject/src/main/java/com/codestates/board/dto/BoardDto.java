@@ -1,20 +1,27 @@
 package com.codestates.board.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.codestates.audit.Auditable;
+import lombok.*;
+
+import javax.validation.constraints.NotBlank;
+
+@Data
 
 public class BoardDto {
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Post{
         private long memberId;
+        @NotBlank(message = "제목을 입력해주세요.")
         private String boardTitle;
+        @NotBlank(message = "내용을 입력해주세요")
         private String boardContent;
         private int boardViews;
         private int boardLike;
-        private int boardCmt;
-        private String created_at;
+        private int boardCommentId;
+        private String createdAt;
     }
 
     @Getter
@@ -22,7 +29,9 @@ public class BoardDto {
     public static class Patch {
         private long boardId;
         private long memberId;
+        @NotBlank(message = "제목을 입력해주세요")
         private String boardTitle;
+        @NotBlank(message = "내용을 입력해주세요")
         private String boardContent;
         private int boardViews;
         private int boardLike;
@@ -33,8 +42,9 @@ public class BoardDto {
         }
     }
 
-    @AllArgsConstructor
+
     @Getter
+    @AllArgsConstructor
     public static class Response {
         private long boardId;
         private long memberId;
@@ -43,6 +53,6 @@ public class BoardDto {
         private int boardViews;
         private int boardLike;
         private int boardCmt;
-        private String created_at;
+        private String createdAt;
     }
 }
