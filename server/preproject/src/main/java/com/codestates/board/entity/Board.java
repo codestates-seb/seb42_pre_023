@@ -13,11 +13,10 @@ import javax.persistence.*;
 @Entity
 public class Board extends Auditable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardId;
 
     @Column(nullable = false)
-    @OneToOne(mappedBy = "board")
     private Long memberId;
 
     @Column(nullable = false)
