@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentResponseDto {
     private long commentId;
-
     @Setter(AccessLevel.NONE)
     private long boardId;
 

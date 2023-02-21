@@ -18,13 +18,11 @@ public class Comment extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long commentId;
 
-    @ManyToOne
-    @JoinColumn(name = "BOARD_ID")
-    private Board board;
+    @Column(nullable = false)
+    private long boardId;
 
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
+    @Column(nullable = false)
+    private long memberId;
 
     @Column(nullable = false)
     private String commentContent;
