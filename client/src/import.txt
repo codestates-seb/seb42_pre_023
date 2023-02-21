@@ -18,6 +18,8 @@ function App() {
 }
 
 //이시온
-
+import Login from './login/Login';
+import Signup from './login/Signup';
+import DetailPost from './detail-post/DetailPost';
 
 //조정인

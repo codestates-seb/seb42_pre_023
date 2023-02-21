@@ -11,8 +11,7 @@ export default function CommentCreate() {
     console.log(text);
     createCmt({
       borderId: "게시글 아이디",
-      memberId:
-        "현재 로그인 된 유저 아이디 정보 (로그인 안 되어 있으면 댓글 작성 X)",
+      memberId: "현재 로그인 된 유저 아이디 정보 (로그인 안 되어 있으면 댓글 작성 X)",
       commentContent: { text },
     });
     setText("");
@@ -26,7 +25,7 @@ export default function CommentCreate() {
     });
     return await res.json();
   };
-  // onChange={(e) => setText(e.target.value)}
+
   return (
     <Form onSubmit={handleSubmit}>
       <div className="title">Your Answer</div>
@@ -46,6 +45,7 @@ export default function CommentCreate() {
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  margin-top: 2rem;
   .title {
     padding-bottom: 1rem;
     font-weight: bold;
@@ -60,4 +60,7 @@ const Button = styled.button`
   color: white;
   padding: 1rem;
   margin-top: 1rem;
+  &:hover {
+    background-color: #2f79da;
+  }
 `;
