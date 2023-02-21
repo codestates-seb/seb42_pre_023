@@ -18,7 +18,7 @@ public class BoardDto {
         private String boardContent;
         private int boardViews;
         private int boardLike;
-        private int boardCommentId;
+        private int boardCmt;
         private String createdAt;
     }
 
