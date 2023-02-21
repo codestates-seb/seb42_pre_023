@@ -3,11 +3,13 @@ import styled from "styled-components";
 
 const HeaderTemplate = styled.header`
   width: 100vw;
-  height: 80px;
-  border-bottom: 1px solid #e0e0e0;
+  height: 10vh;
+  border-bottom: 2px solid #bbbbbb;
+  padding: 0 50px;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  background-color: #f7f7f7;
 `;
 
 function Header({ children }) {

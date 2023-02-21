@@ -4,6 +4,11 @@ import {FaRegUserCircle} from "react-icons/fa";
 
 
 export default function CommentItem() {
+  // const getComment = async () => {
+  //   const response = await fetch('');
+  //   return await response.json();
+  // }
+
   return (
     <Item>
       <div className="user">
@@ -26,10 +31,10 @@ const Item = styled.li`
   }
   .user-icon {
     margin-right: 0.5rem;
-    font-size: 1.2rem;
+    font-size: 2rem;
   }
   .cmt-content {
-    font-size: 0.9rem;
     margin-top: 1rem;
+    padding-left: 0.5rem;
   }
 `
