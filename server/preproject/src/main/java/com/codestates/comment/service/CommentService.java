@@ -17,7 +17,7 @@ public class CommentService {
         return null;
     }
 
-    public List<Comment> findComments() {
+    public List<Comment> findComments(long boardId) {
         return null;
     }
 
