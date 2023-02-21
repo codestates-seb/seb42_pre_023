@@ -1,7 +1,6 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import Header from './Header/Header';
-
+//! App.js는 항상 이 상태로 형식을 유지할 것.
 const GlobalStyle = createGlobalStyle`
   /* reset CSS */
   *,
@@ -25,15 +24,13 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 `;
-
+//! App.js는 항상 이 상태로 형식을 유지할 것.
 function App() {
-
   return (
     <>
       <GlobalStyle/>
-      <Header/>
     </>
   );
 }
-
+//! App.js는 항상 이 상태로 형식을 유지할 것.
 export default App;
