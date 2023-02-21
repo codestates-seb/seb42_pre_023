@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class MemberDto {
     @Getter
@@ -14,7 +15,9 @@ public class MemberDto {
         @NotBlank
         @Email
         private String memberEmail;
+        @NotBlank(message = "이름은 공백이 아니어야 합니다.")
         private String memberName;
+        @Size(min =6, max =16,message = "6~16자리 입력해주세요.")
         private String memberPwd;
 
     }
@@ -23,8 +26,12 @@ public class MemberDto {
     @AllArgsConstructor
     public static class Patch {
         private long memberId;
+        @NotBlank
+        @Email
         private String memberEmail;
+        @NotBlank(message = "이름은 공백이 아니어야 합니다.")
         private String memberName;
+        @Size(min =6, max =16,message = "6~16자리 입력해주세요.")
         private String memberPwd;
         private Member.MemberGrade memberGrade;
 
@@ -40,8 +47,7 @@ public class MemberDto {
             private String memberEmail;
             private String memberName;
             private Member.MemberGrade memberGrade;
-
-//            private String memberPwd;
+            private String memberPwd;
             public String getMemberGrade() {
                 return memberGrade.getGrade();
             }
