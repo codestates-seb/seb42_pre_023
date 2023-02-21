@@ -6,19 +6,21 @@ const LoginButton = styled.button`
   position: relative;
   float: left;
   width: 120px;
+  height: 50px;
   padding: 0;
   margin: 5px 20px 5px 0;
   font-weight: 600;
   text-align: center;
   line-height: 50px;
   color: #333333;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   border-radius: 10px;
-  transition: all 0.2s ;
+  transition: all 0.1s ;
   background: #ffbc6a;
   box-shadow: 0px 5px 0px 0px #A66615;
   border: none;
   cursor: pointer;
+  margin: 0 50px;
 
   &:hover{
 
