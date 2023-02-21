@@ -20,8 +20,10 @@ public class MemberDto {
     }
 
     @Getter
+    @AllArgsConstructor
     public static class Patch {
         private long memberId;
+        private String memberEmail;
         private String memberName;
         private String memberPwd;
         private Member.MemberGrade memberGrade;
@@ -40,6 +42,9 @@ public class MemberDto {
             private Member.MemberGrade memberGrade;
 
 //            private String memberPwd;
+            public String getMemberGrade() {
+                return memberGrade.getGrade();
+            }
         }
     }
 

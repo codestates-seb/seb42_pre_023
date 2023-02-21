@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.Arrays;
 
+@RestController
 @RequestMapping("/members")
 public class MemberController {
 
@@ -26,8 +27,8 @@ public class MemberController {
     @GetMapping("/{member-id}")
     public ResponseEntity getMember() {
         MemberDto.Response response =
-                new MemberDto.Response(1, "hgd@gmail.com", "홍길동", Member.MemberGrade.MEMBER_NOMAL   );
-        return ResponseEntity.ok(null);
+                new MemberDto.Response(1, "hgd@gmail.com", "홍길동", Member.MemberGrade.MEMBER_BRONZE);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
