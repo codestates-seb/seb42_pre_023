@@ -52,7 +52,7 @@ class MemberControllerTest {
     @Test
     void patchMemberTest() throws Exception {
         MemberDto.Patch patch = new MemberDto.Patch(
-                1L, "hgd@gmail.com", "홍길동", "asdf1234", Member.MemberGrade.MEMBER_BRONZE);
+                1L,  "홍길동", "asdf1234", Member.MemberGrade.MEMBER_BRONZE);
         String content = gson.toJson(patch);
 
         ResultActions actions =
@@ -63,7 +63,7 @@ class MemberControllerTest {
                                 .content(content)
                 );
         MvcResult result = actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.memberEmail").value(patch.getMemberEmail()))
+
                 .andExpect(jsonPath("$.memberName").value(patch.getMemberName()))
                 .andExpect(jsonPath("$.memberGrade").value(patch.getMemberGrade().getGrade()))
                 .andDo(print())
