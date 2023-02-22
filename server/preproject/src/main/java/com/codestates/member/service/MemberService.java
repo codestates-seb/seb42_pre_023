@@ -45,7 +45,7 @@ public class MemberService {
 
     }
 
-    private Member findVerifiedMember(long memberId) {
+    public Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember =
                 memberRepository.findById(memberId);
         Member findMember =
