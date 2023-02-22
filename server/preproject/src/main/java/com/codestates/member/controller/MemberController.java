@@ -14,18 +14,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
-import java.util.Arrays;
 
 @RestController
 @RequestMapping("/pre/members")
 @Validated
 @Slf4j
-public class MemberControllerV1 {
+public class MemberController {
     private final static String MEMBER_DEFAULT_URL = "/pre/members";
     private final MemberService memberService;
     private final MemberMapper mapper;
 
-    public MemberControllerV1(MemberService memberService, MemberMapper mapper) {
+    public MemberController(MemberService memberService, MemberMapper mapper) {
         this.memberService = memberService;
         this.mapper = mapper;
     }
