@@ -37,7 +37,6 @@ public class BoardService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Board updateBoard(Board board) {
         Board findBoard = findVerifiedBoard(board.getBoardId());
-        verifyExistsMember(board.getMemberId());
 
         Optional.ofNullable(board.getMemberId())
                 .ifPresent(memberId -> findBoard.setMemberId(memberId));
