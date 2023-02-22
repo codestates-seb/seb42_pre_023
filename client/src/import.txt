@@ -9,19 +9,23 @@ function App() {
 
 //백종우
 import Header from './Header/Header';
-import Logo from './Header/Logo';
-import Search from './Header/Search';
-import Login from './Header/Login';
+import BodyScreen from './BodyScreen';
+import Nav from './Nav/Nav';
+import TopButton from './TopButton';
+import UserInfoTemplate from './Userinfo/UserInfoTemplate';
+import CreatBoard from './CreatBoard/CreatBoard';
 
 function App() {
   return (
     <>
       <GlobalStyle/>
-      <Header>
-        <Logo></Logo>
-        <Search></Search>
-        <Login></Login>
-      </Header>
+      <Header/>
+      <Nav/>
+      <BodyScreen>
+        {/* <UserInfoTemplate/> */}
+        <CreatBoard/>
+      </BodyScreen>
+      <TopButton/>
     </>
   );
 }
@@ -29,6 +33,6 @@ function App() {
 //이시온
 import Login from './login/Login';
 import Signup from './login/Signup';
-import DetailPost from './detail-post/DetailPost';
+import DetailBoard from './detail-board/DetailBoard';
 
 //조정인

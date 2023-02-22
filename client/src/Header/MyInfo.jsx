@@ -6,7 +6,7 @@ const MyInfoButton = styled.button`
   width: 60px;
   height: 50px;
   padding: 10px 25px;
-  border: 2px solid #afafaf;
+  border: 2px solid #948f8f;
   font-family: 'Lato', sans-serif;
   font-weight: 500;
   background: transparent;
@@ -52,6 +52,9 @@ const MyInfoButton = styled.button`
   }
   &:hover:after {
     width: 100%;
+  }
+  span{
+    padding: 0px 10px;
   }
   span:before,
   span:after {

@@ -6,7 +6,7 @@ const HeaderLogo = styled.div`
   cursor: pointer;
   flex: 1.5;
   img {
-    width: 170px;
+    width: 200px;
     margin-right: 50px;
     height: auto;
   }
