@@ -11,7 +11,7 @@ const NavHeader = styled.div`
   width: 90%;
   margin-bottom: 20px;
   img{
-    width: 15%;
+    width: 25px;
     margin-right: 5px;
   }
   span{

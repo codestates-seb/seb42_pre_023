@@ -28,6 +28,7 @@ const TagItem = styled.ul`
     z-index: -1;
     width: 100%;
     height: 100%;
+    border-radius: 50px;
     transition: all 0.3s ease;
     -webkit-transform: scale(.1);
     transform: scale(.1);

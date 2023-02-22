@@ -7,7 +7,7 @@ const LoginButton = styled.button`
   float: left;
   width: 120px;
   height: 50px;
-  padding: 0;
+  padding: 0px 20px;
   margin: 5px 20px 5px 0;
   font-weight: 600;
   text-align: center;
@@ -16,7 +16,7 @@ const LoginButton = styled.button`
   font-size: 1.5rem;
   border-radius: 10px;
   transition: all 0.1s ;
-  background: #ffbc6a;
+  background: #ffd097;
   box-shadow: 0px 5px 0px 0px #A66615;
   border: none;
   cursor: pointer;
@@ -32,7 +32,7 @@ const LoginButton = styled.button`
 
 function Login() {
   return(
-    <LoginButton>Login</LoginButton>
+    <LoginButton>Log in</LoginButton>
   )
 }
 

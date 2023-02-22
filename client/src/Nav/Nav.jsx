@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const NavTemplate = styled.nav`
-  width: 12vw;
+  width: 250px;
   height: 90vh;
   border-right: 2px solid #bbbbbb;
   display: flex;

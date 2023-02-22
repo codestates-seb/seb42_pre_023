@@ -19,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 1.6rem;
     line-height: 1.6;
+    background: #fffcf9;
   }
   li {
     list-style: none;

@@ -9,9 +9,18 @@ function App() {
 
 //백종우
 import Header from './Header/Header';
+import BodyScreen from './BodyScreen';
 import Logo from './Header/Logo';
 import Search from './Header/Search';
 import Login from './Header/Login';
+import MyInfo from './Header/MyInfo';
+import Nav from './Nav/Nav';
+import NavHead from './Nav/NavHead';
+import TagSearch from './Nav/TagSearch';
+import TagListTemplate from './Nav/TagListTemplate';
+import TagList from './Nav/TagList';
+import UserInfoTemplate from './Userinfo/UserInfoTemplate';
+import UserProfile from './Userinfo/UserProfile'
 
 function App() {
   return (
@@ -21,7 +30,20 @@ function App() {
         <Logo></Logo>
         <Search></Search>
         <Login></Login>
+        <MyInfo></MyInfo>
       </Header>
+      <BodyScreen>
+        <Nav>
+          <NavHead/>
+          <TagSearch/>
+          <TagListTemplate>
+            <TagList/>
+          </TagListTemplate>
+        </Nav>
+        <UserInfoTemplate>
+          <UserProfile></UserProfile>
+        </UserInfoTemplate>
+      </BodyScreen>
     </>
   );
 }

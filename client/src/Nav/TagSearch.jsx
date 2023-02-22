@@ -46,7 +46,7 @@ function TagSearch() {
         <span>
           <BsTags size={25}></BsTags>
         </span>
-        <input type="text" placeholder="Search tag"/>
+        <input type="text" placeholder="Search"/>
         <span>
           <ImCancelCircle size={25} color="#ff5656"></ImCancelCircle>
         </span>
