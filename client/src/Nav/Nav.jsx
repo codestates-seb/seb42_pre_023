@@ -1,10 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import NavHead from "./NavHead";
+import TagSearch from "./TagSearch";
+import TagListTemplate from "./TagListTemplate";
+import TagList from "./TagList";
 
 const NavTemplate = styled.nav`
   width: 250px;
-  height: 90vh;
-  border-right: 2px solid #bbbbbb;
+  height: 100vh;
+  border-right: 2px solid rgb(187, 187, 187);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -12,11 +16,21 @@ const NavTemplate = styled.nav`
   background-color: #f7f7f7;
   padding-top: 50px;
   position: relative;
-  z-index: 0;
+  z-index: 1;
+  position: fixed;
+  top: 89px;
 `;
 
-function Nav({ children }) {
-  return <NavTemplate>{ children }</NavTemplate>;
+function Nav() {
+  return (
+    <NavTemplate>
+      <NavHead/>
+      <TagSearch/>
+      <TagListTemplate>
+          <TagList/>
+      </TagListTemplate>
+    </NavTemplate>
+  );
 }
 
 export default Nav;

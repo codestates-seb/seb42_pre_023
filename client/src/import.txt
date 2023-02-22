@@ -10,40 +10,22 @@ function App() {
 //백종우
 import Header from './Header/Header';
 import BodyScreen from './BodyScreen';
-import Logo from './Header/Logo';
-import Search from './Header/Search';
-import Login from './Header/Login';
-import MyInfo from './Header/MyInfo';
 import Nav from './Nav/Nav';
-import NavHead from './Nav/NavHead';
-import TagSearch from './Nav/TagSearch';
-import TagListTemplate from './Nav/TagListTemplate';
-import TagList from './Nav/TagList';
+import TopButton from './TopButton';
 import UserInfoTemplate from './Userinfo/UserInfoTemplate';
-import UserProfile from './Userinfo/UserProfile'
+import CreatBoard from './CreatBoard/CreatBoard';
 
 function App() {
   return (
     <>
       <GlobalStyle/>
-      <Header>
-        <Logo></Logo>
-        <Search></Search>
-        <Login></Login>
-        <MyInfo></MyInfo>
-      </Header>
+      <Header/>
+      <Nav/>
       <BodyScreen>
-        <Nav>
-          <NavHead/>
-          <TagSearch/>
-          <TagListTemplate>
-            <TagList/>
-          </TagListTemplate>
-        </Nav>
-        <UserInfoTemplate>
-          <UserProfile></UserProfile>
-        </UserInfoTemplate>
+        {/* <UserInfoTemplate/> */}
+        <CreatBoard/>
       </BodyScreen>
+      <TopButton/>
     </>
   );
 }
@@ -51,6 +33,6 @@ function App() {
 //이시온
 import Login from './login/Login';
 import Signup from './login/Signup';
-import DetailPost from './detail-post/DetailPost';
+import DetailBoard from './detail-board/DetailBoard';
 
 //조정인

@@ -3,15 +3,16 @@ import styled from "styled-components";
 import CommentItem from "./CommentItem";
 
 export default function CommentList() {
+  // const {boardCmt} = getCommentNum;
   
   // const getCommentNum = async () => {
-  //   const response = await fetch('');
+  //   const response = await fetch('/pre/board');
   //   return await response.json();
   // }
 
   return (
     <List>
-      <div className="title">{1} Answer</div>
+      <div className="title">'boardCmt' Answer</div>
       <CommentItem />
     </List>
   );
