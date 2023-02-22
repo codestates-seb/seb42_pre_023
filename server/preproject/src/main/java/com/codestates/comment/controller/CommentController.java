@@ -6,7 +6,9 @@ import com.codestates.comment.mapper.CommentMapper;
 import com.codestates.comment.dto.CommentPatchDto;
 import com.codestates.comment.dto.CommentResponseDto;
 import com.codestates.comment.service.CommentService;
+import com.codestates.dto.MultiResponseDto;
 import com.codestates.dto.SingleResponseDto;
+import com.codestates.utils.UriCreator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,11 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.lang.reflect.Array;
 import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -28,6 +26,8 @@ public class CommentController {
     private final CommentService commentService;
     private final CommentMapper mapper;
 
+    private final static String COMMENT_DEFAULT_URL = "/pre/comments";
+
     public CommentController(CommentService commentService, CommentMapper mapper) {
         this.commentService = commentService;
         this.mapper = mapper;
@@ -35,10 +35,10 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentDto) {
-        Comment comment = mapper.commentPostDtoToComment(commentDto);
-        Comment response = commentService.createComment(comment);
+        Comment comment = commentService.createComment(mapper.commentPostDtoToComment(commentDto));
+        URI location = UriCreator.createUri(COMMENT_DEFAULT_URL, comment.getCommentId());
 
-        return new ResponseEntity<>(mapper.commentToCommentResponseDto(response), HttpStatus.CREATED);
+        return ResponseEntity.created(location).build();
     }
 
     @PatchMapping("/{comment-id}")
@@ -60,14 +60,17 @@ public class CommentController {
     }
 
     @GetMapping("/list/{board-id}")
-    public ResponseEntity getComments(@PathVariable("board-id") long boardId) {
+    public ResponseEntity getComments(@PathVariable("board-id") @Positive long boardId) {
+        List<Comment> comments = commentService.findComments(boardId);
 
-        return null;
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.commentsToCommentResponseDtos(comments)), HttpStatus.OK);
     }
 
     @DeleteMapping("/{comment-id}")
-    public ResponseEntity deleteComment() {
-        return ResponseEntity.noContent().build();
+    public ResponseEntity deleteComment(@PathVariable("comment-id") @Positive long commentId) {
+        commentService.deleteComment(commentId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
