@@ -19,7 +19,7 @@ public class CommentResponseDto {
     @Setter(AccessLevel.NONE)
     private long memberId;
 
-    private String content;
+    private String commentContent;
     private LocalDateTime createdAt;
 
     public void setBoardId(Board board) {
