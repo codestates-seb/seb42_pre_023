@@ -29,7 +29,7 @@ const SearchInput = styled.div`
   }
 
   div:hover > input, div:hover {
-    background-color: #c2c2c2;
+    background-color: #dfdfdf;
   }
   div:focus-within {
     outline: none;

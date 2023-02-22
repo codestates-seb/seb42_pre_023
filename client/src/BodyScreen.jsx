@@ -2,7 +2,10 @@ import React from 'react';
 import styled from "styled-components";
 
 const BodyScreenDeployment = styled.div`
-  display: flex;
+  position: relative;
+  width: 83vw;
+  top: 130px;
+  left: 300px;
 `
 
 function BodyScreen({ children }) {
