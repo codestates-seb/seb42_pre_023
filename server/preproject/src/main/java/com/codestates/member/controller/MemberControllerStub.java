@@ -3,7 +3,6 @@ package com.codestates.member.controller;
 import com.codestates.member.dto.MemberDto;
 import com.codestates.member.entity.Member;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -11,7 +10,7 @@ import java.util.Arrays;
 
 @RestController
 @RequestMapping("/members")
-public class MemberController {
+public class MemberControllerStub {
 
     @PostMapping
     public ResponseEntity postMember() {
