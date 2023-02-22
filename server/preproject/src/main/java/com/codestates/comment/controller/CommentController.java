@@ -9,6 +9,9 @@ import com.codestates.comment.service.CommentService;
 import com.codestates.dto.MultiResponseDto;
 import com.codestates.dto.SingleResponseDto;
 import com.codestates.utils.UriCreator;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/pre/comments")
 @Validated
+@Slf4j
 public class CommentController {
     private final CommentService commentService;
     private final CommentMapper mapper;
@@ -61,10 +65,11 @@ public class CommentController {
 
     @GetMapping("/list/{board-id}")
     public ResponseEntity getComments(@PathVariable("board-id") @Positive long boardId) {
-        List<Comment> comments = commentService.findComments(boardId);
+        Page<Comment> pageComments = commentService.findComments(boardId);
+        List<Comment> comments = pageComments.getContent();
 
         return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.commentsToCommentResponseDtos(comments)), HttpStatus.OK);
+                new MultiResponseDto<>(mapper.commentsToCommentResponseDtos(comments), pageComments), HttpStatus.OK);
     }
 
     @DeleteMapping("/{comment-id}")

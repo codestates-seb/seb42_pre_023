@@ -18,6 +18,6 @@ public class CommentPostDto {
     private long memberId;
 
     @NotBlank(message = "댓글에 내용을 입력해주세요.")
-    private String content;
+    private String commentContent;
 
 }

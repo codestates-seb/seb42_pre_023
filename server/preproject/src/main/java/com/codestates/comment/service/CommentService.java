@@ -8,6 +8,9 @@ import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.helper.CommentCalculator;
 import com.codestates.member.service.MemberService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,14 +51,27 @@ public class CommentService {
         return findVerifiedComment(commentId);
     }
 
-    public List<Comment> findComments(long boardId) {
+//    public List<Comment> findComments(long boardId) {
+//
+//        List<Comment> comments = commentRepository.findAllByBoardId(boardId)
+//                .stream()
+//                .sorted(Comparator.comparing(Comment::getCommentId))
+//                .collect(Collectors.toList());
+//
+//        return comments;
+//    }
 
-        List<Comment> comments = commentRepository.findByBoardId(boardId)
+    public Page<Comment> findComments(long boardId) {
+
+        List<Comment> comments = commentRepository.findAllByBoardId(boardId)
                 .stream()
+                .filter(comment -> comment.getBoardId() == boardId)
                 .sorted(Comparator.comparing(Comment::getCommentId))
                 .collect(Collectors.toList());
 
-        return comments;
+
+        return new PageImpl<>(comments);
+
     }
 
     public void deleteComment(long commentId) {
@@ -86,7 +102,7 @@ public class CommentService {
     private Comment findVerifiedComment(long commentId) {
         Optional<Comment> optionalComment = commentRepository.findById(commentId);
         Comment findComment = optionalComment.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUNT));
+                new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
         return findComment;
     }
 
