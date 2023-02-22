@@ -1,11 +1,14 @@
 package com.codestates.member.controller;
 
+import com.codestates.dto.MultiResponseDto;
+import com.codestates.dto.SingleResponseDto;
 import com.codestates.member.dto.MemberDto;
 import com.codestates.member.entity.Member;
 import com.codestates.member.mapper.MemberMapper;
 import com.codestates.member.service.MemberService;
 import com.codestates.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/pre/members")
@@ -37,7 +42,8 @@ public class MemberController {
         Member createdMember = memberService.createMember(member);
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
-        return new ResponseEntity<>(mapper.memberToMemberResponseDto(createdMember), HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.memberToMemberResponseDto(createdMember)), HttpStatus.CREATED);
 
     }
 
@@ -50,27 +56,36 @@ public class MemberController {
         Member member =
                 memberService.updateMember(mapper.memberPathchDtoToMember(requestBody));
 
-        return new ResponseEntity<>(mapper.memberToMemberResponseDto(member),HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.memberToMemberResponseDto(member)),HttpStatus.OK);
     }
-//
-//    @GetMapping("/{member-id}")
-//    public ResponseEntity getMember() {
-//        MemberDto.Response response =
-//                new MemberDto.Response(1, "hgd@gmail.com", "홍길동", Member.MemberGrade.MEMBER_BRONZE, "asdf1234");
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    @GetMapping
-//    public ResponseEntity getMembers() {
-//        MemberDto.Response response1 =
-//                new MemberDto.Response(1, "hgd@gamail.com", "홍길동", Member.MemberGrade.MEMBER_NOMAL, "asdf1234");
-//        MemberDto.Response response2 =
-//                new MemberDto.Response(2, "hgd2@gmail.com", "김길동", Member.MemberGrade.MEMBER_NOMAL, "qwer1234");
-//        return ResponseEntity.ok(Arrays.asList(response1, response2));
-//    }
-//
-//    @DeleteMapping("/{member-id}")
-//    public ResponseEntity deleteMember() {
-//        return ResponseEntity.noContent().build();
-//    }
+
+    @GetMapping("/{member-id}")
+    public ResponseEntity getMember(
+            @PathVariable("member-id") @Positive long memberId) {
+        Member member = memberService.findVerifiedMember(memberId);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.memberToMemberResponseDto(member))
+                , HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity getMembers(@Positive @RequestParam int page,
+                                     @Positive @RequestParam int size) {
+        Page<Member> pageMembers = memberService.findMembers(page - 1, size);
+        List<Member> members = pageMembers.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.membersToMembersToMemberResponseDtos(members),
+                        pageMembers), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{member-id}")
+    public ResponseEntity deleteMember(
+            @PathVariable("member-id") @Positive long memberId) {
+        memberService.deletemember(memberId);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }
