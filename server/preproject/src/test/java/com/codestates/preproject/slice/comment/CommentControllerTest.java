@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,9 +32,6 @@ public class CommentControllerTest {
 
     @Autowired
     private Gson gson;
-
-    public CommentControllerTest() throws Exception {
-    }
 
     @Test
     public void postCommentTest() throws Exception{
@@ -82,7 +80,7 @@ public class CommentControllerTest {
                                 .content(Content)
                 );
         patchActions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").value(patch.getContent()));
+                .andExpect(jsonPath("$.commentContent").value(patch.getCommentContent()));
     }
 
     @Test
@@ -108,7 +106,7 @@ public class CommentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.boardId").value(post.getBoardId()))
                 .andExpect(jsonPath("$.memberId").value(post.getMemberId()))
-                .andExpect(jsonPath("$.content").value(post.getContent()));
+                .andExpect(jsonPath("$.commentContent").value(post.getCommentContent()));
     }
 
    @Test

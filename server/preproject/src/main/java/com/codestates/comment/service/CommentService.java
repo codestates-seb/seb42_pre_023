@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -39,11 +40,17 @@ public class CommentService {
         Comment savedComment = saveComment(comment);
         updateCommentCount(savedComment);
 
+
         return savedComment;
     }
 
     public Comment updateComment(Comment comment) {
         Comment findComment = findVerifiedComment(comment.getCommentId());
+
+        Optional.ofNullable(comment.getCommentContent())
+                .ifPresent(content -> findComment.setCommentContent(content));
+        Optional.ofNullable(comment.getCreatedAt())
+                .ifPresent(time -> findComment.setCreatedAt(time));
 
         return commentRepository.save(findComment);
     }
@@ -78,6 +85,7 @@ public class CommentService {
     }
 
     private Comment saveComment(Comment comment) {
+        comment.setCreatedAt(LocalDateTime.now());
         return commentRepository.save(comment);
     }
 

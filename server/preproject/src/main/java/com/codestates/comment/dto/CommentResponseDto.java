@@ -10,24 +10,18 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class CommentResponseDto {
     private long commentId;
-    @Setter(AccessLevel.NONE)
+
     private long boardId;
 
-    @Setter(AccessLevel.NONE)
     private long memberId;
 
     private String commentContent;
+
     private LocalDateTime createdAt;
 
-    public void setBoardId(Board board) {
-        this.boardId = board.getBoardId();
-    }
-
-    public void setMemberId(Member member) {
-        this.memberId = member.getMemberId();
-    }
 
 }

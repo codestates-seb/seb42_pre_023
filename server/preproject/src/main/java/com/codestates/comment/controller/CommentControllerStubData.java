@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-
+@RestController
+@RequestMapping("/comments")
+@Validated
 public class CommentControllerStubData {
-    @RestController
-    @RequestMapping("/comments")
-    @Validated
-    public class CommentController {
 
         @PostMapping
         public ResponseEntity postComment() {
@@ -56,8 +54,5 @@ public class CommentControllerStubData {
         public ResponseEntity deleteComment() {
             return ResponseEntity.noContent().build();
         }
-
-
-    }
 
 }
