@@ -11,6 +11,7 @@ import com.codestates.member.service.MemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,16 +52,6 @@ public class CommentService {
         return findVerifiedComment(commentId);
     }
 
-//    public List<Comment> findComments(long boardId) {
-//
-//        List<Comment> comments = commentRepository.findAllByBoardId(boardId)
-//                .stream()
-//                .sorted(Comparator.comparing(Comment::getCommentId))
-//                .collect(Collectors.toList());
-//
-//        return comments;
-//    }
-
     public Page<Comment> findComments(long boardId) {
 
         List<Comment> comments = commentRepository.findAllByBoardId(boardId)
@@ -68,7 +59,6 @@ public class CommentService {
                 .filter(comment -> comment.getBoardId() == boardId)
                 .sorted(Comparator.comparing(Comment::getCommentId))
                 .collect(Collectors.toList());
-
 
         return new PageImpl<>(comments);
 
