@@ -9,7 +9,7 @@ import javax.validation.constraints.Positive;
 @Getter
 @AllArgsConstructor
 public class CommentPatchDto {
-    @Positive
+
     private long commentId;
 
     @NotBlank(message = "댓글에 내용을 입력해주세요.")

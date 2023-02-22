@@ -28,7 +28,7 @@ public class Comment extends Auditable {
     @Column(nullable = false)
     private String commentContent;
 
-    @Column(nullable = false, name = "LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt = LocalDateTime.now();
+    @Column(nullable = false, name = "CREATED_AT")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 }

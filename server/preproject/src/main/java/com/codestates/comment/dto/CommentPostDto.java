@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -19,5 +20,6 @@ public class CommentPostDto {
 
     @NotBlank(message = "댓글에 내용을 입력해주세요.")
     private String commentContent;
+
 
 }

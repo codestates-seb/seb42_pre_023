@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -40,6 +41,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentDto) {
         Comment comment = commentService.createComment(mapper.commentPostDtoToComment(commentDto));
+        comment.setCreatedAt(LocalDateTime.now());
         URI location = UriCreator.createUri(COMMENT_DEFAULT_URL, comment.getCommentId());
 
         return ResponseEntity.created(location).build();
@@ -50,7 +52,6 @@ public class CommentController {
                                        @Valid @RequestBody CommentPatchDto commentPatchDto) {
         commentPatchDto.setCommentId(commentId);
         Comment response = commentService.updateComment(mapper.commentPatchDtoToComment(commentPatchDto));
-
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.commentToCommentResponseDto(response)), HttpStatus.OK);
     }
