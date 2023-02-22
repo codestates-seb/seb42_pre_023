@@ -53,11 +53,11 @@ const UserProfileTemplate = styled.div`
   .profile{
     display: flex;
     justify-content: center;
-    flex: 1;
+    flex: 1.2;
   }
   .userInfo{
     padding: 30px;
-    width: 600px;
+    width: 500px;
     display: flex;
     flex-direction: column;
     flex: 2;
@@ -65,7 +65,7 @@ const UserProfileTemplate = styled.div`
   .badge{
     margin-top: 10px;
     display: flex;
-    margin:;
+
   }
   .badge > div{
     width: 30px;
@@ -90,7 +90,8 @@ const UserProfileTemplate = styled.div`
     border: 1px solid #5555555f;
   }
   button:hover{
-    background-color: #5252525f;
+    background-color: #dddddd;
+    font-weight: bold;
   }
   .edit_profile{
     background: #b6d8ff61;
