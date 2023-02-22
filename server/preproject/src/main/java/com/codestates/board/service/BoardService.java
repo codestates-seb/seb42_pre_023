@@ -29,8 +29,6 @@ public class BoardService {
     }
 
     public Board createBoard(Board board) {
-        verifyExistsMember(board.getMemberId());
-
         return boardRepository.save(board);
     }
 
