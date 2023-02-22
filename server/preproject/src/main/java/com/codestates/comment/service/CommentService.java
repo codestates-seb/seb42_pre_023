@@ -1,9 +1,13 @@
 package com.codestates.comment.service;
 
 import com.codestates.comment.entity.Comment;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
+@Service
 public class CommentService {
     public Comment createComment (Comment comment) {
         return null;
