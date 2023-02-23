@@ -36,12 +36,12 @@ public class MemberLogController {
         this.mapper = mapper;
     }
 
-    @PostMapping
-    public ResponseEntity postMemberLog(@Valid @RequestBody MemberLogDto.Post memberLogDto) {
-        MemberLog memberLog = memberLogService.createMemberLog(mapper.MemberLogPostDtoToMemberLog(memberLogDto));
-        URI location = UriCreator.createUri(COMMENT_DEFAULT_URL, memberLog.getMemberLogId());
-        return ResponseEntity.created(location).build();
-    }
+//    @PostMapping
+//    public ResponseEntity postMemberLog(@Valid @RequestBody MemberLogDto.Post memberLogDto) {
+//        MemberLog memberLog = memberLogService.createMemberLog(mapper.MemberLogPostDtoToMemberLog(memberLogDto));
+//        URI location = UriCreator.createUri(COMMENT_DEFAULT_URL, memberLog.getMemberLogId());
+//        return ResponseEntity.created(location).build();
+//    }
 
     @GetMapping("/list/{member-id}")
     public ResponseEntity getMemberLogs(@PathVariable("member-id") @Positive long memberId) {

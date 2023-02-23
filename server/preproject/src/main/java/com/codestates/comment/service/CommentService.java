@@ -8,6 +8,8 @@ import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.helper.CommentCalculator;
 import com.codestates.member.service.MemberService;
+import com.codestates.memberLog.entity.MemberLog;
+import com.codestates.memberLog.service.MemberLogService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -27,26 +29,38 @@ public class CommentService {
     private final MemberService memberService;
     private final BoardService boardService;
     private final CommentRepository commentRepository;
+    private final MemberLogService memberLogService;
 
-    public CommentService(MemberService memberService,
-                          BoardService boardService, CommentRepository commentRepository) {
+    public CommentService(MemberService memberService, BoardService boardService,
+                          CommentRepository commentRepository,
+                          MemberLogService memberLogService) {
         this.memberService = memberService;
         this.boardService = boardService;
         this.commentRepository = commentRepository;
+        this.memberLogService = memberLogService;
     }
 
     public Comment createComment (Comment comment) {
         verifyComment(comment);
         Comment savedComment = saveComment(comment);
         updateCommentCount(savedComment);
+
+        MemberLog memberLog = memberLogService.createCommentLog(comment);
+        memberLog.setLogActive(MemberLog.LogActive.COMMENT_CREATED);
+        memberLogService.saveMemberLog(memberLog);
+
         return savedComment;
     }
 
     public Comment updateComment(Comment comment) {
         Comment findComment = findVerifiedComment(comment.getCommentId());
-
         Optional.ofNullable(comment.getCommentContent())
                 .ifPresent(content -> findComment.setCommentContent(content));
+
+        MemberLog memberLog = memberLogService.createCommentLog(findComment);
+        memberLog.setLogActive(MemberLog.LogActive.COMMENT_MODIFIED);
+        memberLogService.saveMemberLog(memberLog);
+
         return commentRepository.save(findComment);
     }
 
@@ -67,6 +81,10 @@ public class CommentService {
 
     public void deleteComment(long commentId) {
         Comment comment = findVerifiedComment(commentId);
+        MemberLog memberLog = memberLogService.createCommentLog(comment);
+        memberLog.setLogActive(MemberLog.LogActive.COMMENT_DELETED);
+        memberLogService.saveMemberLog(memberLog);
+
         commentRepository.delete(comment);
     }
 

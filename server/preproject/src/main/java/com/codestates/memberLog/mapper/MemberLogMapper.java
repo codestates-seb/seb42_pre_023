@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MemberLogMapper {
-    MemberLog MemberLogPostDtoToMemberLog(MemberLogDto.Post memberLogPostDto);
+//    MemberLog MemberLogPostDtoToMemberLog(MemberLogDto.Post memberLogPostDto);
     MemberLogDto.Response MemberLogToMemberLogResponseDto(MemberLog memberLog);
     List<MemberLogDto.Response> MemberLogsToMemberLogResponseDtos(List<MemberLog> memberLogs);
 }
