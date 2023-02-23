@@ -37,6 +37,7 @@ replay_pid*
 .idea/**/shelf
 
 .idea/
+.resources/application.yml
 # AWS User-specific
 .idea/**/aws.xml
 
