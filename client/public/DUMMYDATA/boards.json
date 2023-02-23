@@ -1,0 +1,22 @@
+[
+  {
+    "boardId": 1,
+    "memberId": 1,
+    "boardTitle": "The Best Video Game Soundtracks of All Time",
+    "boardContent": "Video game soundtracks have come a long way . From epic orchestral scores to catchy chiptunes, video game music has become an art form in its own right. What are your favorite video game soundtracks? Let's share and discuss!",
+    "boardViews": 0,
+    "boardLike": 0,
+    "boardCmt": 0,
+    "createdAt": "2023-11-22 12:32:32.433"
+  },
+  {
+    "boardId": 1,
+    "memberId": 1,
+    "boardTitle": "Asking for input until desired result, then returning result",
+    "boardContent": "I'm currently building a Rock Paper Scissors game and trying to ask the user for their choice and then returning their choice. I'm using a while loop to continue to prompt the user for their choice until it is valid, but it continues to prompt even when I give it my desired answer.",
+    "boardViews": 0,
+    "boardLike": 0,
+    "boardCmt": 2,
+    "createdAt": "2023-11-22 12:32:32.433"
+  }
+]

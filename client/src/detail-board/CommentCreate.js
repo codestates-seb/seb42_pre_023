@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import axios from "axios";
 
 export default function CommentCreate() {
   const [text, setText] = useState("");
@@ -18,13 +19,9 @@ export default function CommentCreate() {
   };
 
   const createCmt = async (data) => {
-    const res = await fetch("", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    return await res.json();
-  };
+    return axios.post("/DUMMYDATA/comments.json", data)
+    .then((res) => console.log(res.data))
+  }
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -34,6 +31,7 @@ export default function CommentCreate() {
         onChange={(event, editor) => {
           const data = editor.getData();
           // console.log({ event, editor, data });
+          // console.log(data)
           setText(data);
         }}
       />
