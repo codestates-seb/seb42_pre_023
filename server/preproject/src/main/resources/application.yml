@@ -20,8 +20,8 @@ spring:
       client:
         registration:
           google:
-            clientId: ${OATUTH_SECRET_ID}
-            clientSecret: ${OATUTH_SECRET_PWD}
+            clientId: ${OAUTH_SECRET_ID}
+            clientSecret: ${OAUTH_SECRET_PWD}
             scope:
               - email
               - profile
