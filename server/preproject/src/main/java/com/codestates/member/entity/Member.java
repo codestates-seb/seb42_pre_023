@@ -28,6 +28,9 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberGrade memberGrade = MemberGrade.MEMBER_NOMAL;
 
+    public Member(String email) {
+        this.memberEmail = email;
+    }
     public enum MemberGrade {
         MEMBER_NOMAL("일반등급"),
         MEMBER_BRONZE("브론즈"),
