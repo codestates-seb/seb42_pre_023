@@ -25,7 +25,7 @@ public class CommentControllerStubData {
         public ResponseEntity patchComment() {
             CommentResponseDto response =
                     new CommentResponseDto(1,1,1,
-                            "댓글 작성테스트", LocalDateTime.now());
+                            "댓글 작성테스트", LocalDateTime.now(), LocalDateTime.now());
 
             return ResponseEntity.ok(response);
         }
@@ -34,7 +34,7 @@ public class CommentControllerStubData {
         public ResponseEntity getComment() {
             CommentResponseDto response =
                     new CommentResponseDto(1,1,1,
-                            "댓글 작성테스트", LocalDateTime.now());
+                            "댓글 작성테스트", LocalDateTime.now(), LocalDateTime.now());
             return ResponseEntity.ok(response);
         }
 
@@ -42,10 +42,10 @@ public class CommentControllerStubData {
         public ResponseEntity getComments() {
             CommentResponseDto response1 =
                     new CommentResponseDto(1,1,1,
-                            "댓글 작성테스트", LocalDateTime.now());
+                            "댓글 작성테스트", LocalDateTime.now(), LocalDateTime.now());
             CommentResponseDto response2 =
                     new CommentResponseDto(2,1,2,
-                            "댓글 작성테스트", LocalDateTime.now());
+                            "댓글 작성테스트", LocalDateTime.now(), LocalDateTime.now());
 
             return ResponseEntity.ok(Arrays.asList(response1, response2));
         }
