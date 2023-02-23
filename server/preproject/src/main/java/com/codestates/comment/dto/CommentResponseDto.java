@@ -23,5 +23,6 @@ public class CommentResponseDto {
 
     private LocalDateTime createdAt;
 
+    private LocalDateTime modifiedAt;
 
 }

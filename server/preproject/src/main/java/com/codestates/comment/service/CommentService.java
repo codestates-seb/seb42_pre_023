@@ -39,8 +39,6 @@ public class CommentService {
         verifyComment(comment);
         Comment savedComment = saveComment(comment);
         updateCommentCount(savedComment);
-
-
         return savedComment;
     }
 
@@ -49,9 +47,6 @@ public class CommentService {
 
         Optional.ofNullable(comment.getCommentContent())
                 .ifPresent(content -> findComment.setCommentContent(content));
-        Optional.ofNullable(comment.getCreatedAt())
-                .ifPresent(time -> findComment.setCreatedAt(time));
-
         return commentRepository.save(findComment);
     }
 
@@ -68,13 +63,11 @@ public class CommentService {
                 .collect(Collectors.toList());
 
         return new PageImpl<>(comments);
-
     }
 
     public void deleteComment(long commentId) {
         Comment comment = findVerifiedComment(commentId);
         commentRepository.delete(comment);
-
     }
 
     private void verifyComment(Comment comment) {
@@ -85,7 +78,6 @@ public class CommentService {
     }
 
     private Comment saveComment(Comment comment) {
-        comment.setCreatedAt(LocalDateTime.now());
         return commentRepository.save(comment);
     }
 
