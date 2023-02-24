@@ -1,9 +1,20 @@
-import React,{ useState } from 'react';
+import React,{ useState,useEffect } from 'react';
 import styled from 'styled-components';
 import QuestionCard from './QuestionCard'
+import axios from 'axios';
 
 export default function QuestionList() {
-  // const [questionList, setquestionList] = useState([]);
+  const getQList = async () => {
+    return axios.get("/DUMMYDATA/boards.json");
+  };
+  const [questionList, setquestionList] = useState([]);
+
+  useEffect(() => {
+    getQList().then((res) => setquestionList(res.data));
+  }, []);
+  
+
+
 //ask question 로그인 여부 navigate
 
 //   //필터
@@ -53,7 +64,7 @@ return(
       <AskQButton>Ask Question</AskQButton> 
       </H1>
     <H2>
-      <QCount>{} questions</QCount>  
+      <QCount>{questionList.length} questions</QCount>  
       <FilterWrap>
       <Button>Views</Button>
       <Button>Views</Button>
@@ -65,11 +76,11 @@ return(
 
   <QuestionContainer>
     <Question >
-    {/* {questionList.map((question)=>{
+    {questionList.map((questions)=>{
       return(
-        <QuestionCard question={question} key={question.id}/>
+        <QuestionCard questions={questions} key={questions.boardId}/>
       )
-    })} */}
+    })}
     </Question>
   </QuestionContainer>
 
@@ -78,7 +89,7 @@ return(
 }
 const HeadContainer = styled.div`
 border-bottom: 1px solid gray;
-width: 100%;
+width: calc(100% - 164px);
 height: 15vh;
 padding: 15px;
 box-sizing: border-box;
@@ -86,7 +97,7 @@ h1{
 font-size:35px;
 margin-right:12px;
 margin-bottom:12px;
-flex: 1 1 auto;
+/* flex: 1 1 auto; */
 padding-left:10px ;
 }
 `
@@ -145,7 +156,7 @@ border-radius:3px;
 const QuestionContainer = styled.ul`
 margin: 0;
 padding: 0;
-width:100%;
+width:calc(100% - 164px);
 height: 100%;
 
 `;

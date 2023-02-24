@@ -3,22 +3,31 @@ import styled from "styled-components";
 
 //title에서 링크 
 //시간 수정
-export default function QuestionCard() {
+export default function QuestionCard({questions }) {
+    const {
+    memberId,
+    boardTitle,
+    boardContent,
+    boardViews,
+    boardLike,
+    boardCmt,
+    createdAt,
+  } = questions;
   return(
     <>
   <QContainer>
     <Qsummary>
-      <QLikes> votes</QLikes>
-      <QVote> answers</QVote>
-      <QViews> views</QViews>
+      <QLikes>{boardLike} votes</QLikes>
+      <QVote>{boardCmt} answers</QVote>
+      <QViews>{boardViews} views</QViews>
       </Qsummary>
 
       <QContentContainer>
-      <QTitle></QTitle>
-      <QContent></QContent>
+      <QTitle>{boardTitle}</QTitle>
+      <QContent>{boardContent}</QContent>
       <QInfoContainer>
       <Tagbox><Tag>태그</Tag><Tag>javaScript</Tag></Tagbox>
-      <span> asked </span>
+      <span>{memberId} asked {createdAt}</span>
       </QInfoContainer>
       </QContentContainer>
 
@@ -28,7 +37,7 @@ export default function QuestionCard() {
 }
 
 const QContainer = styled.div`
-width: 80%;
+width: 95%;
 display: flex;
 flex-direction: column ;
 
