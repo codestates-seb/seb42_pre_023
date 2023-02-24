@@ -19,15 +19,7 @@ export default function Section({tagInfo}) {
 
 
 const SectionContainer = styled.section`
-  max-width: 1100px;
-  width: calc(100%-250px);
-  height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-`;
+`
 
 
 const BodyScreenDeployment = styled.div`

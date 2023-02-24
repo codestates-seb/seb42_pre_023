@@ -50,7 +50,7 @@ export default function QuestionCard({ questions }) {
 }
 
 const QContainer = styled.div`
-  width: 95%;
+  width:calc(100% - 164px);
   display: flex;
   flex-direction: column;
 
@@ -79,6 +79,9 @@ const QContentContainer = styled.div``;
 const QTitle = styled.p`
   font-size: 17px;
   color: hsl(206, 100%, 40%);
+  cursor:pointer;
+  :hover{ 
+    color: hsl(206,100%,52%)};
 `;
 
 const QContent = styled.p`
@@ -105,4 +108,7 @@ const Tag = styled.div`
   margin: 3px;
   padding: 3px;
   font-size: 12px;
+  :hover{
+    background-color: hsl(206,93%,83.5%);
+  };
 `;

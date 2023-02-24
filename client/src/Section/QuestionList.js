@@ -18,22 +18,36 @@ export default function QuestionList() {
 //ask question 로그인 여부 navigate
 
 //   //필터
-//   const handleQClick = () => {};
-//   const handleOldest = ()=>  {
-      //   let newArr = [...boards];
-      //   let newestArr = newArr.sort((a,b)) =>{
-      //     return a.BoardId-b.boardId;
-      //   };
-      //   setBoards(newestArr)
-      // };
+  // const handleOldest = ()=>  {
+  //       let newArr = [...questionList];
+  //       let oldest = newArr.sort((a,b) =>{
+  //         return a.createdAt-b.createdAt;
+  //       });
+  //       setquestionList(oldest);
+  //     };
 
+  const handleViewsup = () => {
+      let newArr = [...questionList];
+      let Upviews = newArr.sort((a,b) =>{
+        return a.boardViews-b.boardViews;
+      });
+      setquestionList(Upviews);
+  }
+
+  const handleViewsdown = () => {
+    let newArr = [...questionList];
+    let Downviews = newArr.sort((a,b) =>{
+      return b.boardViews-a.boardViews;
+    });
+    setquestionList(Downviews);
+}
 //   const handleNewest = ()=>{
-      //   let newArr = [...boards];
-      //   let newestArr = newArr.sort((a,b)) =>{
-      //     return b.BoardId-a.boardId;
-      //   };
-      //   setBoards(newestArr)
-      // };
+//         let newArr = [...questionList];
+//         let newestArr = newArr.sort((a,b)) =>{
+//           return b.BoardId-a.boardId;
+//         };
+//         setBoards(newestArr)
+//       };
 // };
 
   //질문목록
@@ -66,10 +80,11 @@ return(
     <H2>
       <QCount>{questionList.length} questions</QCount>  
       <FilterWrap>
-      <Button>Views</Button>
-      <Button>Views</Button>
+      <Button onClick={handleViewsup}>Views⬆</Button>
+      <Button onClick={handleViewsdown}>Views⬇</Button>
+      <Button>Comments</Button>
       <Button>Newest</Button>
-      <Button>Oldest</Button>
+      <Button >Oldest</Button>
   </FilterWrap>
   </H2>
   </HeadContainer>
@@ -128,7 +143,7 @@ font-size:13px;
 padding: 10.4px;
 width:103px;
 cursor:pointer;
-&:hover{
+:hover{
 background-color:rgb(0 116 204);
 }
 
@@ -148,6 +163,11 @@ background: white;
 color: #6A737C;
 border: 1px solid #6A737C;
 border-radius:3px;
+:hover{
+  background-color:hsl(210,8%,97.5%) ;
+  color:black;
+};
+
 `
 
 
@@ -155,7 +175,8 @@ border-radius:3px;
 const QuestionContainer = styled.ul`
 margin: 0;
 padding: 0;
-width:calc(100% - 164px);
+/* width:calc(100% - 164px); */
+width:100%;
 height: 100%;
 
 `;
@@ -164,5 +185,5 @@ const Question = styled.li`
 display: flex;
 flex-direction: column;
 overflow: hidden;
-
+gap:3px;
 `;
