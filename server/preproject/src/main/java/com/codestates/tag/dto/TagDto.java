@@ -15,6 +15,7 @@ public class TagDto {
     }
 
     @Getter
+    @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Patch {
@@ -28,6 +29,7 @@ public class TagDto {
 
 
     @Getter
+    @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response {
