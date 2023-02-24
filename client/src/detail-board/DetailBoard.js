@@ -5,7 +5,6 @@ import { BiShare } from "react-icons/bi";
 import Comment from "./Comment";
 import axios from "axios";
 
-
 const getBoard = async () => {
   return axios.get("/DUMMYDATA/boards.json");
 };
@@ -116,8 +115,8 @@ const PostWrap = styled.div`
   width: calc(100% - 164px);
   height: 100vh;
   padding: 3rem;
-  margin-bottom: 10rem;
-            margin: 15rem 0 0 30rem; //지우기
+  /* margin-bottom: 10rem; */
+  margin: 15rem 0 35rem 30rem; //지우기
   .tag-list > button {
     margin-right: 0.5rem;
     padding: 0.7rem;

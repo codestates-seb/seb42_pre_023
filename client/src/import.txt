@@ -22,7 +22,7 @@ function App() {
       <Header/>
       <Nav/>
       <BodyScreen>
-        {/* <UserInfoTemplate/> */}
+        {/* <UserInfo/> */}
         <CreatBoard/>
       </BodyScreen>
       <TopButton/>
