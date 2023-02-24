@@ -1,6 +1,7 @@
 package com.codestates.board.controller;
 
-import com.codestates.board.dto.BoardDto;
+import com.codestates.board.dto.BoardPatchDto;
+import com.codestates.board.dto.BoardPostDto;
 import com.codestates.board.entity.Board;
 import com.codestates.board.mapper.BoardMapper;
 import com.codestates.board.service.BoardService;
@@ -37,7 +38,7 @@ public class BoardController {
     }
 
     @PostMapping
-    public ResponseEntity postBoard(@Valid @RequestBody BoardDto.Post requestBody) {
+    public ResponseEntity postBoard(@Valid @RequestBody BoardPostDto requestBody) {
         Board board = mapper.boardPostToBoard(requestBody);
 
         Board createdBoard = boardService.createBoard(board);
@@ -49,7 +50,7 @@ public class BoardController {
     @PatchMapping("/{board-id}")
     public ResponseEntity patchBoard(
             @PathVariable("board-id") @Positive long boardId,
-            @Valid @RequestBody BoardDto.Patch requestBody) {
+            @Valid @RequestBody BoardPatchDto requestBody) {
         requestBody.setBoardId(boardId);
 
         Board board =

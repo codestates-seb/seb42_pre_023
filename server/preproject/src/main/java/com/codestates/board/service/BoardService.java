@@ -77,10 +77,4 @@ public class BoardService {
                         new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
         return findBoard;
     }
-
-    private void verifyExistsMember(Long memberId) {
-        Optional<Member> member = memberRepository.findById(memberId);
-        if (member.isPresent())
-            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
-    }
 }
