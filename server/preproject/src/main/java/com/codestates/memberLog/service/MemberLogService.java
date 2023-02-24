@@ -2,20 +2,19 @@ package com.codestates.memberLog.service;
 
 import com.codestates.board.entity.Board;
 import com.codestates.board.repository.BoardRepository;
-import com.codestates.board.service.BoardService;
 import com.codestates.comment.entity.Comment;
 import com.codestates.comment.repository.CommentRepository;
-import com.codestates.comment.service.CommentService;
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
-import com.codestates.member.service.MemberService;
 import com.codestates.memberLog.entity.MemberLog;
 import com.codestates.memberLog.repository.MemberLogRepository;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -28,7 +27,6 @@ import java.util.stream.Collectors;
 @Service
 public class MemberLogService {
     private final MemberLogRepository memberLogRepository;
-
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
@@ -42,6 +40,7 @@ public class MemberLogService {
         this.commentRepository = commentRepository;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public MemberLog createMemberLog (Member member) {
         MemberLog memberLog = new MemberLog();
         memberLog.setMemberId(member.getMemberId());
@@ -50,6 +49,7 @@ public class MemberLogService {
         return memberLog;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public MemberLog createBoardLog (Board board) {
         MemberLog memberLog = new MemberLog();
         memberLog.setMemberId(board.getMemberId());
@@ -59,6 +59,7 @@ public class MemberLogService {
         return memberLog;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public MemberLog createCommentLog (Comment comment) {
         MemberLog memberLog = new MemberLog();
         memberLog.setMemberId(comment.getMemberId());
@@ -69,8 +70,8 @@ public class MemberLogService {
         return memberLog;
     }
 
+    @Transactional(readOnly = true)
     public Page<MemberLog> findMemberLogs(long memberId) {
-
         List<MemberLog> memberLogs = memberLogRepository.findAllByMemberId(memberId)
                 .stream()
                 .filter(memberLog -> memberLog.getMemberId() == memberId)
@@ -84,8 +85,8 @@ public class MemberLogService {
         memberLogRepository.delete(memberLog);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public MemberLog saveMemberLog(MemberLog memberLog) {
-
         return memberLogRepository.save(memberLog);
     }
 
@@ -93,6 +94,7 @@ public class MemberLogService {
         Optional<MemberLog> optionalMemberLog = memberLogRepository.findById(memberLogId);
         MemberLog findMemberLog = optionalMemberLog.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.LOG_NOT_FOUND));
+
         return findMemberLog;
     }
 }

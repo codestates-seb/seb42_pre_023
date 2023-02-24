@@ -1,8 +1,6 @@
 package com.codestates.comment.controller;
 
 import com.codestates.comment.dto.CommentResponseDto;
-import com.codestates.comment.mapper.CommentMapper;
-import com.codestates.comment.service.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
