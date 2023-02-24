@@ -10,12 +10,16 @@ export default function Layout({
   displayNav = false,
   displayFooter = false,
   isLogin,
+  setTagInfo,
 }) {
+
+  
+
   return (
     <Wrap>
       {displayHeader && <Header isLogin={isLogin} />}
       <Container>
-        {displayNav && <Nav />}
+        {displayNav && <Nav setTagInfo={setTagInfo} />}
         <Main>
           <Outlet />
         </Main>

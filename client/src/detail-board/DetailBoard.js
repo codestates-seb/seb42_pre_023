@@ -4,6 +4,7 @@ import { AiOutlineEye, AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BiShare } from "react-icons/bi";
 import Comment from "./Comment";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const getBoard = async () => {
   return axios.get("/DUMMYDATA/boards.json");
@@ -23,15 +24,15 @@ const getName = async () => {
 
 const updateLike = async (data) => {
   // console.log(data)
-  return axios.patch("/DUMMYDATA/boards.json", data)
+  return axios.patch("/DUMMYDATA/boards.json", data);
 };
 
-
 export default function DetailBoard() {
-  const [boardData , setBoardData] = useState('');
-  const [memberName, setMemberName] = useState('');
+  const [boardData, setBoardData] = useState("");
+  const [memberName, setMemberName] = useState("");
   const [like, setLike] = useState(false);
   const [likeNum, setLikeNum] = useState(0);
+  const { board } = useParams();
   const {
     memberId,
     boardTitle,
@@ -47,22 +48,25 @@ export default function DetailBoard() {
   const date = new Date(createdAt).toLocaleString();
 
   useEffect(() => {
-    getBoard().then((res) => setBoardData(res.data[1]));
-    getName().then((res) => res.data.filter((el) => el.memberId === memberId ? setMemberName(el.memberName) : ''))
-  }, [memberId])
+    getBoard().then((res) => res.data.filter((el) => el.boardId == board ? setBoardData(el) : null));
+    getName().then((res) =>
+      res.data.filter((el) =>
+        el.memberId === memberId ? setMemberName(el.memberName) : ""
+      )
+    );
+  }, [board, memberId]);
 
-  
   const handleClick = () => {
     const likeUser = [];
     setLike(!like);
-    if (like === false && likeUser.indexOf('memberId') === -1) {
+    if (like === false && likeUser.indexOf("memberId") === -1) {
       updateLike(likeNum + 1);
       setLikeNum(likeNum + 1);
-      likeUser.push('memberId');
+      likeUser.push("memberId");
     } else {
       updateLike(likeNum - 1);
       setLikeNum(likeNum - 1);
-      likeUser.filter((el) => el !== 'memberId');
+      likeUser.filter((el) => el !== "memberId");
     }
   };
 
@@ -75,14 +79,11 @@ export default function DetailBoard() {
           <span>{date}</span>
         </div>
         <span className="view">
-          <AiOutlineEye /> 356 
+          <AiOutlineEye /> 356
           {boardViews}
         </span>
       </Info>
-      <div className="post-content">
-        {boardContent}
-        
-      </div>
+      <div className="post-content">{boardContent}</div>
       <div className="tag-list">
         {/* {tagName.map((tag) => {
             <button>{tag}</button>

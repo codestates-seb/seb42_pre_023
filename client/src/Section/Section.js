@@ -2,14 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import QuestionList from './QuestionList'
 
-export default function Section() {
+export default function Section({tagInfo}) {
 
   
     return(
     <>
+    <BodyScreenDeployment>
     <SectionContainer>
         <QuestionList />
     </SectionContainer>
+    </BodyScreenDeployment>
     </>
   
     )
@@ -25,7 +27,12 @@ const SectionContainer = styled.section`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-
 `;
 
+
+const BodyScreenDeployment = styled.div`
+  position: relative;
+  width: 83vw;
+  top: 130px;
+  left: 300px;
+`

@@ -38,6 +38,7 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [tagInfo, setTagInfo] = useState('');
   const displayHeader = true;
   const displayNav = true;
   const displayFooter = true;
@@ -66,12 +67,14 @@ function App() {
               displayNav={displayNav}
               displayFooter={displayFooter}
               isLogin={isLogin}
+              setTagInfo={setTagInfo}
             />
           }
         >
           <Route path="/" element={<Section />} />
+          <Route path="/:tagId" element={<Section tagInfo={tagInfo} />} />
           <Route path="/userinfo" element={<UserInfo userInfo={userInfo} />} />
-          <Route path="/detail" element={<DetailBoard />} />
+          <Route path="/detail/:board" element={<DetailBoard />} />
           <Route path="/create" element={<CreatBoard />} />
         </Route>
       </Routes>
