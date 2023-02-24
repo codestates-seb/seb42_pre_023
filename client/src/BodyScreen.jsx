@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
+import UserInfo from "./Userinfo/UserInfo"
+import CreatBoard from "./CreatBoard/CreatBoard"
 
 const BodyScreenDeployment = styled.div`
   position: relative;
@@ -8,9 +10,12 @@ const BodyScreenDeployment = styled.div`
   left: 300px;
 `
 
-function BodyScreen({ children }) {
+function BodyScreen() {
   return (
-    <BodyScreenDeployment>{ children }</BodyScreenDeployment>
+    <BodyScreenDeployment>
+      <UserInfo/>
+      {/* <CreatBoard/> */}
+    </BodyScreenDeployment>
   );
 }
 

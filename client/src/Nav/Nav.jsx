@@ -17,7 +17,8 @@ const NavTemplate = styled.nav`
   padding-top: 50px;
   position: relative;
   position: fixed;
-  top: 89px;
+  left: 0;
+  top: 98px;
 `;
 
 function Nav() {
