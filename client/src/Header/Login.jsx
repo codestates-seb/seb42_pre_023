@@ -32,7 +32,9 @@ const LoginButton = styled.button`
 
 function Login({isLogin}) {
   return(
-    <Link to='/login'><LoginButton isLogin={isLogin}>{isLogin ? 'Log out' : 'Log in'}</LoginButton></Link>
+    <Link to='/login'>
+      <LoginButton isLogin={isLogin}>{isLogin ? 'Log out' : 'Log in'}</LoginButton>
+    </Link>
   )
 }
 

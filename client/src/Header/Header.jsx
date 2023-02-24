@@ -26,7 +26,7 @@ function Header({isLogin}) {
       <Logo></Logo>
       <Search></Search>
       <Login isLogin={isLogin}></Login>
-      <MyInfo></MyInfo>
+      <MyInfo isLogin={isLogin}></MyInfo>
     </HeaderTemplate>
   );
 }

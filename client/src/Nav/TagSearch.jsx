@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BsTags } from "react-icons/bs";
 import { ImCancelCircle } from "react-icons/im";
@@ -29,7 +29,9 @@ const TagSearchInput = styled.div`
     background-color: #f5f5f5;
     outline: none;
   }
-
+  span{
+    cursor: pointer;
+  }
   input:focus{
     background-color: #ffffff;
   }
@@ -43,14 +45,24 @@ const TagSearchInput = styled.div`
 
 
 function TagSearch() {
+  const [tagSearch, setTagSearch] = useState("");
+
+  const onChange = (e) => setTagSearch(e.target.value);
+  const deleteTagSearch = (e) => setTagSearch("");
+
   return(
     <TagSearchInput>
       <div>
         <span>
           <BsTags size={25}></BsTags>
         </span>
-        <input type="text" placeholder="Search"/>
-        <span>
+        <input 
+          type="text" 
+          placeholder="Search"
+          value={tagSearch}
+          onChange={onChange}
+        />
+        <span onClick={deleteTagSearch}>
           <ImCancelCircle size={25} color="#ff5656"></ImCancelCircle>
         </span>
       </div>

@@ -48,7 +48,7 @@ export default function DetailBoard() {
   const date = new Date(createdAt).toLocaleString();
 
   useEffect(() => {
-    getBoard().then((res) => res.data.filter((el) => el.boardId == board ? setBoardData(el) : null));
+    getBoard().then((res) => res.data.filter((el) => el.boardId === board ? setBoardData(el) : null));
     getName().then((res) =>
       res.data.filter((el) =>
         el.memberId === memberId ? setMemberName(el.memberName) : ""
