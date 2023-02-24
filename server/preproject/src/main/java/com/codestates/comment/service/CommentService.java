@@ -61,10 +61,13 @@ public class CommentService {
         return commentRepository.save(findComment);
     }
 
+    @Transactional(readOnly = true)
     public Comment findComment(long commentId) {
         return findVerifiedComment(commentId);
     }
 
+
+    @Transactional(readOnly = true)
     public Page<Comment> findComments(long boardId) {
 
         List<Comment> comments = commentRepository.findAllByBoardId(boardId)

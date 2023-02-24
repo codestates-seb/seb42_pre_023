@@ -14,6 +14,7 @@ import com.codestates.memberLog.repository.MemberLogRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -39,6 +40,7 @@ public class MemberLogService {
         this.commentRepository = commentRepository;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public MemberLog createMemberLog (Member member) {
         MemberLog memberLog = new MemberLog();
         memberLog.setMemberId(member.getMemberId());
@@ -47,6 +49,7 @@ public class MemberLogService {
         return memberLog;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public MemberLog createBoardLog (Board board) {
         MemberLog memberLog = new MemberLog();
         memberLog.setMemberId(board.getMemberId());
@@ -56,6 +59,7 @@ public class MemberLogService {
         return memberLog;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public MemberLog createCommentLog (Comment comment) {
         MemberLog memberLog = new MemberLog();
         memberLog.setMemberId(comment.getMemberId());
@@ -66,6 +70,7 @@ public class MemberLogService {
         return memberLog;
     }
 
+    @Transactional(readOnly = true)
     public Page<MemberLog> findMemberLogs(long memberId) {
         List<MemberLog> memberLogs = memberLogRepository.findAllByMemberId(memberId)
                 .stream()
@@ -80,6 +85,7 @@ public class MemberLogService {
         memberLogRepository.delete(memberLog);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public MemberLog saveMemberLog(MemberLog memberLog) {
         return memberLogRepository.save(memberLog);
     }
