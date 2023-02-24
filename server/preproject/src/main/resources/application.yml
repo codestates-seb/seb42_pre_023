@@ -15,16 +15,6 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            clientId: ${OAUTH_SECRET_ID}
-            clientSecret: ${OAUTH_SECRET_PWD}
-            scope:
-              - email
-              - profile
 logging:
   level:
     org:

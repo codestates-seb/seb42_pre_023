@@ -4,13 +4,16 @@ import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
+import com.codestates.utils.CustomAuthorityUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -19,9 +22,12 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
+    private final CustomAuthorityUtils authorityUtils;
+
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authorityUtils = authorityUtils;
     }
 
     public Member createMember(Member member) {
@@ -30,12 +36,15 @@ public class MemberService {
         String encryptedPassword = passwordEncoder.encode(member.getMemberPwd());
         member.setMemberPwd(encryptedPassword);
 
+        List<String> roles = authorityUtils.createRoles(member.getMemberEmail());
+        member.setRoles(roles);
+
         Member savedMember = memberRepository.save(member);
 
         return savedMember;
     }
 
-    private void verifyExistsEmail(String email) {
+    protected void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByMemberEmail(email);
         if (member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);

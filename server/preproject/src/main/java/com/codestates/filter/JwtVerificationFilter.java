@@ -1,4 +1,4 @@
-package com.codestates.auth.filter;
+package com.codestates.filter;
 
 
 import com.codestates.jwt.JwtTokenizer;
