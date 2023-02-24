@@ -53,8 +53,7 @@ public interface BoardMapper {
         boardResponseDto.setBoardViews(board.getBoardViews());
         boardResponseDto.setBoardContent(board.getBoardContent());
         boardResponseDto.setBoardContent(board.getBoardContent());
-        boardResponseDto.setCreatedAt(board.getCreatedAt().toString());
-        boardResponseDto.setOrderCoffees(
+        boardResponseDto.setBoardTags(
                 boardTagsToBoardTagResponse(boardTags)
         );
 
