@@ -46,7 +46,7 @@ export default function Footer() {
 const FooterWrap = styled.div`
   min-width: 700px;
   width: 100vw;
-  height: 30vh;
+  height: 200px;
   background-color: #333;
   position: absolute;
   bottom: 0;

@@ -1,87 +1,87 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AiOutlineEye, AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BiShare } from "react-icons/bi";
 import Comment from "./Comment";
+import axios from "axios";
+
+const getBoard = async () => {
+  return axios.get("/DUMMYDATA/boards.json");
+};
+
+const getName = async () => {
+  return axios.get("/DUMMYDATA/members.json");
+};
+// const getTag = async () => {
+//   return axios.get("");
+// }
+
+// const getTagName = async () =>  {
+//   return axios.get("")
+//   .then((res) => res.filter((tag) => tag.tagId === tagId))
+// }
+
+const updateLike = async (data) => {
+  // console.log(data)
+  return axios.patch("/DUMMYDATA/boards.json", data)
+};
+
 
 export default function DetailBoard() {
+  const [boardData , setBoardData] = useState('');
+  const [memberName, setMemberName] = useState('');
   const [like, setLike] = useState(false);
   const [likeNum, setLikeNum] = useState(0);
-  // const {
-  //   memberId,
-  //   boardTitle,
-  //   boardContent,
-  //   boardViews,
-  //   boardLike,
-  //   createdAt,
-  // } = getBoard;
-  // const { menberName } = getName;
-  // const { tagId } = getTag;
-  // const { tagName } = getTagName;
+  const {
+    memberId,
+    boardTitle,
+    boardContent,
+    boardViews,
+    boardLike,
+    boardCmt,
+    createdAt,
+  } = boardData;
+  // const { tagId } = getTag(0);
+  // const { tagName } = getTagName();
 
-  // const getBoard = async () => {
-  //   const res = await fetch("/pre/board");
-  //   return await res.json();
-  // };
+  const date = new Date(createdAt).toLocaleString();
 
-  // const getName = async () => {
-  //   const res = await fetch("/pre/member");
-  //   return await res.json();
-  // };
+  useEffect(() => {
+    getBoard().then((res) => setBoardData(res.data[1]));
+    getName().then((res) => res.data.filter((el) => el.memberId === memberId ? setMemberName(el.memberName) : ''))
+  }, [memberId])
 
-  // const getTag = async () => {
-  //   const res = await fetch("/pre/boardTag");
-  //   return await res.json();
-  // }
-
-  // const getTagName = async () =>  {
-  //   await fetch("/pre/tag")
-  //   .then((res) => res.json())
-  //   .then((res) => res.filter((tag) => tag.tagId === tagId))
-  // }
-
+  
   const handleClick = () => {
     const likeUser = [];
     setLike(!like);
     if (like === false && likeUser.indexOf('memberId') === -1) {
       updateLike(likeNum + 1);
-      setLikeNum(likeNum);
+      setLikeNum(likeNum + 1);
       likeUser.push('memberId');
     } else {
       updateLike(likeNum - 1);
-      setLikeNum(likeNum);
+      setLikeNum(likeNum - 1);
       likeUser.filter((el) => el !== 'memberId');
     }
   };
 
-  const updateLike = async (data) => {
-    const res = await fetch("", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    return await res.json();
-  };
-
   return (
     <PostWrap>
-      <h1>The Best Video Game Soundtracks of All Time 'boardTitle'</h1>
+      <h1>{boardTitle}</h1>
       <Info>
         <div>
-          <span>'menberName' </span>
-          <span>'createdAt' </span>
+          <span>{memberName}</span>
+          <span>{date}</span>
         </div>
         <span className="view">
           <AiOutlineEye /> 356 
-          {/* {boardViews} */}
+          {boardViews}
         </span>
       </Info>
       <div className="post-content">
-        'boardContent'
-        Video game soundtracks have come a long way . From epic orchestral
-        scores to catchy chiptunes, video game music has become an art form in
-        its own right. What are your favorite video game soundtracks? Let's
-        share and discuss!
+        {boardContent}
+        
       </div>
       <div className="tag-list">
         {/* {tagName.map((tag) => {
@@ -97,13 +97,13 @@ export default function DetailBoard() {
           ) : (
             <AiOutlineLike className="icon" />
           )}
-          {/* {boardLike} */}
+          {boardLike}
         </div>
         <div>
           <BiShare className="icon" /> Share
         </div>
       </Look>
-      <Comment />
+      <Comment boardCmt={boardCmt} />
     </PostWrap>
   );
 }
@@ -115,7 +115,8 @@ const PostWrap = styled.div`
   width: calc(100% - 164px);
   height: 100vh;
   padding: 3rem;
-  margin-bottom: 10rem;
+  /* margin-bottom: 10rem; */
+  margin: 15rem 0 35rem 30rem; //지우기
   .tag-list > button {
     margin-right: 0.5rem;
     padding: 0.7rem;

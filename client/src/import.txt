@@ -22,7 +22,7 @@ function App() {
       <Header/>
       <Nav/>
       <BodyScreen>
-        {/* <UserInfoTemplate/> */}
+        {/* <UserInfo/> */}
         <CreatBoard/>
       </BodyScreen>
       <TopButton/>
@@ -33,6 +33,13 @@ function App() {
 //이시온
 import Login from './login/Login';
 import Signup from './login/Signup';
+
 import DetailBoard from './detail-board/DetailBoard';
+import Header from './Header/Header';
+import Nav from './Nav/Nav';
+
+<Header/>
+<Nav/>
+<DetailBoard />
 
 //조정인

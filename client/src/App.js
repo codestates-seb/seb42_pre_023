@@ -1,5 +1,13 @@
-import React from 'react';
-import { createGlobalStyle } from 'styled-components';
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
+import Login from "./login/Login";
+import Signup from "./login/Signup";
+import Section from "./Section/Section";
+import DetailBoard from "./detail-board/DetailBoard";
+import CreatBoard from "./CreatBoard/CreatBoard";
+import UserInfo from "./Userinfo/UserInfo";
+import Layout from "./Layout";
 //! App.js는 항상 이 상태로 형식을 유지할 것.
 const GlobalStyle = createGlobalStyle`
   /* reset CSS */
@@ -27,9 +35,41 @@ const GlobalStyle = createGlobalStyle`
 `;
 //! App.js는 항상 이 상태로 형식을 유지할 것.
 function App() {
+  const [isLogin, setIsLogin] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  const displayHeader = true;
+  const displayNav = true;
+  const displayFooter = true;
+
   return (
     <>
-      <GlobalStyle/>
+      <GlobalStyle />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route
+            path="/login"
+            element={
+              <Login setIsLogin={setIsLogin} setUserInfo={setUserInfo} />
+            }
+          />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
+        <Route
+          element={
+            <Layout
+              displayHeader={displayHeader}
+              displayNav={displayNav}
+              displayFooter={displayFooter}
+              isLogin={isLogin}
+            />
+          }
+        >
+          <Route path="/" element={<Section />} />
+          <Route path="/userinfo" element={<UserInfo userInfo={userInfo} />} />
+          <Route path="/detail" element={<DetailBoard />} />
+          <Route path="/create" element={<CreatBoard />} />
+        </Route>
+      </Routes>
     </>
   );
 }

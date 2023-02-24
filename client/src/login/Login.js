@@ -2,29 +2,31 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
-export default function Login() {
-  const [login, setLogin] = useState({
+export default function Login({setIsLogin, setUserInfo}) {
+  const [loginInfo, setLoginInfo] = useState({
     memberEmail: '',
     memberPwd: '',
   })
   const [keepLogin, setKeepLogin] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const handleInput = (key) => (e) => {
-    setLogin({...login, [key]: e.target.value})
+    setLoginInfo({...loginInfo, [key]: e.target.value})
   }
   const loginRequest = () => {
-    if (!login.memberEmail || !login.memberPwd) {
+    if (!loginInfo.memberEmail || !loginInfo.memberPwd) {
       setErrorMsg('아이디와 비밀번호를 입력해주세요')
       return;
     }
 
     return axios
-      .post('/pre/login', {login, keepLogin})
+      .post('/DUMMYDATA/members.json', {login: loginInfo, keepLogin})
       .then((res) => {
-        '마이페이지로 상태를 담고있는 함수에 res.data를 보내준다'
-        '로그인 상태를 불리언 값으로 보내준다 true'
+        setIsLogin(true);
+        setUserInfo(res.data);
         setErrorMsg('')
+        window.location.href('/');
       })
       .catch((err) => {
         setErrorMsg('로그인에 실패했습니다.')
@@ -66,7 +68,7 @@ export default function Login() {
           </Button>
         </Form>
         <div className="text">
-          New to Stack Overflow? <a href="/">Sign up</a>
+          New to Stack Overflow? <Link to="/signup">Sign up</Link>
         </div>
       </Container>
     </LoginWrap>

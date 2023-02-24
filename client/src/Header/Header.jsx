@@ -7,7 +7,7 @@ import MyInfo from "./MyInfo";
 
 const HeaderTemplate = styled.header`
   width: 100vw;
-  height: 10vh;
+  height: 100px;
   border-bottom: 2px solid #bbbbbb;
   padding: 0 50px;
   display: flex;
@@ -20,12 +20,12 @@ const HeaderTemplate = styled.header`
   z-index: 1;
 `;
 
-function Header() {
+function Header({isLogin}) {
   return (
     <HeaderTemplate>
       <Logo></Logo>
       <Search></Search>
-      <Login></Login>
+      <Login isLogin={isLogin}></Login>
       <MyInfo></MyInfo>
     </HeaderTemplate>
   );
