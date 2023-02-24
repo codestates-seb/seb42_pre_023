@@ -20,5 +20,5 @@ public class BoardResponseDto {
     private int boardLike;
     private long boardCmt;
     private String createdAt;
-    private List<BoardTagResponseDto> orderCoffees;
+    private List<BoardTagResponseDto> boardTags;
 }
