@@ -4,8 +4,9 @@ import com.codestates.board.entity.Board;
 import com.codestates.board.repository.BoardRepository;
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
-import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
+import com.codestates.memberLog.entity.MemberLog;
+import com.codestates.memberLog.service.MemberLogService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -23,13 +24,22 @@ public class BoardService {
 
     private final MemberRepository memberRepository;
 
-    public BoardService(BoardRepository boardRepository, MemberRepository memberRepository) {
+    private final MemberLogService memberLogService;
+
+    public BoardService(BoardRepository boardRepository, MemberRepository memberRepository, MemberLogService memberLogService) {
         this.boardRepository = boardRepository;
         this.memberRepository = memberRepository;
+        this.memberLogService = memberLogService;
     }
 
     public Board createBoard(Board board) {
-        return boardRepository.save(board);
+        Board savedBoard = saveBoard(board);
+
+        MemberLog memberLog = memberLogService.createBoardLog(board);
+        memberLog.setLogActive(MemberLog.LogActive.BOARD_CREATED);
+        memberLogService.saveMemberLog(memberLog);
+
+        return savedBoard;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
@@ -49,7 +59,12 @@ public class BoardService {
         Optional.ofNullable(board.getBoardCmt())
                 .ifPresent(boardCmt -> findBoard.setBoardCmt(boardCmt));
 
-        return boardRepository.save(findBoard);
+        MemberLog memberLog = memberLogService.createBoardLog(findBoard);
+        memberLog.setLogActive(MemberLog.LogActive.BOARD_MODIFIED);
+        memberLogService.saveMemberLog(memberLog);
+
+        Board savedBoard = saveBoard(board);
+        return savedBoard;
     }
 
     @Transactional(readOnly = true)
@@ -65,6 +80,10 @@ public class BoardService {
     public void deleteBoard(long boardId) {
         Board board = findVerifiedBoard(boardId);
 
+        MemberLog memberLog = memberLogService.createBoardLog(board);
+        memberLog.setLogActive(MemberLog.LogActive.BOARD_DELETED);
+        memberLogService.saveMemberLog(memberLog);
+
         boardRepository.delete(board);
     }
 
@@ -76,5 +95,9 @@ public class BoardService {
                 optionalBoard.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
         return findBoard;
+    }
+
+    private Board saveBoard(Board board) {
+        return boardRepository.save(board);
     }
 }

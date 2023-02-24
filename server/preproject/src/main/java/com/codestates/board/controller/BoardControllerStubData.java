@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/boards")
-public class BoardControllerStub {
+public class BoardControllerStubData {
 
     @PostMapping
     public ResponseEntity postBoard() {

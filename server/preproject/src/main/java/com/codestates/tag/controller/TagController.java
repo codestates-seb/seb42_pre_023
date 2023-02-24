@@ -64,15 +64,14 @@ public class TagController {
             @PathVariable("tag-id") @Positive long tagId) {
         Tag tag = tagService.findTag(tagId);
         return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.tagToTagResponse(tag))
+                mapper.tagToTagResponse(tag)
                 , HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity getTags() {
         List<Tag> tags = tagService.findTags();
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.tagsToTagResponses(tags)), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.tagsToTagResponses(tags), HttpStatus.OK);
     }
 
     @DeleteMapping("/{tag-id}")
