@@ -1,8 +1,5 @@
 package com.codestates.comment.dto;
 
-import com.codestates.board.entity.Board;
-import com.codestates.member.entity.Member;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

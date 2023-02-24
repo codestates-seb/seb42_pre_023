@@ -1,13 +1,10 @@
 package com.codestates.memberLog.entity;
 
-import com.codestates.audit.Auditable;
-import com.codestates.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -18,13 +15,13 @@ public class MemberLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long MemberLogId;
+    private long memberLogId;
 
     @Column(nullable = false)
     private LocalDateTime lastModifiedAt;
 
     @Enumerated(EnumType.STRING)
-    private MemberLog.LogActive logActive = LogActive.MEMBER_CREATED;
+    private LogActive logActive = LogActive.MEMBER_CREATED;
 
     @Column
     private long boardId;
