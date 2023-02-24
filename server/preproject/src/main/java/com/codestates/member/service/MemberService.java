@@ -4,11 +4,12 @@ import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
+import com.codestates.memberLog.entity.MemberLog;
+import com.codestates.memberLog.service.MemberLogService;
 import com.codestates.utils.CustomAuthorityUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +23,13 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
+    private final MemberLogService memberLogService;
     private final CustomAuthorityUtils authorityUtils;
 
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, MemberLogService memberLogService, CustomAuthorityUtils authorityUtils) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
+        this.memberLogService = memberLogService;
         this.authorityUtils = authorityUtils;
     }
 
@@ -40,6 +43,10 @@ public class MemberService {
         member.setRoles(roles);
 
         Member savedMember = memberRepository.save(member);
+
+        MemberLog memberLog = memberLogService.createMemberLog(member);
+        memberLog.setLogActive(MemberLog.LogActive.MEMBER_CREATED);
+        memberLogService.saveMemberLog(memberLog);
 
         return savedMember;
     }
@@ -65,6 +72,9 @@ public class MemberService {
                             memberPwd -> findMember.setMemberPwd(encryptedPassword)
                     );
         }
+        MemberLog memberLog = memberLogService.createMemberLog(findMember);
+        memberLog.setLogActive(MemberLog.LogActive.MEMBER_MODIFIED);
+        memberLogService.saveMemberLog(memberLog);
 
         return memberRepository.save(findMember);
 
@@ -86,6 +96,9 @@ public class MemberService {
 
     public void deletemember(long memberId) {
         Member findMember = findVerifiedMember(memberId);
+        MemberLog memberLog = memberLogService.createMemberLog(findMember);
+        memberLog.setLogActive(MemberLog.LogActive.MEMBER_DELETED);
+        memberLogService.saveMemberLog(memberLog);
         memberRepository.delete(findMember);
     }
 
