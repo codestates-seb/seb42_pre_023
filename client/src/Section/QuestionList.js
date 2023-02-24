@@ -90,7 +90,6 @@ return(
 const HeadContainer = styled.div`
 border-bottom: 1px solid gray;
 width: calc(100% - 164px);
-height: 15vh;
 padding: 15px;
 box-sizing: border-box;
 h1{

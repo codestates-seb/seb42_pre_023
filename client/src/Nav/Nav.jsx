@@ -21,13 +21,13 @@ const NavTemplate = styled.nav`
   top: 98px;
 `;
 
-function Nav() {
+function Nav({setTagInfo}) {
   return (
     <NavTemplate>
       <NavHead/>
       <TagSearch/>
       <TagListTemplate>
-          <TagList/>
+          <TagList setTagInfo={setTagInfo} />
       </TagListTemplate>
     </NavTemplate>
   );

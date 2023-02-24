@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const TagItem = styled.ul`
@@ -43,10 +44,17 @@ const TagItem = styled.ul`
   }
 `;
 
-function TagList() {
+function TagList({setTagInfo}) {
+  const navigate = useNavigate();
+  const handleClick = (e) => {
+    console.log(e.target.textContent)
+    setTagInfo(e.target.textContent)
+    navigate(`/${e.target.textContent}`)
+  }
+
   return (
     <TagItem>
-      <li>JavaScrpit</li>
+      <li onClick={handleClick}>JavaScrpit</li>
       <li>React</li>
       <li>HTML</li>
       <li>Java</li>

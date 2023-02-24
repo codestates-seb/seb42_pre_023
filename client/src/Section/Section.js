@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import QuestionList from './QuestionList'
 
-export default function Section() {
+export default function Section({tagInfo}) {
 
   
     return(
@@ -27,8 +27,6 @@ const SectionContainer = styled.section`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-
 `;
 
 
