@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -26,11 +28,21 @@ public class Board extends Auditable {
     private String boardContent;
 
     @Column
-    private Long boardViews;
+    private int boardViews;
 
     @Column
-    private Long boardLike;
+    private int boardLike;
 
     @Column
-    private Long boardCmt;
+    private int boardCmt;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<BoardTag> boardTags = new ArrayList<>();
+
+    public void addBoardTag(BoardTag boardTag) {
+        this.boardTags.add(boardTag);
+        if (boardTag.getBoard() != this) {
+            boardTag.addBoard(this);
+        }
+    }
 }
