@@ -4,32 +4,47 @@ import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
-import org.springframework.context.ApplicationEventPublisher;
+import com.codestates.utils.CustomAuthorityUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public MemberService(MemberRepository memberRepository) {
+    private final CustomAuthorityUtils authorityUtils;
+
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
         this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authorityUtils = authorityUtils;
     }
 
     public Member createMember(Member member) {
         verifyExistsEmail(member.getMemberEmail());
+
+        String encryptedPassword = passwordEncoder.encode(member.getMemberPwd());
+        member.setMemberPwd(encryptedPassword);
+
+        List<String> roles = authorityUtils.createRoles(member.getMemberEmail());
+        member.setRoles(roles);
+
         Member savedMember = memberRepository.save(member);
 
         return savedMember;
     }
 
-    private void verifyExistsEmail(String email) {
+    protected void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByMemberEmail(email);
         if (member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
@@ -42,9 +57,14 @@ public class MemberService {
                 .ifPresent(memberName -> findMember.setMemberName(memberName));
         Optional.ofNullable(member.getMemberGrade())
                 .ifPresent(memberGrade -> findMember.setMemberGrade(memberGrade));
-        Optional.ofNullable(member.getMemberPwd())
-                .ifPresent(memberPwd -> findMember.setMemberPwd(memberPwd));
-        // 암호화된 비밀번호 변경 로직 추가 예정 똑같을 수도 있나?
+        String encryptedPassword;
+        if (member.getMemberPwd() != null) {
+            encryptedPassword = passwordEncoder.encode(member.getMemberPwd());
+            Optional.ofNullable(member.getMemberPwd())
+                    .ifPresent(
+                            memberPwd -> findMember.setMemberPwd(encryptedPassword)
+                    );
+        }
 
         return memberRepository.save(findMember);
 
