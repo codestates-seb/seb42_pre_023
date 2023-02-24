@@ -2,22 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import { RiMedalLine } from "react-icons/ri"
 
-const getRandomNumber = (min, max) => {
-  return parseInt(Math.random() * (Number(max) - Number(min) + 2));
-};
+function UserProfile({ userInfo }) {
 
-let getRandomProfile = `https://randomuser.me/api/portraits/lego/${getRandomNumber(1,9)}.jpg`
+  const getRandomNumber = (min, max) => {
+    return parseInt(Math.random() * (Number(max) - Number(min) + 2));
+  };
+  
+  let getRandomProfile = `https://randomuser.me/api/portraits/lego/${getRandomNumber(1,9)}.jpg`;
 
-function UserProfile() {
   return (
     <UserProfileTemplate>
       <div className="profile">
         <img src={getRandomProfile} alt="proFile"></img>
       </div>
       <div className="userInfo">
-        <h1>bjw0120</h1>
-        <span>Nickname : 개발새발자</span>
-        <span>E-mail : bjw0120@gmail.com</span>
+        <h1>{userInfo[2].memberEmail}</h1>
+        <span>Nickname : {userInfo[2].memberName}</span>
         <div className="badge">
           <RiMedalLine size={30} color="blue"/>
           <RiMedalLine size={30} color="green"/>

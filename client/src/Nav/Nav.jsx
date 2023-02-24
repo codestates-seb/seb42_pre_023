@@ -18,7 +18,8 @@ const NavTemplate = styled.nav`
   position: relative;
   z-index: 1;
   position: fixed;
-  top: 89px;
+  left: 0;
+  top: 98px;
 `;
 
 function Nav() {

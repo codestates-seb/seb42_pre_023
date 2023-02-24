@@ -1,5 +1,9 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
+import Header from './Header/Header';
+import BodyScreen from './BodyScreen';
+import Nav from './Nav/Nav';
+import TopButton from './TopButton';
 //! App.js는 항상 이 상태로 형식을 유지할 것.
 const GlobalStyle = createGlobalStyle`
   /* reset CSS */
@@ -30,6 +34,10 @@ function App() {
   return (
     <>
       <GlobalStyle/>
+      <Header/>
+      <Nav/>
+      <BodyScreen/>
+      <TopButton/>
     </>
   );
 }
