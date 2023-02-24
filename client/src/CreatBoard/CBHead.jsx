@@ -1,7 +1,8 @@
-import React,{ useEffect, useState }from "react";
+import React,{ useState }from "react";
 import styled from "styled-components";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { Link } from "react-router-dom";
 
 function CBHead() {
   const [title, setTitle] = useState("");
@@ -22,7 +23,7 @@ function CBHead() {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    window.scrollTo(0,0);
     // UserID에 추가하기
   }
 
@@ -39,42 +40,42 @@ function CBHead() {
           <li>Review your question and post it to the site.</li>
         </ul>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="categoryTemplate">
-          <h3>Title</h3>
-          <span>Be specific and imagine you’re asking a question to another person.</span>
-          <input 
-            type="text" 
-            placeholder="ex) Asking for input until desired result, then returning result"
-            value={title}
-            onChange={titleOnChange}
-          />
-        </div>
-        <div className="categoryTemplate">
-          <h3>What are the details of your problem?</h3>
-          <span>Introduce the problem and expand on what you put in the title. Minimum 20 characters.</span>
-          <CKEditor
-            editor={ClassicEditor}
-            data={content}
-            onChange={(event, editor) => {
-              setContent(editor.getData());
-            }}
-          />
-        </div>
-        <div className="categoryTemplate">
-          <h3>Tags</h3>
-          <span>Add up to 5 tags to describe what your question is about. Start typing to see suggestions.</span>
-          <input 
-            type="text" 
-            value={tag} 
-            placeholder="Enter the desired tag"
-            onChange={tagOnChange}
-          />
-        </div>
-      </form>
+      <div className="categoryTemplate">
+        <h3>Title</h3>
+        <span>Be specific and imagine you’re asking a question to another person.</span>
+        <input 
+          type="text" 
+          placeholder="ex) Asking for input until desired result, then returning result"
+          value={title}
+          onChange={titleOnChange}
+        />
+      </div>
+      <div className="categoryTemplate">
+        <h3>What are the details of your problem?</h3>
+        <span>Introduce the problem and expand on what you put in the title. Minimum 20 characters.</span>
+        <CKEditor
+          editor={ClassicEditor}
+          data={content}
+          onChange={(event, editor) => {
+            setContent(editor.getData());
+          }}
+        />
+      </div>
+      <div className="categoryTemplate">
+        <h3>Tags</h3>
+        <span>Add up to 5 tags to describe what your question is about. Start typing to see suggestions.</span>
+        <input 
+          type="text" 
+          value={tag} 
+          placeholder="Enter the desired tag"
+          onChange={tagOnChange}
+        />
+      </div>
       <div className="clickButton">
         <button className="discard" onClick={discardDraft}>Discard draft</button>
-        <button className="submit">Submit</button>
+        <Link to="/">
+          <button className="submit" onClick={handleSubmit}>Submit</button>
+        </Link>
       </div>
     </CBHeadTemplate>
   );

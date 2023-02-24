@@ -27,13 +27,16 @@ const TagSearchInput = styled.div`
     margin-left: 10px;
     margin-right: 10px;
     background-color: #f5f5f5;
+    outline: none;
   }
 
+  input:focus{
+    background-color: #ffffff;
+  }
   div:hover > input, div:hover {
-    background-color: #ffeada;
+    background-color: #ffffff;
   }
   div:focus-within {
-    outline: none;
     background-color: #ffffff;
   }
 `;

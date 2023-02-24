@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { RiMedalLine } from "react-icons/ri"
 
-function UserProfile({ userInfo }) {
+const getRandomNumber = (min, max) => {
+  return parseInt(Math.random() * (Number(max) - Number(min) + 2));
+};
 
-  const getRandomNumber = (min, max) => {
-    return parseInt(Math.random() * (Number(max) - Number(min) + 2));
-  };
-  
-  let getRandomProfile = `https://randomuser.me/api/portraits/lego/${getRandomNumber(1,9)}.jpg`;
+let getRandomProfile = `https://randomuser.me/api/portraits/lego/${getRandomNumber(1,9)}.jpg`;
+
+function UserProfile({ memberEmail, memberName }) {
 
   return (
     <UserProfileTemplate>
@@ -16,8 +16,8 @@ function UserProfile({ userInfo }) {
         <img src={getRandomProfile} alt="proFile"></img>
       </div>
       <div className="userInfo">
-        <h1>{userInfo[2].memberEmail}</h1>
-        <span>Nickname : {userInfo[2].memberName}</span>
+        <h1>{memberEmail}</h1>
+        <span>Nickname : {memberName}</span>
         <div className="badge">
           <RiMedalLine size={30} color="blue"/>
           <RiMedalLine size={30} color="green"/>
@@ -45,10 +45,10 @@ const UserProfileTemplate = styled.div`
     box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
   }
   h1{
-    font-size: 50px;
+    font-size: 40px;
   }
   span{
-    font-size: 30px;
+    font-size: 20px;
   }
   .profile{
     display: flex;

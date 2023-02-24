@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { BsPencil } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const MyQuestionHead= styled.div`
   margin-top: 20px;
@@ -36,10 +37,12 @@ function MyQuestion() {
     <MyQuestionHead>
       <div>
         <h1>My Question: 0개</h1>
-        <button className="boardCreat">
-          <BsPencil size={20}/>
-          <span>Creat Question</span>
-        </button>
+        <Link to='/create' style={{textDecoration: "none"}}>
+          <button className="boardCreat">
+            <BsPencil size={20}/>
+            <span>Creat Question</span>
+          </button>
+        </Link>
       </div>
       <hr/>
     </MyQuestionHead>

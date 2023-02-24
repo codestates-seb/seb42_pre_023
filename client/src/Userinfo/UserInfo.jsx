@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MyQuestion from "./MyQuestion"
 import UserProfile from "./UserProfile"
+import axios from "axios";
 
 const UserInfoBackground = styled.div`
   display: flex;
@@ -9,12 +10,30 @@ const UserInfoBackground = styled.div`
   justify-content: flex-start;
 `;
 
+const BodyScreenDeployment = styled.div`
+  position: relative;
+  width: 83vw;
+  top: 130px;
+  left: 300px;
+`
+
 function UserInfo() {
+
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("/DUMMYDATA/members.json")
+      .then(el => setData(el.data[2]));
+  },[])
+
   return (
-    <UserInfoBackground>
-      <UserProfile/>
-      <MyQuestion/>
-    </UserInfoBackground>
+    <BodyScreenDeployment>
+      <UserInfoBackground>
+        <UserProfile memberEmail={data.memberEmail} memberName={data.memberName}/>
+        <MyQuestion/>
+      </UserInfoBackground>
+    </BodyScreenDeployment>
   );
 }
 

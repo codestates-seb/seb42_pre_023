@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import Login from "./login/Login";
@@ -8,6 +8,7 @@ import DetailBoard from "./detail-board/DetailBoard";
 import CreatBoard from "./CreatBoard/CreatBoard";
 import UserInfo from "./Userinfo/UserInfo";
 import Layout from "./Layout";
+import TopButton from "./TopButton"
 //! App.js는 항상 이 상태로 형식을 유지할 것.
 const GlobalStyle = createGlobalStyle`
   /* reset CSS */
@@ -41,6 +42,10 @@ function App() {
   const displayNav = true;
   const displayFooter = true;
 
+  useEffect(()=>{
+    window.scrollTo(0,0);
+  },[])
+
   return (
     <>
       <GlobalStyle />
@@ -70,6 +75,7 @@ function App() {
           <Route path="/create" element={<CreatBoard />} />
         </Route>
       </Routes>
+      <TopButton/>
     </>
   );
 }

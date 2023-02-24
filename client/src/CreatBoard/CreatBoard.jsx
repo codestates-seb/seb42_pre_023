@@ -7,12 +7,20 @@ const CreatBoardTemplate = styled.div`
   flex-direction: column;
   justify-content: flex-start;
 `;
+const BodyScreenDeployment = styled.div`
+  position: relative;
+  width: 83vw;
+  top: 130px;
+  left: 300px;
+`
 
 function CreatBoard(){
   return (
-    <CreatBoardTemplate>
-      <CBHead/>
-    </CreatBoardTemplate>
+    <BodyScreenDeployment>
+      <CreatBoardTemplate>
+        <CBHead/>
+      </CreatBoardTemplate>
+    </BodyScreenDeployment>
   );
 }
 

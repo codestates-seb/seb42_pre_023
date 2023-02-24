@@ -26,13 +26,16 @@ const SearchInput = styled.div`
     margin-left: 10px;
     margin-right: 20px;
     background-color: #f5f5f5;
+    outline: none;
   }
 
+  input:focus{
+    background-color: #ffffff;
+  }
   div:hover > input, div:hover {
-    background-color: #dfdfdf;
+    background-color: #ffffff;
   }
   div:focus-within {
-    outline: none;
     background-color: #ffffff;
   }
 `;
