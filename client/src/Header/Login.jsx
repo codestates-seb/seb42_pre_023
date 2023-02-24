@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const LoginButton = styled.button`
@@ -30,9 +31,9 @@ const LoginButton = styled.button`
   }
 `
 
-function Login() {
+function Login({isLogin}) {
   return(
-    <LoginButton>Log in</LoginButton>
+    <Link to='/login'><LoginButton>{isLogin ? 'Log out' : 'Log in'}</LoginButton></Link>
   )
 }
 

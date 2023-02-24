@@ -9,7 +9,7 @@ const UserInfoBackground = styled.div`
   justify-content: flex-start;
 `;
 
-function UserInfoTemplate() {
+function UserInfo() {
   return (
     <UserInfoBackground>
       <UserProfile/>
@@ -18,4 +18,4 @@ function UserInfoTemplate() {
   );
 }
 
-export default UserInfoTemplate
+export default UserInfo

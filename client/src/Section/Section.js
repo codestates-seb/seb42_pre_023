@@ -76,11 +76,10 @@ const SectionContainer = styled.section`
   justify-content: space-between;
   align-items: center;
   background-color: #f7f7f7;
-  position: relative;
+  margin-top: 9rem;
+  /* position: relative;
   top:10vh;
-  left:12vw;
- 
-
+  left:12vw; */
 `;
 
 const SectionHeder = styled.div`
