@@ -24,21 +24,21 @@ export default function Layout({
           <Outlet />
         </Main>
       </Container>
-      {displayFooter && <Footer />}
+      {displayFooter && <Footer />}   
     </Wrap>
   );
 }
 
 const Wrap = styled.div`
   width: 100%;
-  height: 2000px;
+  height: 1500px;
   position: relative;
+  overflow: hidden;
 `;
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  overflow: hidden;
 `;
 
 const Main = styled.div``;
