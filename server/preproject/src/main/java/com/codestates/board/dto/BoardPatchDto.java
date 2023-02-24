@@ -18,7 +18,7 @@ public class BoardPatchDto {
     private String boardContent;
     private int boardViews;
     private int boardLike;
-    private int boardCmt;
+    private long boardCmt;
 
     public void setBoardId(long boardId) {
         this.boardId = boardId;
