@@ -41,7 +41,6 @@ public class CommentController {
     @PostMapping
     public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentDto) {
         Comment comment = commentService.createComment(mapper.commentPostDtoToComment(commentDto));
-        comment.setCreatedAt(LocalDateTime.now());
         URI location = UriCreator.createUri(COMMENT_DEFAULT_URL, comment.getCommentId());
 
         return ResponseEntity.created(location).build();
