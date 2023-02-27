@@ -85,7 +85,7 @@ const MyInfoButton = styled.button`
 function MyInfo({isLogin}) {
   return (
     <Link to='/userinfo'>
-    {!isLogin ? 
+    {isLogin ? 
       <MyInfoButton>
         <span>
           <FaUser size={20} />
