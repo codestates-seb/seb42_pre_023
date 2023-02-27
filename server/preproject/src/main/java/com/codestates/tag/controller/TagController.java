@@ -1,6 +1,5 @@
 package com.codestates.tag.controller;
 
-import com.codestates.dto.MultiResponseDto;
 import com.codestates.tag.dto.TagDto;
 import com.codestates.tag.entity.Tag;
 import com.codestates.tag.mapper.TagMapper;

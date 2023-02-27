@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardPostDto {
+    @NotBlank(message = "작성자를 정해주세요.")
     private long memberId;
     @NotBlank(message = "제목을 입력해주세요.")
     private String boardTitle;
@@ -21,6 +22,5 @@ public class BoardPostDto {
     private int boardViews;
     private int boardLike;
     private long boardCmt;
-    private String createdAt;
     private List<BoardTagDto> boardTags;
 }

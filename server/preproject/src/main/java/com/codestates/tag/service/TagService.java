@@ -1,5 +1,8 @@
 package com.codestates.tag.service;
 
+import com.codestates.board.entity.Board;
+import com.codestates.board.entity.BoardTag;
+import com.codestates.board.repository.BoardRepository;
 import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.tag.entity.Tag;
@@ -9,6 +12,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +21,24 @@ import java.util.Optional;
 public class TagService {
     private final TagRepository tagRepository;
 
-    public TagService(TagRepository tagRepository) {
+    private final BoardRepository boardRepository;
+
+    public TagService(TagRepository tagRepository, BoardRepository boardRepository) {
         this.tagRepository = tagRepository;
+        this.boardRepository = boardRepository;
+    }
+
+    @PostConstruct
+    private void defaultData() {
+        List<Tag> tags = List.of(new Tag(1L, "java"), new Tag(2L, "python"), new Tag(3L, "spring"),
+                new Tag(4L, "javascript"), new Tag(5L, "css"), new Tag(6L, "php"), new Tag(7L, "reactjs"));
+        tagRepository.saveAll(tags);
+
+        List<Board> boards = List.of(new Board(1L, 1L, "이 에러 짜증나요.", "에러 분석해주세요.",
+                        1, 1, 1L, List.of(new BoardTag(1L ,new Tag(3L), new Board(1L)),  new BoardTag(2L, new Tag(2L), new Board(1L)))),
+                new Board(2L, 1L, "git pull을 사용하면 에러가 떠요.", "도와주세요.",
+                        3, 6, 3L, List.of(new BoardTag(3L, new Tag(1L), new Board(2L)))));
+        boardRepository.saveAll(boards);
     }
 
     public Tag createTag(Tag tag) {
