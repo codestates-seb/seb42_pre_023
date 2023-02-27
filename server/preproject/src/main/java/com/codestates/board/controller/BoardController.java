@@ -4,6 +4,7 @@ import com.codestates.board.dto.BoardPatchDto;
 import com.codestates.board.dto.BoardPostDto;
 import com.codestates.board.entity.Board;
 import com.codestates.board.mapper.BoardMapper;
+import com.codestates.board.repository.BoardRepository;
 import com.codestates.board.service.BoardService;
 import com.codestates.utils.UriCreator;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,9 +33,12 @@ public class BoardController {
     private final BoardService boardService;
     private final BoardMapper mapper;
 
-    public BoardController(BoardService boardService, BoardMapper mapper) {
+    private final BoardRepository boardRepository;
+
+    public BoardController(BoardService boardService, BoardMapper mapper, BoardRepository boardRepository) {
         this.boardService = boardService;
         this.mapper = mapper;
+        this.boardRepository = boardRepository;
     }
 
     @PostMapping
@@ -54,7 +58,7 @@ public class BoardController {
         requestBody.setBoardId(boardId);
 
         Board board =
-                boardService.updateBoard(mapper.boardPatchToBoard(requestBody));
+                boardService.updateBoard(mapper.boardPatchToBoard(requestBody, boardRepository));
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.boardToBoardResponse(board)),

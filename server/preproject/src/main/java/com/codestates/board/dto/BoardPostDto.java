@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
@@ -13,14 +14,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardPostDto {
-    @NotBlank(message = "작성자를 정해주세요.")
-    private long memberId;
+    @NotNull(message = "작성자를 정해주세요.")
+    private Long memberId;
     @NotBlank(message = "제목을 입력해주세요.")
     private String boardTitle;
     @NotBlank(message = "내용을 입력해주세요")
     private String boardContent;
-    private int boardViews;
-    private int boardLike;
-    private long boardCmt;
+    private Integer boardViews;
+    private Integer boardLike;
+    private Long boardCmt;
     private List<BoardTagDto> boardTags;
 }
