@@ -38,4 +38,10 @@ public class BoardTag extends Auditable {
             this.tag.addBoardTag(this);
         }
     }
+
+    public BoardTag(Long boardTagId, Tag tag, Board board) {
+        this.boardTagId = boardTagId;
+        this.tag = tag;
+        this.board = board;
+    }
 }

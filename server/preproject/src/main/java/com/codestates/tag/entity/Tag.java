@@ -31,4 +31,13 @@ public class Tag extends Auditable {
             boardTag.addTag(this);
         }
     }
+
+    public Tag(Long tagId) {
+        this.tagId = tagId;
+    }
+
+    public Tag(Long tagId, String tagName) {
+        this.tagId = tagId;
+        this.tagName = tagName;
+    }
 }

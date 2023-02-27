@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,23 +22,23 @@ public class BoardControllerStubData {
     @PatchMapping("/{board-id}")
     public ResponseEntity patchBoard() {
         BoardResponseDto response =
-                new BoardResponseDto(1,1, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1, "2023-11-22 12:32:32.433", List.of(new BoardTagResponseDto(1, "java")));
+                new BoardResponseDto(1,1, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1, LocalDateTime.now(), List.of(new BoardTagResponseDto(1, "java")));
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{board-id}")
     public ResponseEntity getBoard() {
         BoardResponseDto response =
-                new BoardResponseDto(1,1, "커밋이 안돼요", "커밋이 안됩니다.", 0, 0, 0, "2023-11-22 12:32:32.433" , List.of(new BoardTagResponseDto(1, "java")));
+                new BoardResponseDto(1,1, "커밋이 안돼요", "커밋이 안됩니다.", 0, 0, 0, LocalDateTime.now() , List.of(new BoardTagResponseDto(1, "java")));
         return ResponseEntity.ok(response);
     }
 
     @GetMapping
     public ResponseEntity getBoards() {
         BoardResponseDto response1 =
-                new BoardResponseDto(1,1, "커밋이 안돼요", "커밋이 안됩니다.", 0, 0, 0, "2023-11-22 12:32:32.433", List.of(new BoardTagResponseDto(1, "java")));
+                new BoardResponseDto(1,1, "커밋이 안돼요", "커밋이 안됩니다.", 0, 0, 0, LocalDateTime.now(), List.of(new BoardTagResponseDto(1, "java")));
         BoardResponseDto response2 =
-                new BoardResponseDto(1,1, "커밋이 안돼요", "커밋이 안됩니다.", 0, 0, 0, "2023-11-22 12:32:32.433", List.of(new BoardTagResponseDto(1, "java")));
+                new BoardResponseDto(1,1, "커밋이 안돼요", "커밋이 안됩니다.", 0, 0, 0, LocalDateTime.now(), List.of(new BoardTagResponseDto(1, "java")));
         return ResponseEntity.ok(Arrays.asList(response1, response2));
     }
 
