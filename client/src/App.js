@@ -9,6 +9,7 @@ import CreatBoard from "./CreatBoard/CreatBoard";
 import UserInfo from "./Userinfo/UserInfo";
 import Layout from "./Layout";
 import TopButton from "./TopButton";
+import axios from "axios";
 //! App.js는 항상 이 상태로 형식을 유지할 것.
 const GlobalStyle = createGlobalStyle`
   /* reset CSS */
@@ -51,7 +52,12 @@ function App() {
     if(sessionStorage.getItem("login") === 'false'){
       setIsLogin(isLogin);
     }
-  },[])
+ 
+    const token = localStorage.getItem('token');
+    axios.get("/api/pre/members/1", {
+      headers: { authorization: token },
+    }).then(res => setUserInfo(res.body))
+  },[]);
 
   return (
     <>

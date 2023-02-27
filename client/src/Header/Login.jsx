@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 function Login({ isLogin, setIsLogin}) {
@@ -63,7 +63,7 @@ const LogOutButton = styled.button`
   color: #333333;
   font-size: 1.5rem;
   border-radius: 10px;
-  transition: all 0.1s ;
+  transition: all 0.1s;
   border: none;
   cursor: pointer;
   margin: 0 50px;
