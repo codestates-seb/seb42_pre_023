@@ -60,7 +60,9 @@ public interface BoardMapper {
         board.setBoardContent(boardPost.getBoardContent());
         board.setBoardViews(0);
         board.setBoardLike(boardPost.getBoardLike());
+        if(boardPost.getBoardLike() == null) { board.setBoardLike(0); }
         board.setBoardCmt(boardPost.getBoardCmt());
+        if(boardPost.getBoardCmt() == null) { board.setBoardCmt(0L); }
 
         List<BoardTag> boardTags = boardPost.getBoardTags().stream()
                 .map(boardTagDto -> {
