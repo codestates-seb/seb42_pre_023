@@ -15,7 +15,7 @@ export default function Layout({
 
   return (
     <Wrap>
-      {displayHeader && <Header isLogin={isLogin} />}
+      {displayHeader && <Header isLogin={isLogin}/>}
       <Container>
         {displayNav && <Nav setTagInfo={setTagInfo} />}
         <Main>

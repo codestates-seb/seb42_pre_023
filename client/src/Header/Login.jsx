@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const LoginButton = styled.button`
@@ -16,26 +16,42 @@ const LoginButton = styled.button`
   color: #333333;
   font-size: 1.5rem;
   border-radius: 10px;
-  transition: all 0.1s ;
+  transition: all 0.1s;
   border: none;
   cursor: pointer;
   margin: 0 50px;
-  background: ${props => props.isLogin ? '#ff7171': '#ffdbaf'};
-  box-shadow: ${props => props.isLogin ? '0px 5px 0px 0px #750f0f': '0px 5px 0px 0px #aa6913'};
+  background: ${(props) => (props.isLogin ? "#ff7171" : "#ffdbaf")};
+  box-shadow: ${(props) =>
+    props.isLogin ? "0px 5px 0px 0px #750f0f" : "0px 5px 0px 0px #aa6913"};
 
-  &:hover{
+  &:hover {
     margin-top: 15px;
     margin-bottom: 5px;
     box-shadow: 0px 0px 0px 0px;
   }
-`
+`;
 
-function Login({isLogin}) {
-  return(
-    <Link to='/login'>
-      <LoginButton isLogin={isLogin}>{isLogin ? 'Log out' : 'Log in'}</LoginButton>
-    </Link>
-  )
+function Login({ isLogin }) {
+  const navigate = useNavigate();
+  const login = sessionStorage.getItem('login');
+    // setIsLogin(login);
+
+  const handleClick = () => {
+    if (isLogin === false) {
+      navigate("/login");
+    } else if (isLogin === true) {
+      localStorage.removeItem("token");
+      sessionStorage.setItem("login", false);
+      navigate("/");
+      window.location.reload();
+    }
+  };
+
+  return (
+    <LoginButton isLogin={isLogin} onClick={handleClick}>
+      {isLogin ? "Log out" : "Log in"}
+    </LoginButton>
+  );
 }
 
-export default Login
+export default Login;
