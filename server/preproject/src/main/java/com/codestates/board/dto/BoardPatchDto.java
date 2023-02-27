@@ -18,7 +18,6 @@ public class BoardPatchDto {
     private String boardTitle;
     @NotBlank(message = "내용을 입력해주세요")
     private String boardContent;
-    private Integer boardViews;
     private Integer boardLike;
     private Long boardCmt;
     private List<BoardTagDto> boardTags;

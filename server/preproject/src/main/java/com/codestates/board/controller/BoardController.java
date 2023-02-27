@@ -7,6 +7,7 @@ import com.codestates.board.mapper.BoardMapper;
 import com.codestates.board.repository.BoardRepository;
 import com.codestates.board.service.BoardService;
 import com.codestates.utils.UriCreator;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codestates.dto.MultiResponseDto;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -32,7 +34,6 @@ public class BoardController {
     private final static String BOARD_DEFAULT_URL = "/pre/boards";
     private final BoardService boardService;
     private final BoardMapper mapper;
-
     private final BoardRepository boardRepository;
 
     public BoardController(BoardService boardService, BoardMapper mapper, BoardRepository boardRepository) {
@@ -67,8 +68,10 @@ public class BoardController {
 
     @GetMapping("/{board-id}")
     public ResponseEntity getBoard(
-            @PathVariable("board-id") @Positive long boardId) {
+            @PathVariable("board-id") @Positive long boardId, Model model) {
         Board board = boardService.findBoard(boardId);
+        boardService.updateBoardViews(boardId);
+        model.addAttribute("board", board);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.boardToBoardResponse(board))
                 , HttpStatus.OK);
