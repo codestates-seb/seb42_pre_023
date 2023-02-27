@@ -29,7 +29,7 @@ public class TagService {
     }
 
     @PostConstruct
-    private void defaultTags() {
+    private void defaultData() {
         List<Tag> tags = List.of(new Tag(1L, "java"), new Tag(2L, "python"), new Tag(3L, "spring"),
                 new Tag(4L, "javascript"), new Tag(5L, "css"), new Tag(6L, "php"), new Tag(7L, "reactjs"));
         tagRepository.saveAll(tags);
