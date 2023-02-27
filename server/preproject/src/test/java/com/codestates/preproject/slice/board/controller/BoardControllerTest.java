@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -37,7 +38,7 @@ public class BoardControllerTest{
 
     @BeforeEach
     public void init() throws Exception {
-        this.post = new BoardPostDto(1, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1, "2023-11-22 12:32:32.433", List.of(new BoardTagDto(1)));
+        this.post = new BoardPostDto(1, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1, List.of(new BoardTagDto(1)));
         String content = gson.toJson(post);
         String url = "/boards";
         this.postResultActions = mvc.perform(
@@ -61,7 +62,6 @@ public class BoardControllerTest{
         long boardId = getResponseBoardId();
 
         BoardPatchDto patch = new BoardPatchDto(1,1, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1);
-        post.setCreatedAt("2023-02-21 12:32:32.433");
         String content = gson.toJson(patch);
         String uri = "/boards/{board-id}";
 
@@ -85,14 +85,13 @@ public class BoardControllerTest{
         mvc.perform(get(uri, boardId).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.boardTitle").value(this.post.getBoardTitle()))
-                .andExpect(jsonPath("$.boardContent").value(this.post.getBoardContent()))
-                .andExpect(jsonPath("$.createdAt").value(this.post.getCreatedAt()));
+                .andExpect(jsonPath("$.boardContent").value(this.post.getBoardContent()));
     }
 
     @Test
     void getMembers() throws Exception{
         // postMember 하나 더 추가
-        BoardPostDto post = new BoardPostDto(1, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1, "2023-11-22 12:32:32.433", List.of(new BoardTagDto(1)));
+        BoardPostDto post = new BoardPostDto(1, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1, List.of(new BoardTagDto(1)));
         String content = gson.toJson(post);
 
 //        ResultActions actions =

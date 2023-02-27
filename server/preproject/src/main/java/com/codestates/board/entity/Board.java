@@ -1,15 +1,16 @@
 package com.codestates.board.entity;
 
 import com.codestates.audit.Auditable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -29,10 +30,10 @@ public class Board extends Auditable {
     private String boardContent;
 
     @Column
-    private int boardViews;
+    private Integer boardViews;
 
     @Column
-    private int boardLike;
+    private Integer boardLike;
 
     @Column
     private Long boardCmt;
@@ -45,5 +46,9 @@ public class Board extends Auditable {
         if (boardTag.getBoard() != this) {
             boardTag.addBoard(this);
         }
+    }
+
+    public Board(Long boardId) {
+        this.boardId = boardId;
     }
 }

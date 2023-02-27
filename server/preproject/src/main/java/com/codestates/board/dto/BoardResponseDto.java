@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -19,6 +20,6 @@ public class BoardResponseDto {
     private int boardViews;
     private int boardLike;
     private long boardCmt;
-    private String createdAt;
+    private LocalDateTime createdAt;
     private List<BoardTagResponseDto> boardTags;
 }

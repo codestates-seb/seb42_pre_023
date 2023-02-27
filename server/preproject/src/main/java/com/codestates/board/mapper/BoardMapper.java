@@ -8,9 +8,7 @@ import com.codestates.board.entity.Board;
 import com.codestates.board.entity.BoardTag;
 import com.codestates.tag.entity.Tag;
 import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,8 +49,11 @@ public interface BoardMapper {
         boardResponseDto.setBoardTitle(board.getBoardTitle());
         boardResponseDto.setBoardContent(board.getBoardContent());
         boardResponseDto.setBoardViews(board.getBoardViews());
+        boardResponseDto.setBoardLike(board.getBoardLike());
+        boardResponseDto.setBoardCmt(board.getBoardCmt());
         boardResponseDto.setBoardContent(board.getBoardContent());
         boardResponseDto.setBoardContent(board.getBoardContent());
+        boardResponseDto.setCreatedAt(board.getCreatedAt());
         boardResponseDto.setBoardTags(
                 boardTagsToBoardTagResponse(boardTags)
         );
