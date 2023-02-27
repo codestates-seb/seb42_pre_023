@@ -2,59 +2,34 @@ import React,{ useState,useEffect } from 'react';
 import styled from 'styled-components';
 import QuestionCard from './QuestionCard'
 import axios from 'axios';
+import Pagination from 'react-js-pagination'
 
 export default function QuestionList() {
-  const getQList = async () => {
-    return axios.get("/DUMMYDATA/boards.json");
-  };
   const [questionList, setquestionList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [items, setItems] = useState(15);
+
+  const handlePageChange = (page) => {
+     setPage(page); 
+    };
+
+    const getQList = async () => {
+      return axios.get("/DUMMYDATA/boards.json")
+    };
 
   useEffect(() => {
     getQList().then((res) => setquestionList(res.data));
   }, []);
   
+ 
 
-
-//ask question 로그인 여부 navigate
-
-//   //필터
-  // const handleOldest = ()=>  {
-  //       let newArr = [...questionList];
-  //       let oldest = newArr.sort((a,b) =>{
-  //         return a.createdAt-b.createdAt;
-  //       });
-  //       setquestionList(oldest);
+  // const getQList = async () =>{
+  //   return axios
+  //     .get("")       
   //     };
+  
 
-  const handleViewsup = () => {
-      let newArr = [...questionList];
-      let Upviews = newArr.sort((a,b) =>{
-        return a.boardViews-b.boardViews;
-      });
-      setquestionList(Upviews);
-  }
-
-  const handleViewsdown = () => {
-    let newArr = [...questionList];
-    let Downviews = newArr.sort((a,b) =>{
-      return b.boardViews-a.boardViews;
-    });
-    setquestionList(Downviews);
-}
-//   const handleNewest = ()=>{
-//         let newArr = [...questionList];
-//         let newestArr = newArr.sort((a,b)) =>{
-//           return b.BoardId-a.boardId;
-//         };
-//         setBoards(newestArr)
-//       };
-// };
-
-  //질문목록
-  // const getQustionList = async () =>{
-    
-//   }
-//   //조회수 
+  //   //조회수 
 //   const updateView = async (data) => {
 //     const response = await fetch('', {
 //         method: 'POST',
@@ -64,10 +39,61 @@ export default function QuestionList() {
 //     return await response.json();
 // }
 
+//ask question 로그인 여부 navigate
+
+ 
+  //필터
+  const handleViews = () => {
+    if(questionList[0].boardViews < questionList[questionList.length-1].boardViews){
+      let newArr = [...questionList];
+      let Upviews = newArr.sort((a,b) =>{
+        return b.boardViews-a.boardViews;
+      });
+        setquestionList(Upviews);
+    } else{
+      let newArr = [...questionList];
+      let Downviews = newArr.sort((a,b) =>{
+        return a.boardViews-b.boardViews;
+      });
+      setquestionList(Downviews);
+    }
+  };
 
 
 
+ const handleAnswer = () => {
+  if(questionList[0].boardCmt < questionList[questionList.length-1].boardCmt){
+    let newArr = [...questionList];
+    let Upanswer = newArr.sort((a,b) =>{
+      return b.boardCmt-a.boardCmt;
+    });
+    setquestionList(Upanswer);
+  } else {
+    let newArr = [...questionList];
+    let Downanswer = newArr.sort((a,b) =>{
+      return a.boardCmt-b.boardCmt;
+    });
+    setquestionList(Downanswer);
+  }
 
+ }
+
+
+const handleCreatedAt = ()=>{
+  if(new Date(questionList[0].createdAt) < new Date(questionList[questionList.length-1].createdAt)){
+    let newArr = [...questionList];
+    let newest = newArr.sort((a,b) =>{
+      return new Date(b.createdAt)-new Date(a.createdAt);
+    });
+    setquestionList(newest);
+  } else{
+    let newArr = [...questionList];
+    let oldest = newArr.sort((a,b) =>{
+      return new Date(a.createdAt)-new Date(b.createdAt);
+    });
+    setquestionList(oldest);
+  } 
+};
 
 
 return(
@@ -80,25 +106,32 @@ return(
     <H2>
       <QCount>{questionList.length} questions</QCount>  
       <FilterWrap>
-      <Button onClick={handleViewsup}>Views⬆</Button>
-      <Button onClick={handleViewsdown}>Views⬇</Button>
-      <Button>Comments</Button>
-      <Button>Newest</Button>
-      <Button >Oldest</Button>
+      <Button onClick={handleViews}>Views</Button>
+      <Button onClick={handleAnswer}>Anwsers</Button>
+      <Button onClick={handleCreatedAt}>createdAt</Button>
   </FilterWrap>
   </H2>
   </HeadContainer>
 
   <QuestionContainer>
     <Question >
-    {questionList.map((questions)=>{
+    {questionList.slice(items*(page-1),items*(page-1)+items).map((questions)=>{
       return(
         <QuestionCard questions={questions} key={questions.boardId}/>
       )
     })}
     </Question>
+    <PaginationBox>
+        <Pagination
+          activePage={page}
+          itemsCountPerPage={items}
+          totalItemsCount={300}
+          pageRangeDisplayed={5}
+          onChange={handlePageChange}>
+        </Pagination>
+      </PaginationBox>
   </QuestionContainer>
-
+  
   </>
 )
 }
@@ -108,14 +141,12 @@ width: calc(100% - 164px);
 padding: 15px;
 box-sizing: border-box;
 h1{
-font-size:35px;
+font-size: 3.5rem;
 margin-right:12px;
 margin-bottom:12px;
-/* flex: 1 1 auto; */
 padding-left:10px ;
 }
 `
-
 
 const H1= styled.div`
 padding: 10px;
@@ -124,7 +155,7 @@ justify-content: space-between;
 align-items: center;
 `;
 const H2= styled.div`
-padding: 20px;
+padding: 10px;
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -139,12 +170,18 @@ const AskQButton = styled.button`
 background-color: #0a95ff;
 border: 1px;
 color : white;
-font-size:13px;
-padding: 10.4px;
-width:103px;
+font-size:1.5rem;
+text-align: center;
+padding: 5 20px;
+width:140px;
+height: 50px;
+border-radius: 10px;
+
+font-weight: bold;
 cursor:pointer;
 :hover{
 background-color:rgb(0 116 204);
+
 }
 
 `
@@ -152,20 +189,30 @@ const FilterWrap =styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
-
+button:first-child{
+    border-radius: 3px 0 0 3px;
+}
+button:last-child{
+    border-radius:  0 3px 3px 0;
+}
 `
 
 const Button = styled.button`
-font-size:12px;
+/* width:80px; */
+font-size:15px;
+font-weight: 500;
 padding: 9px;
 cursor: pointer;
 background: white;
 color: #6A737C;
 border: 1px solid #6A737C;
-border-radius:3px;
+width: 90px;
 :hover{
   background-color:hsl(210,8%,97.5%) ;
   color:black;
+}
+:active{
+ 
 };
 
 `
@@ -175,15 +222,59 @@ border-radius:3px;
 const QuestionContainer = styled.ul`
 margin: 0;
 padding: 0;
-/* width:calc(100% - 164px); */
-width:100%;
-height: 100%;
+/* width:100%; */
+/* height: 100%; */
 
 `;
 
 const Question = styled.li`
 display: flex;
 flex-direction: column;
-overflow: hidden;
-gap:3px;
+overflow: overlay;
 `;
+
+const PaginationBox = styled.div`
+  .pagination {
+     display: flex;
+     justify-content: center; 
+     margin-top: 25px;
+    }
+  ul {
+     list-style: none;
+      padding: 0;
+     }
+  ul.pagination li {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ecebee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight:bold ;
+    background-color: white;
+  }
+  ul.pagination li:first-child{
+     border-radius: 3px 0 0 3px;
+     }
+  ul.pagination li:last-child{
+     border-radius: 0 3px 3px 0;
+     }
+  ul.pagination li a {
+     text-decoration: none;
+      color: #6A737C;
+       font-size: 1.5rem; }
+  ul.pagination li.active a {
+     color: black;
+     }
+  ul.pagination li.active {
+     background-color: #ffdbaf;
+     }
+  ul.pagination li:hover{
+    background-color:rgb(247,234,222) ;
+  }
+  ul.pagination li a:hover,
+  ul.pagination li a.active {
+     color:black;
+      }
+`

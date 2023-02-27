@@ -26,7 +26,7 @@ export default function Signup() {
       return;
     }
     return axios
-      .post("/pre/signup", { signup })
+      .post("https://b237-183-97-251-175.jp.ngrok.io/pre/members", { signup })
       .then((res) => {
         setSignup("");
         setErrorMsg("");
@@ -38,7 +38,7 @@ export default function Signup() {
 
   const passwordRegex = /^[a-zA-Z0-9]{8,10}$/;
   const isUserValid = passwordRegex.test(signup.memberPwd);
-  console.log(isUserValid);
+  // console.log(isUserValid);
 
   return (
     <LoginWrap>

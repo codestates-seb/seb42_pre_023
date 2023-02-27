@@ -8,7 +8,7 @@ import DetailBoard from "./detail-board/DetailBoard";
 import CreatBoard from "./CreatBoard/CreatBoard";
 import UserInfo from "./Userinfo/UserInfo";
 import Layout from "./Layout";
-import TopButton from "./TopButton"
+import TopButton from "./TopButton";
 //! App.js는 항상 이 상태로 형식을 유지할 것.
 const GlobalStyle = createGlobalStyle`
   /* reset CSS */
