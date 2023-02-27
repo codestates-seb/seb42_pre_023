@@ -49,6 +49,8 @@ public interface BoardMapper {
         boardResponseDto.setBoardTitle(board.getBoardTitle());
         boardResponseDto.setBoardContent(board.getBoardContent());
         boardResponseDto.setBoardViews(board.getBoardViews());
+        boardResponseDto.setBoardLike(board.getBoardLike());
+        boardResponseDto.setBoardCmt(board.getBoardCmt());
         boardResponseDto.setBoardContent(board.getBoardContent());
         boardResponseDto.setBoardContent(board.getBoardContent());
         boardResponseDto.setCreatedAt(board.getCreatedAt());
