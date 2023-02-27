@@ -8,6 +8,7 @@ import com.codestates.exception.BusinessLogicException;
 import com.codestates.exception.ExceptionCode;
 import com.codestates.member.entity.Member;
 import com.codestates.member.repository.MemberRepository;
+import com.codestates.member.service.MemberService;
 import com.codestates.memberLog.entity.MemberLog;
 import com.codestates.memberLog.repository.MemberLogRepository;
 
@@ -34,6 +35,7 @@ public class MemberLogService {
                             MemberRepository memberRepository,
                             BoardRepository boardRepository,
                             CommentRepository commentRepository) {
+
         this.memberLogRepository = memberLogRepository;
         this.memberRepository = memberRepository;
         this.boardRepository = boardRepository;
@@ -72,6 +74,7 @@ public class MemberLogService {
 
     @Transactional(readOnly = true)
     public Page<MemberLog> findMemberLogs(long memberId) {
+        findVerifiedMember(memberId);
         List<MemberLog> memberLogs = memberLogRepository.findAllByMemberId(memberId)
                 .stream()
                 .filter(memberLog -> memberLog.getMemberId() == memberId)
@@ -97,4 +100,14 @@ public class MemberLogService {
 
         return findMemberLog;
     }
+
+    public Member findVerifiedMember(long memberId) {
+        Optional<Member> optionalMember =
+                memberRepository.findById(memberId);
+        Member findMember =
+                optionalMember.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return findMember;
+    }
+
 }
