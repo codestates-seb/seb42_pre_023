@@ -45,6 +45,12 @@ function App() {
 
   useEffect(()=>{
     window.scrollTo(0,0);
+    if(sessionStorage.getItem("login") === 'true'){
+      setIsLogin(!isLogin);
+    }
+    if(sessionStorage.getItem("login") === 'false'){
+      setIsLogin(isLogin);
+    }
   },[])
 
   return (

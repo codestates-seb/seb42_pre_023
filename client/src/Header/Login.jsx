@@ -7,6 +7,9 @@ function Login({ isLogin, setIsLogin}) {
   const LogOutClick = () => {
     setIsLogin(!isLogin);
     localStorage.removeItem("token");
+    sessionStorage.removeItem("login");
+    sessionStorage.setItem("login", false);
+    window.location.reload();
   }
 
   return (
@@ -33,7 +36,7 @@ const LoginButton = styled.button`
   color: #333333;
   font-size: 1.5rem;
   border-radius: 10px;
-  transition: all 0.1s ;
+  transition: all 0.1s;
   border: none;
   cursor: pointer;
   margin: 0 50px;
@@ -67,11 +70,11 @@ const LogOutButton = styled.button`
   background: #ff7171;
   box-shadow: 0px 5px 0px 0px #750f0f;
 
-  &:hover{
+  &:hover {
     margin-top: 15px;
     margin-bottom: 5px;
     box-shadow: 0px 0px 0px 0px;
   }
-`
+`;
 
 export default Login

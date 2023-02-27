@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 
 export default function Login({ setIsLogin, setUserInfo }) {
   const navigate = useNavigate();
-  const [cookie, setCookie] = useCookies(["token"]);
   const [idInfo, setIdInfo] = useState("");
   const [pwInfo, setPwInfo] = useState("");
   const [keepLogin, setKeepLogin] = useState(false);
@@ -20,7 +18,7 @@ export default function Login({ setIsLogin, setUserInfo }) {
   };
 
   const loginRequest = () => {
-    if (!idInfo.username || !pwInfo.password) {
+    if (!idInfo || !pwInfo) {
       setErrorMsg("아이디와 비밀번호를 입력해주세요");
       return;
     }
@@ -34,12 +32,11 @@ export default function Login({ setIsLogin, setUserInfo }) {
       }),
     })
       .then((res) => {
-        setCookie("token", res.headers.authorization);
+        localStorage.setItem('token', res.headers.get('authorization'));
+        sessionStorage.setItem('login', true);
         setIsLogin(true);
-        setUserInfo(res.body);
         setErrorMsg("");
-        // navigate('/')
-        console.log(cookie);
+        navigate('/');
       })
       .catch((error) => {
         // console.log(error);
@@ -56,7 +53,7 @@ export default function Login({ setIsLogin, setUserInfo }) {
         <div className="intro">
           <h1>Log In</h1>
           <p>
-            By continuing, you agree to our{" "}
+            By continuing, you agree to our
             <span className="link">User Agreement</span> <br />
             and <span className="link"> Privacy Policy</span>.
           </p>
