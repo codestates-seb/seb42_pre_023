@@ -32,9 +32,6 @@ public interface BoardMapper {
         if (requestBody.getBoardContent() != null) {
             board.setBoardContent(requestBody.getBoardContent());
         }
-        if (requestBody.getBoardViews() != null) {
-            board.setBoardViews(requestBody.getBoardViews());
-        }
         if (requestBody.getBoardLike() != null) {
             board.setBoardLike(requestBody.getBoardLike());
         }
@@ -61,7 +58,7 @@ public interface BoardMapper {
         board.setMemberId(boardPost.getMemberId());
         board.setBoardTitle(boardPost.getBoardTitle());
         board.setBoardContent(boardPost.getBoardContent());
-        board.setBoardViews(boardPost.getBoardViews());
+        board.setBoardViews(0);
         board.setBoardLike(boardPost.getBoardLike());
         board.setBoardCmt(boardPost.getBoardCmt());
 
