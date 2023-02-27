@@ -1,40 +1,54 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
-import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
-export default function Login({setIsLogin, setUserInfo}) {
-  const [loginInfo, setLoginInfo] = useState({
-    memberEmail: '',
-    memberPwd: '',
-  })
+export default function Login({ setIsLogin, setUserInfo }) {
+  const navigate = useNavigate();
+  const [cookie, setCookie] = useCookies(["token"]);
+  const [idInfo, setIdInfo] = useState("");
+  const [pwInfo, setPwInfo] = useState("");
   const [keepLogin, setKeepLogin] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-  const handleInput = (key) => (e) => {
-    setLoginInfo({...loginInfo, [key]: e.target.value})
-  }
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleIdInput = (e) => {
+    setIdInfo(e.target.value);
+  };
+  const handlePwInput = (e) => {
+    setPwInfo(e.target.value);
+  };
+
   const loginRequest = () => {
-    if (!loginInfo.memberEmail || !loginInfo.memberPwd) {
-      setErrorMsg('아이디와 비밀번호를 입력해주세요')
+    if (!idInfo.username || !pwInfo.password) {
+      setErrorMsg("아이디와 비밀번호를 입력해주세요");
       return;
     }
 
-    return axios
-      .post('/DUMMYDATA/members.json', {login: loginInfo, keepLogin})
+    console.log({ username: idInfo, password: pwInfo });
+    return fetch("/api/pre/login", {
+      method: "POST",
+      body: JSON.stringify({
+        username: idInfo,
+        password: pwInfo,
+      }),
+    })
       .then((res) => {
+        setCookie("token", res.headers.authorization);
         setIsLogin(true);
-        setUserInfo(res.data);
-        setErrorMsg('')
-        window.location.href('/');
+        setUserInfo(res.body);
+        setErrorMsg("");
+        // navigate('/')
+        console.log(cookie);
       })
-      .catch((err) => {
-        setErrorMsg('로그인에 실패했습니다.')
-      })
-  }
+      .catch((error) => {
+        // console.log(error);
+        setErrorMsg("로그인에 실패했습니다.");
+      });
+  };
   const oauthRequest = () => {
-    return window.location.assign('구글 주소');
-  }
+    return window.location.assign("구글 주소");
+  };
 
   return (
     <LoginWrap>
@@ -42,7 +56,8 @@ export default function Login({setIsLogin, setUserInfo}) {
         <div className="intro">
           <h1>Log In</h1>
           <p>
-            By continuing, you agree to our <span className="link">User Agreement</span> <br />
+            By continuing, you agree to our{" "}
+            <span className="link">User Agreement</span> <br />
             and <span className="link"> Privacy Policy</span>.
           </p>
         </div>
@@ -53,15 +68,24 @@ export default function Login({setIsLogin, setUserInfo}) {
           </Button>
         </form>
         <Form onSubmit={(e) => e.preventDefault()}>
-          <input type="email" placeholder="email" onChange={handleInput('memberEmail')} />
-          <input type="password" placeholder="password" onChange={handleInput('memberPwd')} />
-          {errorMsg ? (<div className="error">{errorMsg}</div>) : ''}
+          <input
+            type="email"
+            placeholder="email"
+            onChange={handleIdInput} //handleInput("username")
+          />
+          <input
+            type="password"
+            placeholder="password"
+            onChange={handlePwInput} // handleInput("password")
+          />
+          {errorMsg ? <div className="error">{errorMsg}</div> : ""}
           <label className="checked-login">
-            <input type='checkbox' onChange={() => setKeepLogin(!keepLogin)} />
+            <input type="checkbox" onChange={() => setKeepLogin(!keepLogin)} />
             <p>로그인 상태 유지하기</p>
           </label>
           <div className="text">
-            Forget your <span className="link">email</span> or <span className="link">password</span> ?
+            Forget your <span className="link">email</span> or{" "}
+            <span className="link">password</span> ?
           </div>
           <Button login="#ef8236" type="submit" onClick={loginRequest}>
             <span className="login">Log in</span>
