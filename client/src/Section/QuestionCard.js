@@ -45,6 +45,7 @@ export default function QuestionCard({ questions }) {
   
   const handleClick = (e) => {
     e.preventDefault();
+    // console.log(boardId)
     navigate(`/detail/${boardId}`)
   };
 

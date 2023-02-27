@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BiSearchAlt } from "react-icons/bi";
 import { ImCancelCircle } from "react-icons/im";
@@ -38,19 +38,32 @@ const SearchInput = styled.div`
   div:focus-within {
     background-color: #ffffff;
   }
+  span{
+    cursor: pointer;
+  }
 `;
 
 
 function Search() {
+  const [search, setSearch] = useState("");
+
+  const onChange = (e) => setSearch(e.target.value);
+  const deleteSearch = (e) => setSearch("");
+
   return(
     <SearchInput>
       <div>
         <span>
           <BiSearchAlt size={25}></BiSearchAlt>
         </span>
-        <input type="text" placeholder="Search StackoverFlow..."/>
+        <input 
+          type="text" 
+          placeholder="Search StackoverFlow..."
+          value={search}
+          onChange={onChange}
+        />
         <span>
-          <ImCancelCircle size={25} color="#ff5656"></ImCancelCircle>
+          <ImCancelCircle size={25} color="#ff5656" onClick={deleteSearch}></ImCancelCircle>
         </span>
       </div>
     </SearchInput>

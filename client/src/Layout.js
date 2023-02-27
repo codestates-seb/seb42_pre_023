@@ -13,8 +13,6 @@ export default function Layout({
   setTagInfo,
 }) {
 
-  
-
   return (
     <Wrap>
       {displayHeader && <Header isLogin={isLogin} />}
@@ -38,7 +36,7 @@ const Wrap = styled.div`
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
 `;
 
 const Main = styled.div``;

@@ -11,7 +11,21 @@ const getBoard = async () => {
 };
 
 const getName = async () => {
-  return axios.get("/DUMMYDATA/members.json");
+  // try {
+  //   const response = await axios.get("/api/pre/members/1", {
+  //     headers: {"ngrok-skip-browser-warning": "230227"},
+  //   });
+  //   if (response && response.data) {
+  //     return response.data;
+  //   } else {
+  //     throw new Error("Invalid response data");
+  //   }
+  // } catch (error) {
+  //   console.error(error);
+  // }
+  return axios.get("/api/pre/members/1", {
+    headers: { "ngrok-skip-browser-warning": "230227" },
+  });
 };
 // const getTag = async () => {
 //   return axios.get("");
@@ -48,12 +62,18 @@ export default function DetailBoard() {
   const date = new Date(createdAt).toLocaleString();
 
   useEffect(() => {
-    getBoard().then((res) => res.data.filter((el) => el.boardId == board ? setBoardData(el) : null));
-    getName().then((res) =>
-      res.data.filter((el) =>
-        el.memberId === memberId ? setMemberName(el.memberName) : ""
-      )
+    getBoard().then((res) =>
+      res.data.filter((el) => (el.boardId == board ? setBoardData(el) : null))
     );
+    getName()
+      .then((res) => setMemberName(res.data.data.memberName)
+        // res.data.filter((el) =>
+        //   el.memberId === memberId ? setMemberName(el.memberName) : ""
+        // )
+      )
+      .catch((error) => {
+        console.log(error);
+      });
   }, [board, memberId]);
 
   const handleClick = () => {
