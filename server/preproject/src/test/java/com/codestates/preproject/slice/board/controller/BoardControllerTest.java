@@ -3,6 +3,7 @@ package com.codestates.preproject.slice.board.controller;
 import com.codestates.board.dto.BoardPatchDto;
 import com.codestates.board.dto.BoardPostDto;
 import com.codestates.board.dto.BoardTagDto;
+import com.codestates.board.entity.BoardTag;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ public class BoardControllerTest{
 
     @BeforeEach
     public void init() throws Exception {
-        this.post = new BoardPostDto(1, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1, List.of(new BoardTagDto(1)));
+        this.post = new BoardPostDto(1L, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1L, List.of(new BoardTagDto(1)));
         String content = gson.toJson(post);
         String url = "/boards";
         this.postResultActions = mvc.perform(
@@ -61,7 +62,7 @@ public class BoardControllerTest{
     void patchMember() throws Exception {
         long boardId = getResponseBoardId();
 
-        BoardPatchDto patch = new BoardPatchDto(1,1, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1);
+        BoardPatchDto patch = new BoardPatchDto(1L,1L, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1L, List.of(new BoardTagDto(1L)));
         String content = gson.toJson(patch);
         String uri = "/boards/{board-id}";
 
@@ -91,7 +92,7 @@ public class BoardControllerTest{
     @Test
     void getMembers() throws Exception{
         // postMember 하나 더 추가
-        BoardPostDto post = new BoardPostDto(1, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1, List.of(new BoardTagDto(1)));
+        BoardPostDto post = new BoardPostDto(1L, "커밋이 안돼요", "커밋이 안됩니다.", 1, 1, 1L, List.of(new BoardTagDto(1)));
         String content = gson.toJson(post);
 
 //        ResultActions actions =
