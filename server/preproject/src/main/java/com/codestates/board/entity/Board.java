@@ -30,10 +30,10 @@ public class Board extends Auditable {
     private String boardContent;
 
     @Column
-    private int boardViews;
+    private Integer boardViews;
 
     @Column
-    private int boardLike;
+    private Integer boardLike;
 
     @Column
     private Long boardCmt;
