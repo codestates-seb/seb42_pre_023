@@ -52,8 +52,6 @@ public class BoardService {
                 .ifPresent(boardTitle -> findBoard.setBoardTitle(boardTitle));
         Optional.ofNullable(board.getBoardContent())
                 .ifPresent(boardContent -> findBoard.setBoardContent(boardContent));
-        Optional.ofNullable(board.getBoardViews())
-                .ifPresent(boardViews -> findBoard.setBoardViews(boardViews));
         Optional.ofNullable(board.getBoardLike())
                 .ifPresent(boardLike -> findBoard.setBoardLike(boardLike));
         Optional.ofNullable(board.getBoardCmt())
@@ -95,6 +93,11 @@ public class BoardService {
                 optionalBoard.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
         return findBoard;
+    }
+
+    @Transactional
+    public int updateBoardViews(Long boardId) {
+        return boardRepository.updateBoardViews(boardId);
     }
 
     private Board saveBoard(Board board) {
