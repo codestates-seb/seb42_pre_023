@@ -67,6 +67,7 @@ function App() {
               displayNav={displayNav}
               displayFooter={displayFooter}
               isLogin={isLogin}
+              setIsLogin={setIsLogin}
               setTagInfo={setTagInfo}
             />
           }
