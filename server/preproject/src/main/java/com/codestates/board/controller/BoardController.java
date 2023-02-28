@@ -68,10 +68,9 @@ public class BoardController {
 
     @GetMapping("/{board-id}")
     public ResponseEntity getBoard (
-            @PathVariable("board-id") @Positive long boardId, Model model) {
+            @PathVariable("board-id") @Positive long boardId) {
         Board board = boardService.findBoard(boardId);
         boardService.updateBoardViews(boardId);
-        model.addAttribute("board", board);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.boardToBoardResponse(board))
                 , HttpStatus.OK);
