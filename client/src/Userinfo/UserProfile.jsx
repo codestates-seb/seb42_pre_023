@@ -43,7 +43,6 @@ function UserProfile({isLogin, setIsLogin}) {
       })
   }
   
-
   return (
     <>
       <UserProfileTemplate>
