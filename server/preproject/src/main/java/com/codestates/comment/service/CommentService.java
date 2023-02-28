@@ -1,6 +1,7 @@
 package com.codestates.comment.service;
 
 import com.codestates.board.entity.Board;
+import com.codestates.board.repository.BoardRepository;
 import com.codestates.board.service.BoardService;
 import com.codestates.comment.entity.Comment;
 import com.codestates.comment.repository.CommentRepository;
@@ -27,14 +28,16 @@ public class CommentService {
     private final BoardService boardService;
     private final CommentRepository commentRepository;
     private final MemberLogService memberLogService;
+    private final BoardRepository boardRepository;
 
     public CommentService(MemberService memberService, BoardService boardService,
                           CommentRepository commentRepository,
-                          MemberLogService memberLogService) {
+                          MemberLogService memberLogService, BoardRepository boardRepository) {
         this.memberService = memberService;
         this.boardService = boardService;
         this.commentRepository = commentRepository;
         this.memberLogService = memberLogService;
+        this.boardRepository = boardRepository;
     }
 
     public Comment createComment (Comment comment) {
@@ -103,7 +106,7 @@ public class CommentService {
         Board board = boardService.findBoard(comment.getBoardId());
         long earnedCommentCount = CommentCalculator.addCommentCount();
         board.setBoardCmt(
-                CommentCalculator.calculateCommentCount(board.getBoardCmt(), earnedCommentCount));
+                (int) CommentCalculator.calculateCommentCount(board.getBoardCmt(), earnedCommentCount));
         boardService.updateBoard(board);
     }
 
@@ -114,4 +117,8 @@ public class CommentService {
         return findComment;
     }
 
+    @Transactional
+    public int updateBoardCmt(Long boardId) {
+        return boardRepository.updateBoardCmt(boardId);
+    }
 }

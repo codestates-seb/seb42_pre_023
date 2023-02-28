@@ -19,7 +19,7 @@ public class BoardResponseDto {
     private String boardContent;
     private int boardViews;
     private int boardLike;
-    private long boardCmt;
+    private int boardCmt;
     private LocalDateTime createdAt;
     private List<BoardTagResponseDto> boardTags;
 }

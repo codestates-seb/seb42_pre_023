@@ -1,5 +1,7 @@
 package com.codestates.comment.controller;
 
+import com.codestates.board.entity.Board;
+import com.codestates.board.service.BoardService;
 import com.codestates.comment.dto.CommentPostDto;
 import com.codestates.comment.entity.Comment;
 import com.codestates.comment.mapper.CommentMapper;
@@ -13,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +31,7 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
     private final CommentMapper mapper;
+
     private final static String COMMENT_DEFAULT_URL = "/pre/comments";
 
     public CommentController(CommentService commentService, CommentMapper mapper) {
@@ -36,9 +40,12 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentDto) {
+    public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentDto, Model model) {
         Comment comment = commentService.createComment(mapper.commentPostDtoToComment(commentDto));
         URI location = UriCreator.createUri(COMMENT_DEFAULT_URL, comment.getCommentId());
+
+        Long boardId = commentDto.getBoardId();
+        commentService.updateBoardCmt(boardId);
 
         return ResponseEntity.created(location).build();
     }

@@ -8,6 +8,7 @@ import com.codestates.member.repository.MemberRepository;
 import com.codestates.memberLog.entity.MemberLog;
 import com.codestates.memberLog.service.MemberLogService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,10 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -52,10 +56,6 @@ public class BoardService {
                 .ifPresent(boardTitle -> findBoard.setBoardTitle(boardTitle));
         Optional.ofNullable(board.getBoardContent())
                 .ifPresent(boardContent -> findBoard.setBoardContent(boardContent));
-        Optional.ofNullable(board.getBoardLike())
-                .ifPresent(boardLike -> findBoard.setBoardLike(boardLike));
-        Optional.ofNullable(board.getBoardCmt())
-                .ifPresent(boardCmt -> findBoard.setBoardCmt(boardCmt));
 
         MemberLog memberLog = memberLogService.createBoardLog(findBoard);
         memberLog.setLogActive(MemberLog.LogActive.BOARD_MODIFIED);
@@ -68,6 +68,22 @@ public class BoardService {
     @Transactional(readOnly = true)
     public Board findBoard (long boardId) {
         return findVerifiedBoard(boardId);
+    }
+
+    @Transactional
+    public Page<Board> findMemberBoards(long memberId) {
+        List<Board> boards = boardRepository.findAllByMemberId(memberId)
+                .stream()
+                .filter(board -> board.getMemberId() == memberId)
+                .sorted(Comparator.comparing(Board::getBoardId))
+                .collect(Collectors.toList());
+        return new PageImpl<>(boards);
+    }
+
+    @Transactional
+    public Page<Board> findTagBoards(long tagId) {
+        List<Board> boards = boardRepository.findBoardByTagId(tagId);
+        return new PageImpl<>(boards);
     }
 
     public Page<Board> findBoards(int page, int size) {
@@ -98,6 +114,11 @@ public class BoardService {
     @Transactional
     public int updateBoardViews(Long boardId) {
         return boardRepository.updateBoardViews(boardId);
+    }
+
+    @Transactional
+    public int updateBoardLike(Long boardId) {
+        return boardRepository.updateBoardLike(boardId);
     }
 
     private Board saveBoard(Board board) {

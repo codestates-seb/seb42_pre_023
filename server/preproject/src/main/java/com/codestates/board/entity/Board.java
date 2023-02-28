@@ -37,7 +37,7 @@ public class Board extends Auditable {
     private Integer boardLike;
 
     @Column
-    private Long boardCmt;
+    private Integer boardCmt;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<BoardTag> boardTags = new ArrayList<>();

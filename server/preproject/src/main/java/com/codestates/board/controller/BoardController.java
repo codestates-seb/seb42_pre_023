@@ -67,7 +67,7 @@ public class BoardController {
     }
 
     @GetMapping("/{board-id}")
-    public ResponseEntity getBoard(
+    public ResponseEntity getBoard (
             @PathVariable("board-id") @Positive long boardId, Model model) {
         Board board = boardService.findBoard(boardId);
         boardService.updateBoardViews(boardId);
@@ -75,6 +75,28 @@ public class BoardController {
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.boardToBoardResponse(board))
                 , HttpStatus.OK);
+    }
+
+    @GetMapping("/boardLike/{board-id}")
+    public ResponseEntity getBoardLike (
+            @PathVariable("board-id") @Positive long boardId) {
+        boardService.updateBoardLike(boardId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/members/{member-id}")
+    public ResponseEntity getMemberBoards(@PathVariable("member-id") @Positive long memberId) {
+        Page<Board> pageBoards = boardService.findMemberBoards(memberId);
+        List<Board> boards = pageBoards.getContent();
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.boardsToBoardResponses(boards), pageBoards), HttpStatus.OK);
+    }
+
+    @GetMapping("/tags/{tag-id}")
+    public ResponseEntity getTagBoards(@PathVariable("tag-id") @Positive long tagId) {
+        Page<Board> pageBoards = boardService.findTagBoards(tagId);
+        List<Board> boards = pageBoards.getContent();
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.boardsToBoardResponses(boards), pageBoards), HttpStatus.OK);
     }
 
     @GetMapping
@@ -95,4 +117,6 @@ public class BoardController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
 }
