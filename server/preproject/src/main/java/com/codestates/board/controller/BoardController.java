@@ -92,6 +92,13 @@ public class BoardController {
         return new ResponseEntity<>(new MultiResponseDto<>(mapper.boardsToBoardResponses(boards), pageBoards), HttpStatus.OK);
     }
 
+    @GetMapping("/tags/{tag-id}")
+    public ResponseEntity getTagBoards(@PathVariable("tag-id") @Positive long tagId) {
+        Page<Board> pageBoards = boardService.findTagBoards(tagId);
+        List<Board> boards = pageBoards.getContent();
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.boardsToBoardResponses(boards), pageBoards), HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity getBoards(@Positive @RequestParam int page,
                                      @Positive @RequestParam int size) {
