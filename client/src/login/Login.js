@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login({ setIsLogin, setUserInfo }) {
+export default function Login({ setIsLogin }) {
   const navigate = useNavigate();
   const [idInfo, setIdInfo] = useState("");
   const [pwInfo, setPwInfo] = useState("");
@@ -34,6 +34,7 @@ export default function Login({ setIsLogin, setUserInfo }) {
       .then((res) => {
         localStorage.setItem('token', res.headers.get('authorization'));
         sessionStorage.setItem('login', true);
+        sessionStorage.setItem('id', idInfo)
         setIsLogin(true);
         setErrorMsg("");
         navigate('/');

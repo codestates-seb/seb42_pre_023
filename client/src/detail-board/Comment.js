@@ -3,11 +3,11 @@ import styled from "styled-components";
 import CommentCreate from "./CommentCreate";
 import CommentList from "./CommentList";
 
-export default function Comment({ boardCmt }) {
+export default function Comment({ boardCmt, userInfo }) {
   return (
     <CommentWrap>
       <CommentList boardCmt={boardCmt} />
-      <CommentCreate />
+      <CommentCreate userInfo={userInfo} />
     </CommentWrap>
   );
 }

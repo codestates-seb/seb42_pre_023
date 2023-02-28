@@ -1,43 +1,54 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
-  const [signup, setSignup] = useState({
-    memberName: "",
-    memberEmail: "",
-    memberPwd: "",
-  });
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState("");
+  const [userPw, setUserPw] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const handleInput = (key) => (e) => {
-    setSignup({ ...signup, [key]: e.target.value });
+
+  const handleNameInput = (e) => {
+    setUserName(e.target.value);
+  };
+  const handleIdInput = (e) => {
+    setUserId(e.target.value);
+  };
+  const handlePwInput = (e) => {
+    setUserPw(e.target.value);
   };
 
   const signupRequest = () => {
-    if (
-      (!signup.memberEmail || !signup.memberPwd || !signup.memberName) &&
-      isUserValid !== true
-    ) {
+    if ((!userId.memberEmail || !userPw.memberPwd || !userName.memberName) && isUserValid !== true) {
       setErrorMsg("유저명과 아이디, 비밀번호를 입력해주세요");
       return;
     } else if (isUserValid === false) {
-      setErrorMsg("대소문자, 숫자를 포함한 8자 이상 작성해주세요");
+      setErrorMsg("대소문자, 숫자를 포함한 8자 이상 16자 이하 작성해주세요");
       return;
     }
-    return axios
-      .post("https://b237-183-97-251-175.jp.ngrok.io/pre/members", { signup })
+    return fetch("/api/pre/members", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        memberEmail: userId,
+        memberName: userName,
+        memberPwd: userPw
+      }),
+    })
       .then((res) => {
-        setSignup("");
-        setErrorMsg("");
+        setErrorMsg("이미 존재합니다.");
+        navigate('/')
       })
       .catch((err) => {
+        // console.log(err)
         setErrorMsg("회원가입에 실패했습니다.");
       });
   };
-
-  const passwordRegex = /^[a-zA-Z0-9]{8,10}$/;
-  const isUserValid = passwordRegex.test(signup.memberPwd);
+  
+  const passwordRegex = /^[a-zA-Z0-9]{8,16}$/;
+  const isUserValid = passwordRegex.test(userPw);
   // console.log(isUserValid);
 
   return (
@@ -59,17 +70,17 @@ export default function Signup() {
           <input
             type="text"
             placeholder="display name"
-            onChange={handleInput("memberName")}
+            onChange={handleNameInput}
           />
           <input
             type="email"
             placeholder="email"
-            onChange={handleInput("memberEmail")}
+            onChange={handleIdInput}
           />
           <input
             type="password"
             placeholder="password"
-            onChange={handleInput("memberPwd")}
+            onChange={handlePwInput}
           />
           {errorMsg ? <div className="error">{errorMsg}</div> : ""}
           <Button login="#ef8236" margin="2rem 0 0 0" onClick={signupRequest}>
@@ -77,7 +88,7 @@ export default function Signup() {
           </Button>
         </Form>
         <div className="text">
-          Already Stack Overflow? <a href="/">Log In</a>
+          Already Stack Overflow? <Link to='/login'>Log In</Link>
         </div>
       </Container>
     </LoginWrap>
