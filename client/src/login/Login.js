@@ -23,7 +23,7 @@ export default function Login({ setIsLogin }) {
       return;
     }
 
-    console.log({ username: idInfo, password: pwInfo });
+    // console.log({ username: idInfo, password: pwInfo });
     return fetch("/api/pre/login", {
       method: "POST",
       body: JSON.stringify({

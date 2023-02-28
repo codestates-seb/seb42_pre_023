@@ -1,15 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 function Login({ isLogin, setIsLogin}) {
-
+  const navigate = useNavigate();
   const LogOutClick = () => {
     setIsLogin(!isLogin);
     localStorage.removeItem("token");
     sessionStorage.setItem("login", false);
     sessionStorage.removeItem("id");
-    window.location.reload();
+    navigate("/");
   }
 
   return (

@@ -20,19 +20,11 @@ export default function QuestionList() {
   useEffect(() => {
     getQList().then((res) => setquestionList(res.data));
   }, []);
-  
- 
-
-  // const getQList = async () =>{
-  //   return axios
-  //     .get("")       
-  //     };
-  
 
   //   //조회수 
 //   const updateView = async (data) => {
 //     const response = await fetch('', {
-//         method: 'POST',
+//         method: '',
 //         headers: {'Content-Type': 'application/json'},
 //         body: JSON.stringify({data})
 //       })
@@ -117,7 +109,7 @@ return(
     <Question >
     {questionList.slice(items*(page-1),items*(page-1)+items).map((questions)=>{
       return(
-        <QuestionCard questions={questions} key={questions.boardId}/>
+        <QuestionCard key={questions.boardId} questions={questions} />
       )
     })}
     </Question>
@@ -219,7 +211,7 @@ width: 90px;
 
 
 
-const QuestionContainer = styled.ul`
+const QuestionContainer = styled.div`
 margin: 0;
 padding: 0;
 /* width:100%; */
@@ -227,7 +219,7 @@ padding: 0;
 
 `;
 
-const Question = styled.li`
+const Question = styled.div`
 display: flex;
 flex-direction: column;
 overflow: overlay;

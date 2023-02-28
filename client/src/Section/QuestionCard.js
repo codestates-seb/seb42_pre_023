@@ -14,9 +14,11 @@ export default function QuestionCard({ questions }) {
     boardLike,
     boardCmt,
     createdAt,
+    boardTags
   } = questions;
   const newContent = boardContent.slice(0,500);
- 
+  
+
   const timeForToday = (value) => {
     const today = new Date();
     const timeValue = new Date(value);
@@ -62,10 +64,11 @@ export default function QuestionCard({ questions }) {
           <QTitle>{boardTitle}</QTitle>
           <QContent>{newContent}</QContent>
           <QInfoContainer>
-            <Tagbox>
-              <Tag>태그</Tag>
-              <Tag>javaScript</Tag>
-            </Tagbox>
+          <Tagbox>
+            {boardTags.map((boardTag)=>{
+              return <Tag key={boardTag.tagId} >{boardTag.tagName}</Tag>
+            })}
+          </Tagbox>
             <div className="userInfo">
               <span>{memberId} </span>
               <span>asked {date}</span>
@@ -76,9 +79,7 @@ export default function QuestionCard({ questions }) {
     </form>
   );
 }
-//<Tagbox>{questions.boardTags.map((tag)=>{
-//  return <Tag key={questions.boardId}>{tag}</Tag>
-//})}</Tagbox>
+
 
 
 const QContainer = styled.div`
@@ -129,17 +130,18 @@ const QInfoContainer = styled.div`
     font-weight: bold;
   }
 `;
-const Tagbox = styled.div`
+const Tagbox = styled.ul`
   display: flex;
 `;
 
-const Tag = styled.div`
+const Tag = styled.li`
   color: #39739d;
   background-color: #e1ecf4;
   border-radius: 3px;
   margin: 3px;
   padding: 3px;
   font-size: 12px;
+  cursor: pointer;
   :hover{
     background-color: hsl(206,93%,83.5%);
   };
