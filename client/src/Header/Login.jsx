@@ -3,13 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 function Login({ isLogin, setIsLogin}) {
-
+  const navigate = useNavigate();
   const LogOutClick = () => {
     setIsLogin(!isLogin);
     localStorage.removeItem("token");
     sessionStorage.removeItem("login");
     sessionStorage.setItem("login", false);
-    window.location.reload();
+    navigate("/");
   }
 
   return (

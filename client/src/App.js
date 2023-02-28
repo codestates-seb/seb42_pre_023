@@ -86,7 +86,7 @@ function App() {
         >
           <Route path="/" element={<Section />} />
           <Route path="/:tagId" element={<Section tagInfo={tagInfo} />} />
-          <Route path="/userinfo" element={<UserInfo userInfo={userInfo} />} />
+          <Route path="/userinfo" element={<UserInfo userInfo={userInfo} isLogin={isLogin} setIsLogin={setIsLogin}/>} />
           <Route path="/detail/:board" element={<DetailBoard />} />
           <Route path="/create" element={<CreatBoard />} />
         </Route>
