@@ -59,6 +59,13 @@ public class MemberController {
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.memberToMemberResponseDto(member)),HttpStatus.OK);
     }
+    @GetMapping("/info")
+    public ResponseEntity getMember2(@RequestBody MemberDto.Post requestBody) {
+        Member member = memberService.findVerifiedMember2(requestBody.getMemberEmail());
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.memberToMemberResponseDto(member)),
+                HttpStatus.OK);
+    }
 
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(

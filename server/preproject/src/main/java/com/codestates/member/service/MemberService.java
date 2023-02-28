@@ -102,6 +102,15 @@ public class MemberService {
         memberRepository.delete(findMember);
     }
 
+    public Member findVerifiedMember2(String memberEmail) {
+        Optional<Member> optionalMember =
+                memberRepository.findByMemberEmail(memberEmail);
+        Member findMember =
+                optionalMember.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return findMember;
+    }
+
     //왜 필요한지 모르겠음 일단 대기
 //    public Member findMember(long memberId) {
 //        return findVerifiedMember(memberId);
