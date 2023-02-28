@@ -80,6 +80,12 @@ public class BoardService {
         return new PageImpl<>(boards);
     }
 
+    @Transactional
+    public Page<Board> findTagBoards(long tagId) {
+        List<Board> boards = boardRepository.findBoardByTagId(tagId);
+        return new PageImpl<>(boards);
+    }
+
     public Page<Board> findBoards(int page, int size) {
         return boardRepository.findAll(PageRequest.of(page, size,
                 Sort.by("boardId").descending()));

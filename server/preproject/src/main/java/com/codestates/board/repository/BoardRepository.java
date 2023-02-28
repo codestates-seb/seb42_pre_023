@@ -23,4 +23,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Integer updateBoardLike(@Param("id") Long id);
 
     List<Board> findAllByMemberId(Long memberId);
+
+    @Query(value = "SELECT * FROM board WHERE board_id IN (SELECT board_id FROM board_tag WHERE tag_id = :id)", nativeQuery = true)
+    List<Board> findBoardByTagId(@Param("id") Long id);
 }
