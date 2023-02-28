@@ -11,18 +11,15 @@ export default function Layout({
   displayFooter = false,
   isLogin,
   setTagInfo,
+  setIsLogin,
 }) {
 
   return (
     <Wrap>
-      {displayHeader && <Header isLogin={isLogin} />}
-      <Container>
-        {displayNav && <Nav setTagInfo={setTagInfo} />}
-        <Main>
-          <Outlet />
-        </Main>
-      </Container>
-      {displayFooter && <Footer />}   
+      {displayHeader && <Header isLogin={isLogin} setIsLogin ={setIsLogin} />}
+      {displayNav && <Nav setTagInfo={setTagInfo} />}
+      {displayFooter && <Footer />}
+      <Outlet />
     </Wrap>
   );
 }
@@ -34,9 +31,3 @@ const Wrap = styled.div`
   overflow: hidden;
 `;
 
-const Container = styled.div`
-  width: 100%;
-  /* height: 100%; */
-`;
-
-const Main = styled.div``;

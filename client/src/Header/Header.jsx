@@ -20,12 +20,12 @@ const HeaderTemplate = styled.header`
   z-index: 1;
 `;
 
-function Header({isLogin}) {
+function Header({isLogin, setIsLogin}) {
   return (
     <HeaderTemplate>
       <Logo></Logo>
       <Search></Search>
-      <Login isLogin={isLogin}></Login>
+      <Login isLogin={isLogin} setIsLogin={setIsLogin}></Login>
       <MyInfo isLogin={isLogin}></MyInfo>
     </HeaderTemplate>
   );
