@@ -62,7 +62,7 @@ public class BoardControllerTest{
     void patchMember() throws Exception {
         long boardId = getResponseBoardId();
 
-        BoardPatchDto patch = new BoardPatchDto(1L,1L, "커밋이 안돼요", "커밋이 안됩니다.",1, List.of(new BoardTagDto(1L)));
+        BoardPatchDto patch = new BoardPatchDto(1L,1L, "커밋이 안돼요", "커밋이 안됩니다.", List.of(new BoardTagDto(1L)));
         String content = gson.toJson(patch);
         String uri = "/boards/{board-id}";
 
