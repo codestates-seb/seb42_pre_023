@@ -9,7 +9,6 @@ import com.codestates.board.entity.BoardTag;
 import com.codestates.board.repository.BoardRepository;
 import com.codestates.tag.entity.Tag;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityNotFoundException;
@@ -32,12 +31,6 @@ public interface BoardMapper {
         if (requestBody.getBoardContent() != null) {
             board.setBoardContent(requestBody.getBoardContent());
         }
-        if (requestBody.getBoardLike() != null) {
-            board.setBoardLike(requestBody.getBoardLike());
-        }
-        if (requestBody.getBoardCmt() != null) {
-            board.setBoardCmt(requestBody.getBoardCmt());
-        }
         if (requestBody.getBoardTags() != null) {
             List<BoardTag> boardTags = requestBody.getBoardTags().stream()
                     .map(boardTagDto -> {
@@ -59,10 +52,8 @@ public interface BoardMapper {
         board.setBoardTitle(boardPost.getBoardTitle());
         board.setBoardContent(boardPost.getBoardContent());
         board.setBoardViews(0);
-        board.setBoardLike(boardPost.getBoardLike());
-        if(boardPost.getBoardLike() == null) { board.setBoardLike(0); }
-        board.setBoardCmt(boardPost.getBoardCmt());
-        if(boardPost.getBoardCmt() == null) { board.setBoardCmt(0L); }
+        board.setBoardLike(0);
+        board.setBoardCmt(0);
 
         List<BoardTag> boardTags = boardPost.getBoardTags().stream()
                 .map(boardTagDto -> {
