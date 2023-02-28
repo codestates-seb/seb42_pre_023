@@ -14,12 +14,8 @@ import java.util.List;
 public class BoardPatchDto {
     private Long boardId;
     private Long memberId;
-    @NotBlank(message = "제목을 입력해주세요")
     private String boardTitle;
-    @NotBlank(message = "내용을 입력해주세요")
     private String boardContent;
-    private Integer boardLike;
-    private Long boardCmt;
     private List<BoardTagDto> boardTags;
 
     public void setBoardId(long boardId) {
