@@ -56,10 +56,6 @@ public class BoardService {
                 .ifPresent(boardTitle -> findBoard.setBoardTitle(boardTitle));
         Optional.ofNullable(board.getBoardContent())
                 .ifPresent(boardContent -> findBoard.setBoardContent(boardContent));
-        Optional.ofNullable(board.getBoardLike())
-                .ifPresent(boardLike -> findBoard.setBoardLike(boardLike));
-        Optional.ofNullable(board.getBoardCmt())
-                .ifPresent(boardCmt -> findBoard.setBoardCmt(boardCmt));
 
         MemberLog memberLog = memberLogService.createBoardLog(findBoard);
         memberLog.setLogActive(MemberLog.LogActive.BOARD_MODIFIED);
