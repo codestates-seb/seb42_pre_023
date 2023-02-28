@@ -10,7 +10,7 @@ const getRandomNumber = (min, max) => {
 
 let getRandomProfile = `https://randomuser.me/api/portraits/lego/${getRandomNumber(1,9)}.jpg`;
 
-function UserProfile({isLogin, setIsLogin}) {
+function UserProfile({isLogin, setIsLogin, userInfo}) {
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,14 +26,14 @@ function UserProfile({isLogin, setIsLogin}) {
   const ModalClose = () => setIsModalOpen(!isModalOpen);
 
   const ModalSubmit = () => {
-    setIsModalOpen(!isModalOpen);
-    setIsLogin(!isLogin);
-    localStorage.removeItem("token");
-    sessionStorage.removeItem("login");
-    sessionStorage.setItem("login", false);
     axios
-      .delete('/member/:member-id')
+      .delete(`/api/pre/members/${userInfo.memberId}`)
       .then(() => {
+        setIsModalOpen(!isModalOpen);
+        setIsLogin(!isLogin);
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("login");
+        sessionStorage.setItem("login", false);
         alert("삭제에 성공 하셨습니다.");
         navigate("/");
       })
@@ -66,12 +66,12 @@ function UserProfile({isLogin, setIsLogin}) {
       </UserProfileTemplate>
       {isModalOpen ?  
         <ModalOverlay>
-          <div class="modal">
-            <div class="modal-content">
+          <div className="modal">
+            <div className="modal-content">
               <h2>회원 탈퇴</h2>
               <p>진행 하시겠습니까?</p>
-              <button class="modal-submit-btn" onClick={ModalSubmit}>확인</button>
-              <button class="modal-close-btn" onClick={ModalClose}>취소</button>
+              <button className="modal-submit-btn" onClick={ModalSubmit}>확인</button>
+              <button className="modal-close-btn" onClick={ModalClose}>취소</button>
             </div>
           </div>
         </ModalOverlay>

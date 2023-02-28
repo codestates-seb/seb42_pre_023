@@ -16,12 +16,12 @@ const BodyScreenDeployment = styled.div`
   left: 300px;
 `
 
-function UserInfo({isLogin, setIsLogin}) {
+function UserInfo({isLogin, setIsLogin, userInfo}) {
 
   return (
     <BodyScreenDeployment>
       <UserInfoBackground>
-        <UserProfile isLogin={isLogin} setIsLogin={setIsLogin}/>
+        <UserProfile isLogin={isLogin} setIsLogin={setIsLogin} userInfo={userInfo} />
         <MyQuestion/>
       </UserInfoBackground>
     </BodyScreenDeployment>

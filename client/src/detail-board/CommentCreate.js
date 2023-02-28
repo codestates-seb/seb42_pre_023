@@ -3,25 +3,27 @@ import styled from "styled-components";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-export default function CommentCreate() {
+export default function CommentCreate({userInfo}) {
+  const { board } = useParams();
   const [text, setText] = useState("");
+  
+  const createCmt = async (data) => {
+    return axios.post("/api/pre/comments", data)
+    .then((res) => console.log(res.data))
+  }
 
   const handleSubmit = (e) => {
     e.preventdefault();
     console.log(text);
     createCmt({
-      borderId: "게시글 아이디",
-      memberId: "현재 로그인 된 유저 아이디 정보 (로그인 안 되어 있으면 댓글 작성 X)",
+      borderId: board,
+      memberId: userInfo.memberId,
       commentContent: { text },
     });
     setText("");
   };
-
-  const createCmt = async (data) => {
-    return axios.post("/DUMMYDATA/comments.json", data)
-    .then((res) => console.log(res.data))
-  }
 
   return (
     <Form onSubmit={handleSubmit}>

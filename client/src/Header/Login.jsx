@@ -7,8 +7,8 @@ function Login({ isLogin, setIsLogin}) {
   const LogOutClick = () => {
     setIsLogin(!isLogin);
     localStorage.removeItem("token");
-    sessionStorage.removeItem("login");
     sessionStorage.setItem("login", false);
+    sessionStorage.removeItem("id");
     navigate("/");
   }
 

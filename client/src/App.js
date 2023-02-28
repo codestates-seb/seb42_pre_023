@@ -39,25 +39,40 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
-  const [tagInfo, setTagInfo] = useState('');
+  const [tagInfo, setTagInfo] = useState("");
   const displayHeader = true;
   const displayNav = true;
   const displayFooter = true;
 
-  useEffect(()=>{
-    window.scrollTo(0,0);
-    if(sessionStorage.getItem("login") === 'true'){
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (sessionStorage.getItem("login") === "true") {
       setIsLogin(!isLogin);
     }
-    if(sessionStorage.getItem("login") === 'false'){
+    if (sessionStorage.getItem("login") === "false") {
       setIsLogin(isLogin);
     }
- 
-    const token = localStorage.getItem('token');
-    axios.get("/api/pre/members/1", {
-      headers: { authorization: token },
-    }).then(res => setUserInfo(res.body))
-  },[]);
+
+    // const token = localStorage.getItem("token");
+    const id = sessionStorage.getItem("id");
+    // axios({
+    //   url: "/api/pre/members/info",
+    //   method: 'get',
+    //   headers: { "ngrok-skip-browser-warning": "230228" },
+    //   data: {
+    //     memberEmail: id
+    //   }
+    // }).then((res) => console.log(res))
+    axios
+      .get("/api/pre/members?page=1&size=15", {
+        headers: { "ngrok-skip-browser-warning": "230228" },
+      })
+      .then((res) =>
+        res.data.data.filter((user) =>
+          user.memberEmail === id ? setUserInfo(user) : null
+        )
+      );
+  }, []);
 
   return (
     <>
@@ -86,12 +101,13 @@ function App() {
         >
           <Route path="/" element={<Section />} />
           <Route path="/:tagId" element={<Section tagInfo={tagInfo} />} />
+
           <Route path="/userinfo" element={<UserInfo userInfo={userInfo} isLogin={isLogin} setIsLogin={setIsLogin}/>} />
-          <Route path="/detail/:board" element={<DetailBoard />} />
+          <Route path="/detail/:board" element={<DetailBoard userInfo={userInfo} />} />
           <Route path="/create" element={<CreatBoard />} />
         </Route>
       </Routes>
-      <TopButton/>
+      <TopButton />
     </>
   );
 }

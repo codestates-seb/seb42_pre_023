@@ -7,46 +7,21 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const getBoard = async () => {
-  return axios.get("/DUMMYDATA/boards.json");
-};
-
-const getName = async () => {
-  // try {
-  //   const response = await axios.get("/api/pre/members/1", {
-  //     headers: {"ngrok-skip-browser-warning": "230227"},
-  //   });
-  //   if (response && response.data) {
-  //     return response.data;
-  //   } else {
-  //     throw new Error("Invalid response data");
-  //   }
-  // } catch (error) {
-  //   console.error(error);
-  // }
-  return axios.get("/api/pre/members/1", {
+  return axios.get("/api/pre/boards?page=1&size=15", {
     headers: { "ngrok-skip-browser-warning": "230227" },
   });
 };
-// const getTag = async () => {
-//   return axios.get("");
-// }
 
-// const getTagName = async () =>  {
-//   return axios.get("")
-//   .then((res) => res.filter((tag) => tag.tagId === tagId))
-// }
-
-const updateLike = async (data) => {
-  // console.log(data)
-  return axios.patch("/DUMMYDATA/boards.json", data);
+const getName = async () => {
+  return axios.get("/api/pre/members?page=1&size=15", {
+    headers: { "ngrok-skip-browser-warning": "230227" },
+  });
 };
 
-export default function DetailBoard() {
+export default function DetailBoard({userInfo}) {
+  const { board } = useParams();
   const [boardData, setBoardData] = useState("");
   const [memberName, setMemberName] = useState("");
-  const [like, setLike] = useState(false);
-  const [likeNum, setLikeNum] = useState(0);
-  const { board } = useParams();
   const {
     memberId,
     boardTitle,
@@ -55,38 +30,60 @@ export default function DetailBoard() {
     boardLike,
     boardCmt,
     createdAt,
+    boardTags,
   } = boardData;
-  // const { tagId } = getTag(0);
-  // const { tagName } = getTagName();
-
+  const [like, setLike] = useState(false);
   const date = new Date(createdAt).toLocaleString();
 
+  
   useEffect(() => {
-    getBoard().then((res) =>
-      res.data.filter((el) => (el.boardId == board ? setBoardData(el) : null))
+    getBoard().then((res) => {
+      return res.data.data.filter((el) =>
+      el.boardId == board ? setBoardData(el) : null
+      );
+    });
+    getName().then((res) =>
+    res.data.data.filter((el) =>
+    el.memberId === memberId ? setMemberName(el.memberName) : ""
+    )
     );
-    getName()
-      .then((res) => setMemberName(res.data.data.memberName)
-        // res.data.filter((el) =>
-        //   el.memberId === memberId ? setMemberName(el.memberName) : ""
-        // )
-      )
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [board, memberId]);
+  }, []);
+  
+  useEffect(() => {
+    if (sessionStorage.getItem("like") === "true") {
+      setLike(!like);
+    }
+    if (sessionStorage.getItem("like") === "false") {
+      setLike(like);
+    }
+  }, [])
+
+  const updateLike = async (data) => {
+    console.log(data);
+    return axios.patch(`/api/pre/boards/${board}`, data);
+  };
 
   const handleClick = () => {
     const likeUser = [];
-    setLike(!like);
-    if (like === false && likeUser.indexOf("memberId") === -1) {
-      updateLike(likeNum + 1);
-      setLikeNum(likeNum + 1);
-      likeUser.push("memberId");
+    setLike(!like)
+    if (like === false && likeUser.indexOf('memberId') === -1) {
+      likeUser.push('memberId');
+      sessionStorage.setItem('like', true);
+      updateLike({
+        boardTitle,
+        boardContent,
+        boardLike: boardLike + 1,
+      });
+      window.location.reload();
     } else {
-      updateLike(likeNum - 1);
-      setLikeNum(likeNum - 1);
-      likeUser.filter((el) => el !== "memberId");
+      likeUser.filter((el) => el !== 'memberId');
+      sessionStorage.setItem('like', false);
+      updateLike({
+        boardTitle,
+        boardContent,
+        boardLike: boardLike - 1,
+      });
+      window.location.reload();
     }
   };
 
@@ -105,11 +102,9 @@ export default function DetailBoard() {
       </Info>
       <div className="post-content">{boardContent}</div>
       <div className="tag-list">
-        {/* {tagName.map((tag) => {
-            <button>{tag}</button>
-        })} */}
-        <button>java</button>
-        <button>javascript</button>
+        {/* {boardTags.map((tag) => (
+          <button key={tag.tagId}>{tag.tagName}</button>
+        ))} */}
       </div>
       <Look>
         <div onClick={handleClick}>
@@ -124,7 +119,7 @@ export default function DetailBoard() {
           <BiShare className="icon" /> Share
         </div>
       </Look>
-      <Comment boardCmt={boardCmt} />
+      <Comment boardCmt={boardCmt} userInfo={userInfo} />
     </PostWrap>
   );
 }
