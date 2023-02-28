@@ -21,11 +21,8 @@ import java.util.Optional;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
-
     private final MemberRepository memberRepository;
-
     private final MemberLogService memberLogService;
-
     public BoardService(BoardRepository boardRepository, MemberRepository memberRepository, MemberLogService memberLogService) {
         this.boardRepository = boardRepository;
         this.memberRepository = memberRepository;
@@ -45,7 +42,6 @@ public class BoardService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Board updateBoard(Board board) {
         Board findBoard = findVerifiedBoard(board.getBoardId());
-
         Optional.ofNullable(board.getMemberId())
                 .ifPresent(memberId -> findBoard.setMemberId(memberId));
         Optional.ofNullable(board.getBoardTitle())
