@@ -41,7 +41,8 @@ public class MemberLog {
         BOARD_DELETED("게시글 삭제"),
         COMMENT_CREATED("댓글 작성"),
         COMMENT_MODIFIED("댓글 수정"),
-        COMMENT_DELETED("댓글 삭제")
+        COMMENT_DELETED("댓글 삭제"),
+        VIEWS_ADD("게시글 조회")
         ;
 
         @Getter

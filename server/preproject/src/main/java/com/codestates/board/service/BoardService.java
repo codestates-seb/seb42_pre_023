@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.ResultSet;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -112,8 +113,18 @@ public class BoardService {
     }
 
     @Transactional
-    public int updateBoardViews(Long boardId) {
-        return boardRepository.updateBoardViews(boardId);
+    public int updateBoardViews(Long boardId, Long memberId) {
+
+        Board board = findVerifiedBoard(boardId);
+        Integer rs = boardRepository.findBoardViewsCheck(boardId, memberId);
+        if ( rs == null) {
+            MemberLog memberLog = memberLogService.createBoardLog(board);
+            memberLog.setLogActive(MemberLog.LogActive.VIEWS_ADD);
+            memberLog.setMemberId(memberId);
+            memberLogService.saveMemberLog(memberLog);
+            return boardRepository.updateBoardViews(boardId);
+        }
+        return 0;
     }
 
     @Transactional

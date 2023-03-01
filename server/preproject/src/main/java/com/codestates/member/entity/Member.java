@@ -37,7 +37,7 @@ public class Member {
         MEMBER_NOMAL("일반등급"),
         MEMBER_BRONZE("브론즈"),
         MEMBER_SILVER("실버"),
-        MEBER_GOLD("골드"),
+        MEMBER_GOLD("골드"),
         ;
 
         @Getter

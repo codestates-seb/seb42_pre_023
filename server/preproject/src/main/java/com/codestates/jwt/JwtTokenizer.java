@@ -3,10 +3,7 @@ package com.codestates.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
-import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -24,8 +21,7 @@ import java.util.Map;
 @Component
 public class JwtTokenizer {
     @Getter
-    @Value("{jwt.key.secret}")
-    private String secretKey;
+    private String secretKey = generateRandomSecretKey();
     @Getter
     @Value("${jwt.access-token-expiration-minutes}")
     private int accessTokenExpirationMinutes;
@@ -34,6 +30,7 @@ public class JwtTokenizer {
     @Value("${jwt.refresh-token-expiration-minutes}")
     private int refreshTokenExpirationMinutes;
 
+
     public String encodeBase64SecretKey(String secretKey) {
         return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
     }
@@ -41,8 +38,8 @@ public class JwtTokenizer {
     public String generateAccessToken(Map<String, Object> claims,
                                       String subject,
                                       Date expiration,
-                                      String generateRandomSecretKey) {
-        Key key = getKeyFromBase64EncodedKey(generateRandomSecretKey);
+                                      String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -53,8 +50,8 @@ public class JwtTokenizer {
                 .compact();
     }
 
-    public String generateRefreshToken(String subject, Date expiration, String generateRandomSecretKey) {
-        Key key = getKeyFromBase64EncodedKey(generateRandomSecretKey);
+    public String generateRefreshToken(String subject, Date expiration, String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         return Jwts.builder()
                 .setSubject(subject)
@@ -64,8 +61,8 @@ public class JwtTokenizer {
                 .compact();
     }
 
-    public Jws<Claims> getClaims(String jws, String generateRandomSecretKey) {
-        Key key = getKeyFromBase64EncodedKey(generateRandomSecretKey);
+    public Jws<Claims> getClaims(String jws, String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         Jws<Claims> claims = Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -74,8 +71,8 @@ public class JwtTokenizer {
         return claims;
     }
 
-    public void verifySignature(String jws, String generateRandomSecretKey) {
-        Key key = getKeyFromBase64EncodedKey(generateRandomSecretKey);
+    public void verifySignature(String jws, String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -91,16 +88,17 @@ public class JwtTokenizer {
 
         return expiration;
     }
-    public String generateRandomSecretKey() {
+
+    private static  String generateRandomSecretKey() {
         SecureRandom random = new SecureRandom();
         byte[] keyBytes = new byte[32];
         random.nextBytes(keyBytes);
         return Base64.getEncoder().encodeToString(keyBytes);
     }
 
-    private Key getKeyFromBase64EncodedKey(String generateRandomSecretKey) {
+    private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
 
-        byte[] decodedKey = Base64.getDecoder().decode(generateRandomSecretKey);
+        byte[] decodedKey = Base64.getDecoder().decode(base64EncodedSecretKey);
         return new SecretKeySpec(decodedKey, "HmacSHA256");
 
     }
