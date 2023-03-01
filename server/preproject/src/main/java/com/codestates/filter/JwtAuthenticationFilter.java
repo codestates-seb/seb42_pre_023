@@ -67,9 +67,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String subject = member.getMemberEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 
-        String generateRandomSecretKey = jwtTokenizer.generateRandomSecretKey();
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
-        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, generateRandomSecretKey);
+        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
 
         return accessToken;
     }
@@ -78,9 +78,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private String delegateRefreshToken(Member member) {
         String subject = member.getMemberEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
-        String generateRandomSecretKey = jwtTokenizer.generateRandomSecretKey();
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
-        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, generateRandomSecretKey);
+        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
 
         return refreshToken;
     }

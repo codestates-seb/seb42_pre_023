@@ -6,8 +6,10 @@ import com.codestates.board.entity.Board;
 import com.codestates.board.mapper.BoardMapper;
 import com.codestates.board.repository.BoardRepository;
 import com.codestates.board.service.BoardService;
+import com.codestates.jwt.JwtTokenizer;
 import com.codestates.utils.UriCreator;
-import org.springframework.ui.Model;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codestates.dto.MultiResponseDto;
@@ -19,11 +21,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 
 @RestController
@@ -36,10 +39,13 @@ public class BoardController {
     private final BoardMapper mapper;
     private final BoardRepository boardRepository;
 
-    public BoardController(BoardService boardService, BoardMapper mapper, BoardRepository boardRepository) {
+    private final JwtTokenizer jwtTokenizer;
+
+    public BoardController(BoardService boardService, BoardMapper mapper, BoardRepository boardRepository, JwtTokenizer jwtTokenizer) {
         this.boardService = boardService;
         this.mapper = mapper;
         this.boardRepository = boardRepository;
+        this.jwtTokenizer = jwtTokenizer;
     }
 
     @PostMapping
@@ -68,10 +74,18 @@ public class BoardController {
 
     @GetMapping("/{board-id}")
     public ResponseEntity getBoard (
-            @PathVariable("board-id") @Positive long boardId, Model model) {
+            @PathVariable("board-id") @Positive long boardId,
+            HttpServletRequest request) {
+
+        String jws = request.getHeader("Authorization").replace("Bearer ", "");
+        String base64EncodedSecretKey  = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+        Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey ).getBody();
+
+        Long memberId = Long.valueOf(claims.get("memberId").toString());
+
         Board board = boardService.findBoard(boardId);
-        boardService.updateBoardViews(boardId);
-        model.addAttribute("board", board);
+        boardService.updateBoardViews(boardId, memberId);
+
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.boardToBoardResponse(board))
                 , HttpStatus.OK);
