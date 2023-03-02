@@ -89,7 +89,7 @@ return(
      <Link to='/create'><AskQButton>Ask Question</AskQButton> </Link>
       </H1>
     <H2>
-      <QCount> questions</QCount>  
+      <QCount>questions</QCount>  
       <FilterWrap>
       <Button onClick={handleViews}>Views</Button>
       <Button onClick={handleAnswer}>Anwsers</Button>
@@ -100,11 +100,11 @@ return(
 
   <QuestionContainer>
     <Question >
-    {questionList.slice(items*(page-1),items*(page-1)+items).map((questions)=>{
+    {/* {questionList.slice(items*(page-1),items*(page-1)+items).map((questions)=>{
       return(
         <QuestionCard key={questions.boardId} questions={questions} />
       )
-    })}
+    })} */}
     </Question>
     <PaginationBox>
         <Pagination
