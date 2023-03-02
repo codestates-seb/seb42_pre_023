@@ -9,6 +9,7 @@ function Login({ isLogin, setIsLogin}) {
     localStorage.removeItem("token");
     sessionStorage.setItem("login", false);
     sessionStorage.removeItem("id");
+    sessionStorage.removeItem("like");
     navigate("/");
   }
 

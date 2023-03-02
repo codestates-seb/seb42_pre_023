@@ -18,9 +18,9 @@ const getName = async () => {
   });
 };
 
-export default function DetailBoard({userInfo}) {
+export default function DetailBoard({ userInfo }) {
   const { board } = useParams();
-  const [boardData, setBoardData] = useState("");
+  const [boardData, setBoardData] = useState({ boardLike: +1, boardTags: [] });
   const [memberName, setMemberName] = useState("");
   const {
     memberId,
@@ -35,20 +35,19 @@ export default function DetailBoard({userInfo}) {
   const [like, setLike] = useState(false);
   const date = new Date(createdAt).toLocaleString();
 
-  
   useEffect(() => {
     getBoard().then((res) => {
       return res.data.data.filter((el) =>
-      el.boardId == board ? setBoardData(el) : null
+        el.boardId == board ? setBoardData(el) : null
       );
     });
     getName().then((res) =>
-    res.data.data.filter((el) =>
-    el.memberId === memberId ? setMemberName(el.memberName) : ""
-    )
+      res.data.data.filter((el) =>
+        el.memberId === memberId ? setMemberName(el.memberName) : ""
+      )
     );
-  }, []);
-  
+  }, [boardLike]);
+
   useEffect(() => {
     if (sessionStorage.getItem("like") === "true") {
       setLike(!like);
@@ -56,34 +55,33 @@ export default function DetailBoard({userInfo}) {
     if (sessionStorage.getItem("like") === "false") {
       setLike(like);
     }
-  }, [])
+  }, []);
 
-  const updateLike = async (data) => {
-    console.log(data);
-    return axios.patch(`/api/pre/boards/${board}`, data);
+  const updateLike = async () => {
+    return axios
+      .get(`/api/pre/boards/boardLike/${board}`, {
+        headers: { "ngrok-skip-browser-warning": "230227" },
+      })
+      .then((res) => console.log(res.data.data));
   };
 
+  const isLogin = sessionStorage.getItem('login')
   const handleClick = () => {
-    const likeUser = [];
-    setLike(!like)
-    if (like === false && likeUser.indexOf('memberId') === -1) {
-      likeUser.push('memberId');
-      sessionStorage.setItem('like', true);
-      updateLike({
-        boardTitle,
-        boardContent,
-        boardLike: boardLike + 1,
-      });
-      window.location.reload();
-    } else {
-      likeUser.filter((el) => el !== 'memberId');
-      sessionStorage.setItem('like', false);
-      updateLike({
-        boardTitle,
-        boardContent,
-        boardLike: boardLike - 1,
-      });
-      window.location.reload();
+    // const likeUser = [];
+    // && likeUser.indexOf(userInfo.memberId) === -1
+    if (userInfo !== {}) {
+      // likeUser.push(userInfo.memberId);
+      if (like === false) {
+        sessionStorage.setItem("like", true);
+        updateLike();
+        window.location.reload();
+      } 
+    } else if (userInfo === {} || isLogin === false) {
+      alert('로그인 후 이용해주세요.')
+      // likeUser.filter((el) => el !== userInfo.memberId);
+      // sessionStorage.setItem("like", false);
+      // updateLike();
+      // window.location.reload();
     }
   };
 
@@ -102,9 +100,9 @@ export default function DetailBoard({userInfo}) {
       </Info>
       <div className="post-content">{boardContent}</div>
       <div className="tag-list">
-        {/* {boardTags.map((tag) => (
+        {boardTags.map((tag) => (
           <button key={tag.tagId}>{tag.tagName}</button>
-        ))} */}
+        ))}
       </div>
       <Look>
         <div onClick={handleClick}>

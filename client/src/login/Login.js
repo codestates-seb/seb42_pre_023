@@ -82,7 +82,7 @@ export default function Login({ setIsLogin }) {
             <p>로그인 상태 유지하기</p>
           </label>
           <div className="text">
-            Forget your <span className="link">email</span> or{" "}
+            Forget your <span className="link">email</span>
             <span className="link">password</span> ?
           </div>
           <Button login="#ef8236" type="submit" onClick={loginRequest}>

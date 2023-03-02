@@ -38,8 +38,8 @@ const GlobalStyle = createGlobalStyle`
 //! App.js는 항상 이 상태로 형식을 유지할 것.
 function App() {
   const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
-  const [tagInfo, setTagInfo] = useState("");
+  const [userInfo, setUserInfo] = useState({});
+  const [tagInfo, setTagInfo] = useState({});
   const displayHeader = true;
   const displayNav = true;
   const displayFooter = true;
@@ -54,7 +54,6 @@ function App() {
     }
 
     // const token = localStorage.getItem("token");
-    const id = sessionStorage.getItem("id");
     // axios({
     //   url: "/api/pre/members/info",
     //   method: 'get',
@@ -63,6 +62,7 @@ function App() {
     //     memberEmail: id
     //   }
     // }).then((res) => console.log(res))
+    const id = sessionStorage.getItem("id");
     axios
       .get("/api/pre/members?page=1&size=15", {
         headers: { "ngrok-skip-browser-warning": "230228" },

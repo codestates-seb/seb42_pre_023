@@ -26,7 +26,7 @@ export default function Layout({
 
 const Wrap = styled.div`
   width: 100%;
-  height: 1700px;
+  height: 2000px;
   position: relative;
   overflow: hidden;
 `;

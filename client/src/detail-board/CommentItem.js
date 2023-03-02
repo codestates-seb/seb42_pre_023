@@ -4,15 +4,17 @@ import {FaRegUserCircle} from "react-icons/fa";
 import axios from "axios";
 
 const getName = async () => {
-    return axios.get('/DUMMYDATA/members.json')
-}
+  return axios.get("/api/pre/members?page=1&size=15", {
+    headers: { "ngrok-skip-browser-warning": "230227" },
+  });
+};
 
 export default function CommentItem({memberId, commentContent, createdAt}) {
   const [name, setName] = useState('');
   const date = new Date(createdAt).toLocaleString();
 
   useEffect(() => {
-    getName().then((res) => res.data.filter((el) => el.memberId === memberId ? setName(el.memberName) : ''))
+    getName().then((res) => res.data.data.filter((el) => el.memberId === memberId ? setName(el.memberName) : ''))
   })
 
   return (
@@ -33,7 +35,6 @@ const Item = styled.li`
   list-style: none;
   margin-top: 1rem; 
   padding: 1rem;
-  border-bottom: 1px solid #ccc;
   .user {
     display: flex;
     justify-content: space-between;
