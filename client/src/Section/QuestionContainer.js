@@ -68,11 +68,13 @@ function QuestionContainer({ questionList }) {
     setPage(page);
   };
 
+  console.log(questionList)
+
   return (
     <Container>
       <Question>
         {questionList
-          .slice(items * (page - 1), items * (page - 1) + items)
+          // .slice(items * (page - 1), items * (page - 1) + items)
           .map((questions) => {
             return (
               <QuestionCard key={questions.boardId} questions={questions} />
