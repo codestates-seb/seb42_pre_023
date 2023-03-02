@@ -17,22 +17,27 @@ export default function QuestionList() {
   const [items, setItems] = useState(15);
 
   const handlePageChange = (page) => {
+<<<<<<< HEAD
     setPage(page); 
   };
 
+=======
+     setPage(page); 
+    };
+
+    // const getQList = async () => {
+    //   return axios.get("/api/pre/boards?page=1&size=15", {
+    //     headers: { "ngrok-skip-browser-warning": "230227" },
+    //   })
+    // };
+  const getQList = async () => {
+      return axios.get("/DUMMYDATA/boards.json")
+    };
+>>>>>>> ba4183e10ec3d37a8c34de9f979a63e85a29403e
   useEffect(() => {
     getQList().then((res) => setquestionList(res.data.data));
   }, []);
 
-  //   //조회수 
-//   const updateView = async (data) => {
-//     const response = await fetch('', {
-//         method: '',
-//         headers: {'Content-Type': 'application/json'},
-//         body: JSON.stringify({data})
-//       })
-//     return await response.json();
-// }
 
 //ask question 로그인 여부 navigate
 
@@ -219,8 +224,7 @@ margin: 0;
 padding: 0;
 /* width:100%; */
 /* height: 100%; */
-
-`;
+`
 
 const Question = styled.div`
 display: flex;
