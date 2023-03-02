@@ -37,8 +37,9 @@ const GlobalStyle = createGlobalStyle`
 `;
 //! App.js는 항상 이 상태로 형식을 유지할 것.
 function App() {
+  const [data, setData] = useState([]);
   const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
   const [tagInfo, setTagInfo] = useState([]);
   const displayHeader = true;
   const displayNav = true;
@@ -62,18 +63,16 @@ function App() {
     //     memberEmail: id
     //   }
     // }).then((res) => console.log(res))
-    const id = sessionStorage.getItem("id");
     axios
       .get("/api/pre/members?page=1&size=15", {
         headers: { "ngrok-skip-browser-warning": "230228" },
       })
-      .then((res) =>
-        res.data.data.filter((user) =>
-          user.memberEmail === id ? setUserInfo(user) : null
-        )
-      );
-  }, []);
+      .then((res) => setData(res.data.data));
 
+      const id = sessionStorage.getItem("id");
+      data.filter((user) => (user.memberEmail === id ? setUserInfo(user) : null));
+  }, []);
+    
   return (
     <>
       <GlobalStyle />
@@ -95,15 +94,31 @@ function App() {
               displayFooter={displayFooter}
               isLogin={isLogin}
               setIsLogin={setIsLogin}
-              setTagInfo={setTagInfo} 
+              setTagInfo={setTagInfo}
             />
-          }s
+          }
+          s
         >
           <Route path="/" element={<Section />} />
           <Route path="/:tagId" element={<Section tagInfo={tagInfo} />} />
-          <Route path="/userinfo" element={<UserInfo userInfo={userInfo} isLogin={isLogin} setIsLogin={setIsLogin}/>} />
-          <Route path="/detail/:board" element={<DetailBoard userInfo={userInfo} />} />
-          <Route path="/create" element={<CreatBoard memberId={userInfo.memberId}/>} />
+          <Route
+            path="/userinfo"
+            element={
+              <UserInfo
+                userInfo={userInfo}
+                isLogin={isLogin}
+                setIsLogin={setIsLogin}
+              />
+            }
+          />
+          <Route
+            path="/detail/:board"
+            element={<DetailBoard userInfo={userInfo} />}
+          />
+          <Route
+            path="/create"
+            element={<CreatBoard memberId={userInfo.memberId} />}
+          />
         </Route>
       </Routes>
       <TopButton />
