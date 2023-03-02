@@ -1,0 +1,54 @@
+[
+  {
+    "boardId": 1,
+    "memberId": 1,
+    "boardTitle": "The Best Video Game Soundtracks of All Time",
+    "boardContent": "Video game soundtracks have come a long way . From epic orchestral scores to catchy chiptunes, video game music has become an art form in its own right. What are your favorite video game soundtracks? Let's share and discuss!",
+    "boardViews": 5,
+    "boardLike": 30,
+    "boardCmt": 3,
+    "createdAt": "2022-11-22 12:32:32.433",
+    "boardTags": [
+      {
+        "tagId": 11,
+        "tagName":"JavaScript"
+      }
+    ]
+  },
+  {
+    "boardId": 2,
+    "memberId": 2,
+    "boardTitle": "Asking for input until desired result, then returning result",
+    "boardContent": "I'm currently building a Rock Paper Scissors game and trying to ask the user for their choice and then returning their choice. I'm using a while loop to continue to prompt the user for their choice until it is valid, but it continues to prompt even when I give it my desired answer.",
+    "boardViews": 10,
+    "boardLike": 20,
+    "boardCmt": 2,
+    "createdAt": "2023-2-25 12:32:32.433",
+    "boardTags": [
+      {
+        "tagId": 12,
+        "tagName":"Java"
+      }
+    ]
+  },
+  {
+    "boardId": 3,
+    "memberId": 3,
+    "boardTitle": "Asking for input until desired result, then returning result",
+    "boardContent": "I'm currently building a Rock Paper Scissors game and trying to ask the user for their choice and then returning their choice. I'm using a while loop to continue to prompt the user for their choice until it is valid, but it continues to prompt even when I give it my desired answer.",
+    "boardViews": 15,
+    "boardLike": 10,
+    "boardCmt": 1,
+    "createdAt": "2023-2-26 12:32:32.433",
+    "boardTags": [
+      {
+        "tagId": 13,
+        "tagName":"HTML"
+      },
+      {
+        "tagId":16,
+        "tagName":"C#"
+      }
+    ]
+  }
+]
