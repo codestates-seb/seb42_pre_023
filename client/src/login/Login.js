@@ -32,12 +32,16 @@ export default function Login({ setIsLogin }) {
       }),
     })
       .then((res) => {
-        localStorage.setItem('token', res.headers.get('authorization'));
-        sessionStorage.setItem('login', true);
-        sessionStorage.setItem('id', idInfo)
-        setIsLogin(true);
-        setErrorMsg("");
-        navigate('/');
+        if(res.status === 400 || res.status === 401) {
+          setErrorMsg("로그인에 실패했습니다.");
+        } else {
+          localStorage.setItem('token', res.headers.get('authorization'));
+          sessionStorage.setItem('login', true);
+          sessionStorage.setItem('id', idInfo)
+          setIsLogin(true);
+          setErrorMsg("");
+          navigate('/');
+        }
       })
       .catch((error) => {
         // console.log(error);

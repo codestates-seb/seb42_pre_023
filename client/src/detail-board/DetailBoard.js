@@ -49,10 +49,10 @@ export default function DetailBoard({ userInfo }) {
   }, [boardLike]);
 
   useEffect(() => {
-    if (sessionStorage.getItem("like") === "true") {
+    if (sessionStorage.getItem(`like${board}`) === "true") {
       setLike(!like);
     }
-    if (sessionStorage.getItem("like") === "false") {
+    if (sessionStorage.getItem(`like${board}`) === "false") {
       setLike(like);
     }
   }, []);
@@ -67,12 +67,12 @@ export default function DetailBoard({ userInfo }) {
 
   const isLogin = sessionStorage.getItem('login')
   const handleClick = () => {
-    // const likeUser = [];
-    // && likeUser.indexOf(userInfo.memberId) === -1
+    const likeUser = [];
     if (userInfo !== {}) {
-      // likeUser.push(userInfo.memberId);
-      if (like === false) {
-        sessionStorage.setItem("like", true);
+      if (like === false && likeUser.indexOf(userInfo.memberId) === -1) {
+        likeUser.push(userInfo.memberId)
+        localStorage.setItem(`likeUser${board}`, likeUser)
+        sessionStorage.setItem(`like${board}`, true);
         updateLike();
         window.location.reload();
       } 

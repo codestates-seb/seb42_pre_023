@@ -2,59 +2,32 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 
 export default function CommentCreate({ userInfo }) {
   const { memberId } = userInfo;
   const { board } = useParams();
+  const boardId = Number(board)
   const [text, setText] = useState("");
+  const tagInfo = text.replace(/<\/?p>/gi, '')
 
-  // const createCmt = async () => {
-  //   return axios
-  //     .post("/api/pre/comments", {
-  //       borderId: board,
-  //       memberId,
-  //       commentContent: text,
-  //     })
-  // };
   const createCmt = async () => {
     const res = await fetch("/api/pre/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        borderId: board,
+        boardId: boardId,
         memberId,
-        commentContent: text,
+        commentContent: tagInfo,
       }),
     });
     return res.json()
   };
 
-  // const cmtRequest = () => {
-  //   if (userInfo !== {}) {
-  //     return fetch("/api/pre/comments", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         borderId: board,
-  //         memberId,
-  //         commentContent: text,
-  //       }),
-  //     })
-  //     .then((res) => {
-  //       console.log(res)
-  //     })
-  //     .catch((err) => console.log(err))
-  //   } else {
-  //     alert("로그인 후 이용해주세요.")
-  //   }
-  // };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (userInfo !== {}) {
-      createCmt().then((res) => console.log(res));
+      createCmt()
       setText("");
       window.location.reload();
     } else {
@@ -74,6 +47,7 @@ export default function CommentCreate({ userInfo }) {
           setText(data);
         }}
       />
+      {/* <textarea onChange={(e) => setText(e.target.value)} /> */}
       <Button>Post Your Answer</Button>
     </Form>
   );
