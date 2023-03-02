@@ -16,7 +16,7 @@ export default function QuestionCard({ questions }) {
     createdAt,
     boardTags
   } = questions;
-  const newContent = boardContent.slice(0,500);
+ 
   
 
   const timeForToday = (value) => {
@@ -47,7 +47,7 @@ export default function QuestionCard({ questions }) {
   
   const handleClick = (e) => {
     e.preventDefault();
-    // console.log(boardId)
+    console.log(boardId)
     navigate(`/detail/${boardId}`)
   };
 
@@ -62,7 +62,7 @@ export default function QuestionCard({ questions }) {
 
         <QContentContainer>
           <QTitle>{boardTitle}</QTitle>
-          <QContent>{newContent}</QContent>
+          <QContent>{boardContent}</QContent>
           <QInfoContainer>
           <Tagbox>
             {boardTags.map((boardTag)=>{

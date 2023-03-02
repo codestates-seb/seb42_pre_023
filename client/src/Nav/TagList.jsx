@@ -1,7 +1,7 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+import axios from "axios";
 const TagItem = styled.ul`
   display: flex;
   flex-direction: column;
@@ -46,27 +46,42 @@ const TagItem = styled.ul`
 
 function TagList({ setTagInfo }) {
   const navigate = useNavigate();
+  const [tagList, settagList]=useState([]);
   const handleClick = (e) => {
     console.log(e.target.textContent);
     setTagInfo(e.target.textContent);
     navigate(`/${e.target.textContent}`);
   };
-  const TagList = [
-    "JavaScrpit",
-    "React",
-    "HTML",
-    "Java",
-    "Swift",
-    "C",
-    "C++",
-    "C#",
-    "Python",
-  ];
+  const getTList = async() => {
+    return axios.get(`/DUMMYDATA/tags.json`)
+  }
+  // const getQList = async() => {
+  //   return axios.get(`/DUMMYDATA/boards.json`)
+  // }
+  useEffect(() => {
+    getTList().then((res) => settagList(res.data));
+   
+  }, []);
+
+ 
+  // const TagList = [
+  //   "JavaScrpit",
+  //   "React",
+  //   "HTML",
+  //   "Java",
+  //   "Swift",
+  //   "C",
+  //   "C++",
+  //   "C#",
+  //   "Python",
+  // ];
 
   return (
     <TagItem>
-      {TagList.map((el, idx) => (
-        <li key={idx} onClick={handleClick}>{el}</li>
+      {tagList.map((tags) => (
+        <li key={tags.tagId} onClick={handleClick}>{tags.tagName}
+        <span> {}</span>
+        </li>
       ))}
     </TagItem>
   );
