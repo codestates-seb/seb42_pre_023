@@ -17,23 +17,9 @@ export default function QuestionList() {
   const [items, setItems] = useState(15);
 
   const handlePageChange = (page) => {
-<<<<<<< HEAD
-    setPage(page); 
-  };
-
-=======
      setPage(page); 
     };
-
-    // const getQList = async () => {
-    //   return axios.get("/api/pre/boards?page=1&size=15", {
-    //     headers: { "ngrok-skip-browser-warning": "230227" },
-    //   })
-    // };
-  const getQList = async () => {
-      return axios.get("/DUMMYDATA/boards.json")
-    };
->>>>>>> ba4183e10ec3d37a8c34de9f979a63e85a29403e
+    
   useEffect(() => {
     getQList().then((res) => setquestionList(res.data.data));
   }, []);

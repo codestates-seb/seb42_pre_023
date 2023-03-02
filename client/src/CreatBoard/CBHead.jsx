@@ -2,12 +2,14 @@ import React,{ useState }from "react";
 import styled from "styled-components";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function CBHead() {
+function CBHead({ memberId }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tag, setTag] = useState("");
+  const navigate = useNavigate();
 
   const titleOnChange = (e) => {
     setTitle(e.target.value);
@@ -23,8 +25,23 @@ function CBHead() {
   }
 
   const handleSubmit = (e) => {
-    window.scrollTo(0,0);
-    // UserID에 추가하기
+    const cleanedContent = content.replace(/<\/?p>/gi, '');
+    axios
+      .post('/api/pre/boards',{
+        memberId: memberId,
+        boardTitle: title,
+        boardContent: cleanedContent, 
+        boardTags: [
+          {
+            "tagId": 1
+          }
+        ]
+      })
+      .then(res => {
+        alert("게시글 등록이 성공적으로 되었습니다.");
+        window.scrollTo(0,0);
+        navigate('/');
+      })
   }
 
   return (
@@ -73,9 +90,7 @@ function CBHead() {
       </div>
       <div className="clickButton">
         <button className="discard" onClick={discardDraft}>Discard draft</button>
-        <Link to="/">
-          <button className="submit" onClick={handleSubmit}>Submit</button>
-        </Link>
+        <button className="submit" onClick={handleSubmit}>Submit</button>
       </div>
     </CBHeadTemplate>
   );

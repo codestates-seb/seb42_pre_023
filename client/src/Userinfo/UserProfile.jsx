@@ -56,16 +56,32 @@ function UserProfile({isLogin, setIsLogin, userInfo}) {
     setNickname("");
   }
   const onChange = (e) => setNickname(e.target.value);
+
   const ChangeNickname = () => {
     axios
       .patch(`/api/pre/members/${userInfo.memberId}`,{memberName: nickname})
       .then(() => {
         alert("변경 성공!");
         setIsInputModal(!isInputModalOpen);
+        window.location.reload();
       })
       .catch(() => {
         alert("변경 실패!");
       })
+  }
+  const handleKeyDown = (e) => {
+    if(e.key === 'Enter'){
+    axios
+      .patch(`/api/pre/members/${userInfo.memberId}`,{memberName: nickname})
+      .then(() => {
+        alert("변경 성공!");
+        setIsInputModal(!isInputModalOpen);
+        window.location.reload();
+      })
+      .catch(() => {
+        alert("변경 실패!");
+      })
+    }
   }
   
   return (
@@ -77,8 +93,6 @@ function UserProfile({isLogin, setIsLogin, userInfo}) {
         <div className="userInfo">
           <h1>{userInfo.memberEmail}</h1>
           <span>Nickname : {userInfo.memberName}</span>
-          <h1>이메일</h1>
-          <span>닉네임</span>
           <div className="badge">
             <RiMedalLine size={30} color="blue"/>
             <RiMedalLine size={30} color="green"/>
@@ -116,6 +130,7 @@ function UserProfile({isLogin, setIsLogin, userInfo}) {
                 value={nickname}
                 ref={InputRef}
                 onChange={onChange}
+                onKeyDown={handleKeyDown}
               />
               <button className="modal-submit-btn" onClick={ChangeNickname}>확인</button>
               <button className="modal-close-btn" onClick={EditProfileClose}>취소</button>

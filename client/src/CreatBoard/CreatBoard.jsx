@@ -14,11 +14,11 @@ const BodyScreenDeployment = styled.div`
   left: 300px;
 `
 
-function CreatBoard(){
+function CreatBoard({ memberId }){
   return (
     <BodyScreenDeployment>
       <CreatBoardTemplate>
-        <CBHead/>
+        <CBHead memberId={ memberId }/>
       </CreatBoardTemplate>
     </BodyScreenDeployment>
   );
