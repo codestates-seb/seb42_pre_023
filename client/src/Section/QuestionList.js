@@ -3,6 +3,13 @@ import styled from 'styled-components';
 import QuestionCard from './QuestionCard'
 import axios from 'axios';
 import Pagination from 'react-js-pagination'
+import { Link } from 'react-router-dom';
+
+const getQList = async () => {
+  return axios.get("/api/pre/boards?page=1&size=15", {
+    headers: { "ngrok-skip-browser-warning": "230227" },
+  });
+};
 
 export default function QuestionList() {
   const [questionList, setquestionList] = useState([]);
@@ -10,15 +17,11 @@ export default function QuestionList() {
   const [items, setItems] = useState(15);
 
   const handlePageChange = (page) => {
-     setPage(page); 
-    };
-
-    const getQList = async () => {
-      return axios.get("/DUMMYDATA/boards.json")
-    };
+    setPage(page); 
+  };
 
   useEffect(() => {
-    getQList().then((res) => setquestionList(res.data));
+    getQList().then((res) => setquestionList(res.data.data));
   }, []);
 
   //   //조회수 
@@ -93,7 +96,7 @@ return(
   <HeadContainer>
     <H1>
       <h1>All Questions</h1>
-      <AskQButton>Ask Question</AskQButton> 
+      <Link to='/create'><AskQButton>Ask Question</AskQButton> </Link>
       </H1>
     <H2>
       <QCount>{questionList.length} questions</QCount>  
