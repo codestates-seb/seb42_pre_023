@@ -1,7 +1,7 @@
 import React, { } from "react";
 import styled from "styled-components";
-import MyQuestion from "./MyQuestion"
-import UserProfile from "./UserProfile"
+import MyQuestion from "../Userinfo/MyQuestion"
+import UserProfile from "../Userinfo/UserProfile"
 
 const UserInfoBackground = styled.div`
   display: flex;

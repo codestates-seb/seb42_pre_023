@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import CBHead from "./CBHead";
+import CBHead from "../CreatBoard/CBHead";
 
 const CreatBoardTemplate = styled.div`
   display: flex;

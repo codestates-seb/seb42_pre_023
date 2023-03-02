@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AiOutlineEye, AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BiShare } from "react-icons/bi";
-import Comment from "./Comment";
+import Comment from "../detail-board/Comment";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 

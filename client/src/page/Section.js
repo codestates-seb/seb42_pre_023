@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import QuestionList from './QuestionList'
-import TagQuestionList from './TagQuestionList';
+import QuestionList from '../Section/QuestionList'
+import TagQuestionList from '../Section/TagQuestionList';
 export default function Section({tagInfo}) {
 
   

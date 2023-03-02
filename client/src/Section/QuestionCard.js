@@ -52,31 +52,29 @@ export default function QuestionCard({ questions }) {
   };
 
   return (
-    <form onClick={handleClick}>
-      <QContainer>
-        <Qsummary>
-          <QLikes>{boardLike} votes</QLikes>
-          <QVote>{boardCmt} answers</QVote>
-          <QViews>{boardViews} views</QViews>
-        </Qsummary>
+    <QContainer>
+      <Qsummary>
+        <QLikes>{boardLike} votes</QLikes>
+        <QVote>{boardCmt} answers</QVote>
+        <QViews>{boardViews} views</QViews>
+      </Qsummary>
 
-        <QContentContainer>
-          <QTitle>{boardTitle}</QTitle>
-          <QContent>{boardContent}</QContent>
-          <QInfoContainer>
-          <Tagbox>
-            {boardTags.map((boardTag)=>{
-              return <Tag key={boardTag.tagId} >{boardTag.tagName}</Tag>
-            })}
-          </Tagbox>
-            <div className="userInfo">
-              <span>{memberId} </span>
-              <span>asked {date}</span>
-            </div>
-          </QInfoContainer>
-        </QContentContainer>
-      </QContainer>
-    </form>
+      <QContentContainer>
+        <QTitle onClick={handleClick}>{boardTitle}</QTitle>
+        <QContent>{boardContent}</QContent>
+        <QInfoContainer>
+        <Tagbox>
+          {boardTags.map((boardTag)=>{
+            return <Tag key={boardTag.tagId} >{boardTag.tagName}</Tag>
+          })}
+        </Tagbox>
+          <div className="userInfo">
+            <span>{memberId} </span>
+            <span>asked {date}</span>
+          </div>
+        </QInfoContainer>
+      </QContentContainer>
+    </QContainer>
   );
 }
 
@@ -109,7 +107,8 @@ const QViews = styled.div`
 `;
 
 const QContentContainer = styled.div``;
-const QTitle = styled.p`
+const QTitle = styled.span`
+  display: inline;
   font-size: 2rem;
   color: hsl(206, 100%, 40%);
   cursor:pointer;

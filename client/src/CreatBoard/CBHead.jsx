@@ -33,7 +33,7 @@ function CBHead({ memberId }) {
         boardContent: cleanedContent, 
         boardTags: [
           {
-            "tagId": 1
+            "tagId": 2
           }
         ]
       })

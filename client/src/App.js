@@ -3,11 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import Login from "./login/Login";
 import Signup from "./login/Signup";
-import Section from "./Section/Section";
-import DetailBoard from "./detail-board/DetailBoard";
-import CreatBoard from "./CreatBoard/CreatBoard";
-import UserInfo from "./Userinfo/UserInfo";
-import Layout from "./Layout";
+import Section from "./page/Section";
+import DetailBoard from "./page/DetailBoard";
+import CreatBoard from "./page/CreatBoard";
+import UserInfo from "./page/UserInfo";
+import Layout from "./page/Layout";
 import TopButton from "./TopButton";
 import axios from "axios";
 //! App.js는 항상 이 상태로 형식을 유지할 것.
@@ -95,7 +95,7 @@ function App() {
               displayFooter={displayFooter}
               isLogin={isLogin}
               setIsLogin={setIsLogin}
-              setTagInfo={setTagInfo}
+              setTagInfo={setTagInfo} 
             />
           }s
         >
