@@ -45,22 +45,21 @@ const TagItem = styled.ul`
 `;
 
 function TagList({ setTagInfo }) {
-  const navigate = useNavigate();
   const [tagList, settagList]=useState([]);
+  const navigate = useNavigate();
   const handleClick = (e) => {
     console.log(e.target.textContent);
     setTagInfo(e.target.textContent);
     navigate(`/${e.target.textContent}`);
   };
-  const getTList = async() => {
-    return axios.get(`/DUMMYDATA/tags.json`)
-  }
-  // const getQList = async() => {
-  //   return axios.get(`/DUMMYDATA/boards.json`)
-  // }
+
+  const getTList = async () => {
+    return axios.get(`/api/pre/tags`, {
+      headers: { "ngrok-skip-browser-warning": "230227" },
+    })
+  };
   useEffect(() => {
     getTList().then((res) => settagList(res.data));
-   
   }, []);
 
  
@@ -80,7 +79,7 @@ function TagList({ setTagInfo }) {
     <TagItem>
       {tagList.map((tags) => (
         <li key={tags.tagId} onClick={handleClick}>{tags.tagName}
-        <span> {}</span>
+      
         </li>
       ))}
     </TagItem>
