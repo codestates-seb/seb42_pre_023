@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { RiMedalLine } from "react-icons/ri"
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,9 @@ function UserProfile({isLogin, setIsLogin, userInfo}) {
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInputModalOpen, setIsInputModal] = useState(false);
+  const [nickname, setNickname] = useState("");
+  const InputRef = useRef(null);
   
   const LogOut = () => {
     setIsLogin(!isLogin);
@@ -42,6 +45,28 @@ function UserProfile({isLogin, setIsLogin, userInfo}) {
         navigate("/");
       })
   }
+
+  useEffect(() => {
+    if (isInputModalOpen) InputRef.current.focus();
+  }, [isInputModalOpen]);
+
+  const EditProfile = () => setIsInputModal(!isInputModalOpen);
+  const EditProfileClose = () => {
+    setIsInputModal(!isInputModalOpen);
+    setNickname("");
+  }
+  const onChange = (e) => setNickname(e.target.value);
+  const ChangeNickname = () => {
+    axios
+      .patch(`/api/pre/members/${userInfo.memberId}`,{memberName: nickname})
+      .then(() => {
+        alert("변경 성공!");
+        setIsInputModal(!isInputModalOpen);
+      })
+      .catch(() => {
+        alert("변경 실패!");
+      })
+  }
   
   return (
     <>
@@ -50,8 +75,10 @@ function UserProfile({isLogin, setIsLogin, userInfo}) {
           <img src={getRandomProfile} alt="proFile"></img>
         </div>
         <div className="userInfo">
-          <h1>Empty</h1>
-          <span>Nickname : Empty</span>
+          <h1>{userInfo.memberEmail}</h1>
+          <span>Nickname : {userInfo.memberName}</span>
+          <h1>이메일</h1>
+          <span>닉네임</span>
           <div className="badge">
             <RiMedalLine size={30} color="blue"/>
             <RiMedalLine size={30} color="green"/>
@@ -59,7 +86,7 @@ function UserProfile({isLogin, setIsLogin, userInfo}) {
           </div>
         </div>
         <div className="edit">
-          <button className="edit_profile">Edit profile</button>
+          <button className="edit_profile" onClick={EditProfile}>Edit profile</button>
           <button className="logout" onClick={LogOut}>Log out</button>
           <button className="withdrawn" onClick={Withdrawn}>Withdrawn</button>
         </div>
@@ -75,6 +102,26 @@ function UserProfile({isLogin, setIsLogin, userInfo}) {
             </div>
           </div>
         </ModalOverlay>
+      : null}
+      {isInputModalOpen ?  
+        <InputModalOverlay>
+          <div className="modal">
+            <div className="modal-content">
+              <h2>별명 설정</h2>
+              <p>설정할 별명을 입력하세요..</p>
+              <input 
+                type="text"
+                maxLength="15"
+                placeholder="Change your nickname..."
+                value={nickname}
+                ref={InputRef}
+                onChange={onChange}
+              />
+              <button className="modal-submit-btn" onClick={ChangeNickname}>확인</button>
+              <button className="modal-close-btn" onClick={EditProfileClose}>취소</button>
+            </div>
+          </div>
+        </InputModalOverlay>
       : null}
     </>
   );
@@ -191,6 +238,64 @@ const ModalOverlay = styled.div`
 }
 p {
   margin: 10px 0 20px 0px;
+}
+
+/* 모달창 닫기 버튼 스타일링 */
+button{
+  margin-top: 20px;
+  padding: 10px 20px;
+  margin: 0px 20px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+}
+.modal-submit-btn {
+  background-color: #f52424;
+}
+.modal-close-btn {
+  background-color: #3498db;
+}
+`
+const InputModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+
+/* 모달창 스타일링 */
+.modal {
+  position: fixed;
+  top: 10%;
+  left: 65%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  
+}
+
+/* 모달창 내용 스타일링 */
+.modal-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+p {
+  margin: 10px 0 20px 0px;
+}
+input{
+  display: block;
+  margin-bottom: 30px;
+  height: 40px;
+  line-height: 30px;
+  font-size: 15px;
+  width: 100%;
+  padding: 0px 10px;
 }
 
 /* 모달창 닫기 버튼 스타일링 */
