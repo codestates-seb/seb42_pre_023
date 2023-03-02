@@ -62,19 +62,6 @@ function TagList({ setTagInfo }) {
     getTList().then((res) => settagList(res.data));
   }, []);
 
- 
-  // const TagList = [
-  //   "JavaScrpit",
-  //   "React",
-  //   "HTML",
-  //   "Java",
-  //   "Swift",
-  //   "C",
-  //   "C++",
-  //   "C#",
-  //   "Python",
-  // ];
-
   return (
     <TagItem>
       {tagList.map((tags) => (
