@@ -23,7 +23,7 @@ export default function QuestionList() {
  
   useEffect(() => {
     getQList().then((res) => setQuestionList(res.data.data));
-  }, []);
+  }, [items]);
 
 
  
@@ -100,11 +100,11 @@ return(
 
   <QuestionContainer>
     <Question >
-    {/* {questionList.slice(items*(page-1),items*(page-1)+items).map((questions)=>{
+    {questionList.slice(items*(page-1),items*(page-1)+items).map((questions)=>{
       return(
         <QuestionCard key={questions.boardId} questions={questions} />
       )
-    })} */}
+    })}
     </Question>
     <PaginationBox>
         <Pagination
@@ -212,7 +212,6 @@ padding: 0;
 const Question = styled.div`
 display: flex;
 flex-direction: column;
-
 `;
 
 const PaginationBox = styled.div`
