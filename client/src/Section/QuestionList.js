@@ -17,16 +17,13 @@ export default function QuestionList() {
   const [items, setItems] = useState(15);
 
   const handlePageChange = (page) => {
-     setPage(page); 
+      setPage(page); 
     };
 
- 
   useEffect(() => {
     getQList().then((res) => setquestionList(res.data.data));
   }, []);
 
-
- 
   //필터
   const handleViews = () => {
     if(questionList[0].boardViews < questionList[questionList.length-1].boardViews){
@@ -44,9 +41,7 @@ export default function QuestionList() {
     }
   };
 
-
-
- const handleAnswer = () => {
+const handleAnswer = () => {
   if(questionList[0].boardCmt < questionList[questionList.length-1].boardCmt){
     let newArr = [...questionList];
     let Upanswer = newArr.sort((a,b) =>{
@@ -61,7 +56,7 @@ export default function QuestionList() {
     setquestionList(Downanswer);
   }
 
- }
+}
 
 
 const handleCreatedAt = ()=>{
@@ -80,13 +75,12 @@ const handleCreatedAt = ()=>{
   } 
 };
 
-
 return(
   <>
   <HeadContainer>
     <H1>
       <h1>All Questions</h1>
-     <Link to='/create'><AskQButton>Ask Question</AskQButton> </Link>
+    <Link to='/create'><AskQButton>Ask Question</AskQButton> </Link>
       </H1>
     <H2>
       <QCount>{questionList.length} questions</QCount>  
@@ -192,17 +186,11 @@ background: white;
 color: #6A737C;
 border: 1px solid #6A737C;
 width: 90px;
-:hover{
+&:hover{
   background-color:hsl(210,8%,97.5%) ;
   color:black;
 }
-:active{
- 
-};
-
 `
-
-
 
 const QuestionContainer = styled.div`
 margin: 0;
@@ -212,19 +200,18 @@ padding: 0;
 const Question = styled.div`
 display: flex;
 flex-direction: column;
-
 `;
 
 const PaginationBox = styled.div`
   .pagination {
-     display: flex;
-     justify-content: center; 
-     margin-top: 25px;
+    display: flex;
+    justify-content: center; 
+    margin-top: 25px;
     }
   ul {
-     list-style: none;
-      padding: 0;
-     }
+    list-style: none;
+    padding: 0;
+    }
   ul.pagination li {
     display: inline-block;
     width: 30px;
@@ -237,26 +224,26 @@ const PaginationBox = styled.div`
     background-color: white;
   }
   ul.pagination li:first-child{
-     border-radius: 3px 0 0 3px;
-     }
+    border-radius: 3px 0 0 3px;
+    }
   ul.pagination li:last-child{
-     border-radius: 0 3px 3px 0;
-     }
+    border-radius: 0 3px 3px 0;
+    }
   ul.pagination li a {
-     text-decoration: none;
-      color: #6A737C;
-       font-size: 1.5rem; }
+    text-decoration: none;
+    color: #6A737C;
+    font-size: 1.5rem; }
   ul.pagination li.active a {
-     color: black;
-     }
+    color: black;
+    }
   ul.pagination li.active {
-     background-color: #ffdbaf;
-     }
+    background-color: #ffdbaf;
+    }
   ul.pagination li:hover{
     background-color:rgb(247,234,222) ;
   }
   ul.pagination li a:hover,
   ul.pagination li a.active {
-     color:black;
-      }
+    color:black;
+  }
 `
