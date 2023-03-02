@@ -38,8 +38,8 @@ const GlobalStyle = createGlobalStyle`
 //! App.js는 항상 이 상태로 형식을 유지할 것.
 function App() {
   const [isLogin, setIsLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
-  const [tagInfo, setTagInfo] = useState({});
+  const [userInfo, setUserInfo] = useState([]);
+  const [tagInfo, setTagInfo] = useState([]);
   const displayHeader = true;
   const displayNav = true;
   const displayFooter = true;
