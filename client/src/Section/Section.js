@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import QuestionList from './QuestionList'
-
+import TagQuestionList from './TagQuestionList';
 export default function Section({tagInfo}) {
 
   
@@ -9,7 +9,7 @@ export default function Section({tagInfo}) {
     <>
     <BodyScreenDeployment>
     <SectionContainer>
-        <QuestionList />
+     {tagInfo ? <TagQuestionList tagInfo={tagInfo}/> : <QuestionList tagInfo={tagInfo}/>}
     </SectionContainer>
     </BodyScreenDeployment>
     </>
@@ -18,8 +18,7 @@ export default function Section({tagInfo}) {
 };
 
 
-const SectionContainer = styled.section`
-`
+
 
 
 const BodyScreenDeployment = styled.div`
@@ -27,4 +26,7 @@ const BodyScreenDeployment = styled.div`
   width: 83vw;
   top: 130px;
   left: 300px;
+`
+
+const SectionContainer = styled.section`
 `

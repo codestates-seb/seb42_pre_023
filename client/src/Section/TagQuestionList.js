@@ -11,20 +11,20 @@ const getQList = async () => {
   });
 };
 
-export default function QuestionList() {
+export default function TagQuestionList({tagInfo}) {
   const [questionList, setquestionList] = useState([]);
   const [page, setPage] = useState(1);
   const [items, setItems] = useState(15);
-
 
   const handlePageChange = (page) => {
      setPage(page); 
     };
 
- 
+
   useEffect(() => {
     getQList().then((res) => setquestionList(res.data.data));
   }, []);
+
 
 
  
@@ -86,7 +86,7 @@ return(
   <>
   <HeadContainer>
     <H1>
-      <h1>All Questions</h1>
+      <h1>tag Questions</h1>
      <Link to='/create'><AskQButton>Ask Question</AskQButton> </Link>
       </H1>
     <H2>
@@ -101,7 +101,8 @@ return(
 
   <QuestionContainer>
     <Question >
-    {questionList.slice(items*(page-1),items*(page-1)+items).map((questions)=>{
+    {questionList.slice(items*(page-1),items*(page-1)+items)
+    .map((questions)=>{
       return(
         <QuestionCard key={questions.boardId} questions={questions} />
       )
