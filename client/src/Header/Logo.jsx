@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import headerlogo from '../img/logoname.png';
 
@@ -14,9 +15,12 @@ const HeaderLogo = styled.div`
 
 function Logo() {
   return(
-    <HeaderLogo>
-      <img src={headerlogo} alt="Header_logo" />
-    </HeaderLogo>
+    <Link to='/'>
+      <HeaderLogo>
+        <img src={headerlogo} alt="Header_logo" />
+      </HeaderLogo>
+    </Link>
+    
   )
 }
 

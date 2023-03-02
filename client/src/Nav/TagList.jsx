@@ -1,6 +1,7 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+import axios from "axios";
 const TagItem = styled.ul`
   display: flex;
   flex-direction: column;
@@ -12,7 +13,7 @@ const TagItem = styled.ul`
     border-radius: 50px;
     padding: 2px 10px;
     margin-top: 10px;
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
     font-weight: 500;
     background: transparent;
     cursor: pointer;
@@ -30,8 +31,8 @@ const TagItem = styled.ul`
     height: 100%;
     border-radius: 50px;
     transition: all 0.3s ease;
-    -webkit-transform: scale(.1);
-    transform: scale(.1);
+    -webkit-transform: scale(0.1);
+    transform: scale(0.1);
   }
   li:hover {
     color: #fff;
@@ -43,18 +44,44 @@ const TagItem = styled.ul`
   }
 `;
 
-function TagList() {
+function TagList({ setTagInfo }) {
+  const [tagList, settagList]=useState([]);
+  const navigate = useNavigate();
+  const handleClick = (e) => {
+    console.log(e.target.textContent);
+    setTagInfo(e.target.textContent);
+    navigate(`/${e.target.textContent}`);
+  };
+
+  const getTList = async () => {
+    return axios.get(`/api/pre/tags`, {
+      headers: { "ngrok-skip-browser-warning": "230227" },
+    })
+  };
+  useEffect(() => {
+    getTList().then((res) => settagList(res.data));
+  }, []);
+
+ 
+  // const TagList = [
+  //   "JavaScrpit",
+  //   "React",
+  //   "HTML",
+  //   "Java",
+  //   "Swift",
+  //   "C",
+  //   "C++",
+  //   "C#",
+  //   "Python",
+  // ];
+
   return (
     <TagItem>
-      <li>JavaScrpit</li>
-      <li>React</li>
-      <li>HTML</li>
-      <li>Java</li>
-      <li>Swift</li>
-      <li>C</li>
-      <li>C++</li>
-      <li>C#</li>
-      <li>Python</li>
+      {tagList.map((tags) => (
+        <li key={tags.tagId} onClick={handleClick}>{tags.tagName}
+      
+        </li>
+      ))}
     </TagItem>
   );
 }

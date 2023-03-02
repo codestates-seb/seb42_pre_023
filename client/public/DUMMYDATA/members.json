@@ -1,0 +1,23 @@
+[
+  {
+    "memberId": 1,
+    "memberEmail": "hgd@gamail.com",
+    "memberName": "홍길동",
+    "memberGrade": "일반등급",
+    "memberPwd": "asdf1234"
+  },
+  {
+    "memberId": 2,
+    "memberEmail": "hgd2@gmail.com",
+    "memberName": "김길동",
+    "memberGrade": "일반등급",
+    "memberPwd": "qwer1234"
+  },
+  {
+    "memberId": 3,
+    "memberEmail": "bjw0120@gmail.com",
+    "memberName": "개발새발자",
+    "memberGrade": "일반등급",
+    "memberPwd": "zxcv1234"
+  }
+]

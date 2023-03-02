@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { BsPencil } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const MyQuestionHead= styled.div`
   margin-top: 20px;
@@ -25,18 +26,23 @@ const MyQuestionHead= styled.div`
   }
   button:hover{
     background: #dddddd;
+    cursor: pointer;
   }
   span{
     margin-left: 10px;
   }
 `;
 
+
+
 function MyQuestion() {
+  const navigate = useNavigate();
+  const CreateBoard = () => navigate('/create');
   return (
     <MyQuestionHead>
       <div>
         <h1>My Question: 0개</h1>
-        <button className="boardCreat">
+        <button className="boardCreat" onClick={CreateBoard}>
           <BsPencil size={20}/>
           <span>Creat Question</span>
         </button>

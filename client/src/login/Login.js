@@ -1,38 +1,56 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
-import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Login() {
-  const [login, setLogin] = useState({
-    memberEmail: '',
-    memberPwd: '',
-  })
+export default function Login({ setIsLogin }) {
+  const navigate = useNavigate();
+  const [idInfo, setIdInfo] = useState("");
+  const [pwInfo, setPwInfo] = useState("");
   const [keepLogin, setKeepLogin] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-  const handleInput = (key) => (e) => {
-    setLogin({...login, [key]: e.target.value})
-  }
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleIdInput = (e) => {
+    setIdInfo(e.target.value);
+  };
+  const handlePwInput = (e) => {
+    setPwInfo(e.target.value);
+  };
+
   const loginRequest = () => {
-    if (!login.memberEmail || !login.memberPwd) {
-      setErrorMsg('아이디와 비밀번호를 입력해주세요')
+    if (!idInfo || !pwInfo) {
+      setErrorMsg("아이디와 비밀번호를 입력해주세요");
       return;
     }
 
-    return axios
-      .post('/pre/login', {login, keepLogin})
+    // console.log({ username: idInfo, password: pwInfo });
+    return fetch("/api/pre/login", {
+      method: "POST",
+      body: JSON.stringify({
+        username: idInfo,
+        password: pwInfo,
+      }),
+    })
       .then((res) => {
-        '마이페이지로 상태를 담고있는 함수에 res.data를 보내준다'
-        '로그인 상태를 불리언 값으로 보내준다 true'
-        setErrorMsg('')
+        if(res.status === 400 || res.status === 401) {
+          setErrorMsg("로그인에 실패했습니다.");
+        } else {
+          localStorage.setItem('token', res.headers.get('authorization'));
+          sessionStorage.setItem('login', true);
+          sessionStorage.setItem('id', idInfo)
+          setIsLogin(true);
+          setErrorMsg("");
+          navigate('/');
+        }
       })
-      .catch((err) => {
-        setErrorMsg('로그인에 실패했습니다.')
-      })
-  }
+      .catch((error) => {
+        // console.log(error);
+        setErrorMsg("로그인에 실패했습니다.");
+      });
+  };
   const oauthRequest = () => {
-    return window.location.assign('구글 주소');
-  }
+    return window.location.assign("구글 주소");
+  };
 
   return (
     <LoginWrap>
@@ -40,7 +58,8 @@ export default function Login() {
         <div className="intro">
           <h1>Log In</h1>
           <p>
-            By continuing, you agree to our <span className="link">User Agreement</span> <br />
+            By continuing, you agree to our
+            <span className="link">User Agreement</span> <br />
             and <span className="link"> Privacy Policy</span>.
           </p>
         </div>
@@ -51,22 +70,31 @@ export default function Login() {
           </Button>
         </form>
         <Form onSubmit={(e) => e.preventDefault()}>
-          <input type="email" placeholder="email" onChange={handleInput('memberEmail')} />
-          <input type="password" placeholder="password" onChange={handleInput('memberPwd')} />
-          {errorMsg ? (<div className="error">{errorMsg}</div>) : ''}
+          <input
+            type="email"
+            placeholder="email"
+            onChange={handleIdInput} //handleInput("username")
+          />
+          <input
+            type="password"
+            placeholder="password"
+            onChange={handlePwInput} // handleInput("password")
+          />
+          {errorMsg ? <div className="error">{errorMsg}</div> : ""}
           <label className="checked-login">
-            <input type='checkbox' onChange={() => setKeepLogin(!keepLogin)} />
+            <input type="checkbox" onChange={() => setKeepLogin(!keepLogin)} />
             <p>로그인 상태 유지하기</p>
           </label>
           <div className="text">
-            Forget your <span className="link">email</span> or <span className="link">password</span> ?
+            Forget your <span className="link">email</span>
+            <span className="link">password</span> ?
           </div>
           <Button login="#ef8236" type="submit" onClick={loginRequest}>
             <span className="login">Log in</span>
           </Button>
         </Form>
         <div className="text">
-          New to Stack Overflow? <a href="/">Sign up</a>
+          New to Stack Overflow? <Link to="/signup">Sign up</Link>
         </div>
       </Container>
     </LoginWrap>

@@ -3,15 +3,13 @@ import styled from "styled-components";
 import CommentCreate from "./CommentCreate";
 import CommentList from "./CommentList";
 
-export default function Comment() {
+export default function Comment({ boardCmt, userInfo }) {
   return (
     <CommentWrap>
-      <CommentList />
-      <CommentCreate />
+      <CommentList boardCmt={boardCmt} />
+      <CommentCreate userInfo={userInfo} />
     </CommentWrap>
   );
 }
 
-const CommentWrap = styled.div`
-  
-`;
+const CommentWrap = styled.div``;

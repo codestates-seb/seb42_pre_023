@@ -1,33 +1,55 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
-import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
-  const [signup, setSignup] = useState({
-    memberName: '',
-    memberEmail: '',
-    memberPwd: '',
-  })
-  const [errorMsg, setErrorMsg] = useState('');
-  const handleInput = (key) => (e) => {
-    setSignup({...signup, [key]: e.target.value})
-  }
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState("");
+  const [userPw, setUserPw] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleNameInput = (e) => {
+    setUserName(e.target.value);
+  };
+  const handleIdInput = (e) => {
+    setUserId(e.target.value);
+  };
+  const handlePwInput = (e) => {
+    setUserPw(e.target.value);
+  };
 
   const signupRequest = () => {
-    if ((!signup.memberEmail || !signup.memberPwd || !signup.memberName) && isUserValid !== true) {
-      setErrorMsg('유저명과 아이디, 비밀번호를 입력해주세요')
+    if ((!userId.memberEmail || !userPw.memberPwd || !userName.memberName) && isUserValid !== true) {
+      setErrorMsg("유저명과 아이디, 비밀번호를 입력해주세요");
       return;
     } else if (isUserValid === false) {
-      setErrorMsg('대소문자, 숫자를 포함한 8자 이상 작성해주세요')
+      setErrorMsg("대소문자, 숫자를 포함한 8자 이상 16자 이하 작성해주세요");
       return;
     }
-    return axios.post('/pre/signup', {signup});
-  }
-
-  const passwordRegex = /^[a-zA-Z0-9]{8,10}$/;
-  const isUserValid = passwordRegex.test(signup.memberPwd);
-  console.log(isUserValid)
+    return fetch("/api/pre/members", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        memberEmail: userId,
+        memberName: userName,
+        memberPwd: userPw
+      }),
+    })
+      .then((res) => {
+        setErrorMsg("이미 존재합니다.");
+        navigate('/')
+      })
+      .catch((err) => {
+        // console.log(err)
+        setErrorMsg("회원가입에 실패했습니다.");
+      });
+  };
+  
+  const passwordRegex = /^[a-zA-Z0-9]{8,16}$/;
+  const isUserValid = passwordRegex.test(userPw);
+  // console.log(isUserValid);
 
   return (
     <LoginWrap>
@@ -35,8 +57,8 @@ export default function Signup() {
         <div className="intro">
           <h1>Sign Up</h1>
           <p>
-            By continuing, you are setting up a stack overflow account and
-            agree to our <span className="link">User Agreement</span> and <br />{" "}
+            By continuing, you are setting up a stack overflow account and agree
+            to our <span className="link">User Agreement</span> and <br />{" "}
             <span className="link">Privacy Policy</span>.
           </p>
         </div>
@@ -45,16 +67,28 @@ export default function Signup() {
           <span>Google 계정으로 계속하기</span>
         </Button>
         <Form onSubmit={(e) => e.preventDefault()}>
-          <input type="text" placeholder="display name" onChange={handleInput('memberName')}  />
-          <input type="email" placeholder="email" onChange={handleInput('memberEmail')} />
-          <input type="password" placeholder="password" onChange={handleInput('memberPwd')} />
-          {errorMsg ? (<div className="error">{errorMsg}</div>) : ''}
+          <input
+            type="text"
+            placeholder="display name"
+            onChange={handleNameInput}
+          />
+          <input
+            type="email"
+            placeholder="email"
+            onChange={handleIdInput}
+          />
+          <input
+            type="password"
+            placeholder="password"
+            onChange={handlePwInput}
+          />
+          {errorMsg ? <div className="error">{errorMsg}</div> : ""}
           <Button login="#ef8236" margin="2rem 0 0 0" onClick={signupRequest}>
             <span className="login">Sign up</span>
           </Button>
         </Form>
         <div className="text">
-          Already Stack Overflow? <a href="/">Log In</a>
+          Already Stack Overflow? <Link to='/login'>Log In</Link>
         </div>
       </Container>
     </LoginWrap>

@@ -7,7 +7,7 @@ import MyInfo from "./MyInfo";
 
 const HeaderTemplate = styled.header`
   width: 100vw;
-  height: 10vh;
+  height: 100px;
   border-bottom: 2px solid #bbbbbb;
   padding: 0 50px;
   display: flex;
@@ -17,16 +17,16 @@ const HeaderTemplate = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 999;
 `;
 
-function Header() {
+function Header({isLogin, setIsLogin}) {
   return (
     <HeaderTemplate>
       <Logo></Logo>
       <Search></Search>
-      <Login></Login>
-      <MyInfo></MyInfo>
+      <Login isLogin={isLogin} setIsLogin={setIsLogin}></Login>
+      <MyInfo isLogin={isLogin}></MyInfo>
     </HeaderTemplate>
   );
 }

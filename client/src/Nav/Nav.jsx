@@ -16,18 +16,18 @@ const NavTemplate = styled.nav`
   background-color: #f7f7f7;
   padding-top: 50px;
   position: relative;
-  z-index: 1;
   position: fixed;
-  top: 89px;
+  left: 0;
+  top: 98px;
 `;
 
-function Nav() {
+function Nav({setTagInfo}) {
   return (
     <NavTemplate>
       <NavHead/>
       <TagSearch/>
       <TagListTemplate>
-          <TagList/>
+          <TagList setTagInfo={setTagInfo} />
       </TagListTemplate>
     </NavTemplate>
   );

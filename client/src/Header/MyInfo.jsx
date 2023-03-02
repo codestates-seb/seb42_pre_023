@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import {FaUser} from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const MyInfoButton = styled.button`
   width: 60px;
   height: 50px;
   padding: 10px 25px;
   border: 2px solid #948f8f;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: 500;
   background: transparent;
   cursor: pointer;
@@ -18,7 +19,7 @@ const MyInfoButton = styled.button`
   padding: 0;
   flex: 0.4;
 
-  &:hover{
+  &:hover {
     background: transparent;
     color: #000;
   }
@@ -53,7 +54,7 @@ const MyInfoButton = styled.button`
   &:hover:after {
     width: 100%;
   }
-  span{
+  span {
     padding: 0px 10px;
   }
   span:before,
@@ -79,16 +80,19 @@ const MyInfoButton = styled.button`
   span:hover:after {
     width: 100%;
   }
-`
+`;
 
-function MyInfo() {
-  return(
-    <MyInfoButton>
-      <span>
-        <FaUser size={20}/>
-      </span>
-    </MyInfoButton>
-  )
+function MyInfo({isLogin}) {
+  return (
+    <Link to='/userinfo'>
+    {isLogin ? 
+      <MyInfoButton>
+        <span>
+          <FaUser size={20} />
+        </span>
+      </MyInfoButton>: null}
+    </Link>
+  );
 }
 
-export default MyInfo
+export default MyInfo;
