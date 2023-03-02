@@ -71,13 +71,13 @@ function QuestionContainer({ questionList }) {
   return (
     <Container>
       <Question>
-        {questionList
+        {questionList ? questionList
           .slice(items * (page - 1), items * (page - 1) + items)
           .map((questions) => {
             return (
               <QuestionCard key={questions.boardId} questions={questions} />
             );
-          })}
+          }) : <></>}
       </Question>
       <PaginationBox>
         <Pagination
