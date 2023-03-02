@@ -78,9 +78,7 @@ function TagList({ setTagInfo }) {
   return (
     <TagItem>
       {tagList.map((tags) => (
-        <li key={tags.tagId} onClick={handleClick}>{tags.tagName}
-      
-        </li>
+        <li key={tags.tagId} onClick={handleClick}>{tags.tagName}</li>
       ))}
     </TagItem>
   );
