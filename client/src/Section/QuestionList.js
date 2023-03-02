@@ -12,7 +12,7 @@ const getQList = async () => {
 };
 
 export default function QuestionList() {
-  const [questionList, setquestionList] = useState([]);
+  const [questionList, setQuestionList] = useState([]);
   const [page, setPage] = useState(1);
   const [items, setItems] = useState(15);
 
@@ -22,7 +22,7 @@ export default function QuestionList() {
 
  
   useEffect(() => {
-    getQList().then((res) => setquestionList(res.data.data));
+    getQList().then((res) => setQuestionList(res.data.data));
   }, []);
 
 
@@ -34,13 +34,13 @@ export default function QuestionList() {
       let Upviews = newArr.sort((a,b) =>{
         return b.boardViews-a.boardViews;
       });
-        setquestionList(Upviews);
+        setQuestionList(Upviews);
     } else{
       let newArr = [...questionList];
       let Downviews = newArr.sort((a,b) =>{
         return a.boardViews-b.boardViews;
       });
-      setquestionList(Downviews);
+      setQuestionList(Downviews);
     }
   };
 
@@ -52,13 +52,13 @@ export default function QuestionList() {
     let Upanswer = newArr.sort((a,b) =>{
       return b.boardCmt-a.boardCmt;
     });
-    setquestionList(Upanswer);
+    setQuestionList(Upanswer);
   } else {
     let newArr = [...questionList];
     let Downanswer = newArr.sort((a,b) =>{
       return a.boardCmt-b.boardCmt;
     });
-    setquestionList(Downanswer);
+    setQuestionList(Downanswer);
   }
 
  }
@@ -70,13 +70,13 @@ const handleCreatedAt = ()=>{
     let newest = newArr.sort((a,b) =>{
       return new Date(b.createdAt)-new Date(a.createdAt);
     });
-    setquestionList(newest);
+    setQuestionList(newest);
   } else{
     let newArr = [...questionList];
     let oldest = newArr.sort((a,b) =>{
       return new Date(a.createdAt)-new Date(b.createdAt);
     });
-    setquestionList(oldest);
+    setQuestionList(oldest);
   } 
 };
 
@@ -89,7 +89,7 @@ return(
      <Link to='/create'><AskQButton>Ask Question</AskQButton> </Link>
       </H1>
     <H2>
-      <QCount>{questionList.length} questions</QCount>  
+      <QCount> questions</QCount>  
       <FilterWrap>
       <Button onClick={handleViews}>Views</Button>
       <Button onClick={handleAnswer}>Anwsers</Button>

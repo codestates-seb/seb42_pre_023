@@ -45,7 +45,7 @@ const TagItem = styled.ul`
 `;
 
 function TagList({ setTagInfo }) {
-  const [tagList, settagList]=useState([]);
+  const [tagList, setTagList]=useState([]);
   const navigate = useNavigate();
   const handleClick = (e) => {
     console.log(e.target.textContent);
@@ -59,12 +59,12 @@ function TagList({ setTagInfo }) {
     })
   };
   useEffect(() => {
-    getTList().then((res) => settagList(res.data));
+    getTList().then((res) => setTagList(res.data));
   }, []);
 
   return (
     <TagItem>
-      {tagList.map((tags) => (
+      {tagList && tagList.map((tags) => (
         <li key={tags.tagId} onClick={handleClick}>{tags.tagName}</li>
       ))}
     </TagItem>
