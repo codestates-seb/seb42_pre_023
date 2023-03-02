@@ -100,13 +100,29 @@ export default function QuestionList() {
 
       <QuestionContainer>
         <Question>
-          {questionList ? questionList
-            .slice(items * (page - 1), items * (page - 1) + items)
-            .map((questions) => {
-              return (
-                <QuestionCard key={questions.boardId} questions={questions} />
-              );
-            }) : '' }
+          {questionList
+            ? questionList
+                .slice(items * (page - 1), items * (page - 1) + items)
+                .map((questions) => {
+                  return (
+                    <QuestionCard
+                      key={questions.boardId}
+                      questions={questions}
+                    />
+                  );
+                })
+            : setTimeout(() => {
+                questionList
+                  .slice(items * (page - 1), items * (page - 1) + items)
+                  .map((questions) => {
+                    return (
+                      <QuestionCard
+                        key={questions.boardId}
+                        questions={questions}
+                      />
+                    );
+                  });
+              }, 3000)}
         </Question>
         <PaginationBox>
           <Pagination
