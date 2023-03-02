@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path",
+      "destination": "https://2bfa-183-97-121-150.jp.ngrok.io/:path"
+    },
+    {
+      "source": "/api/:path/",
+      "destination": "https://2bfa-183-97-121-150.jp.ngrok.io/:path/"
+    }
+  ]
+}
