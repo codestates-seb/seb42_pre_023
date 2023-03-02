@@ -13,7 +13,8 @@ export default function QuestionList() {
       .get("/api/pre/boards?page=1&size=15", {
         headers: { "ngrok-skip-browser-warning": "230227" },
       })
-      .then((res) => setQuestionList(res.data.data));
+      .then((res) => setQuestionList(res.data.data))
+      .catch((error) => console.log(error))
   }, []);
 
   //필터
