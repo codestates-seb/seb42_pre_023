@@ -1,12 +1,17 @@
 package com.codestates.board.entity;
 
 import com.codestates.audit.Auditable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -26,11 +31,25 @@ public class Board extends Auditable {
     private String boardContent;
 
     @Column
-    private Long boardViews;
+    private Integer boardViews;
 
     @Column
-    private Long boardLike;
+    private Integer boardLike;
 
     @Column
-    private Long boardCmt;
+    private Integer boardCmt;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<BoardTag> boardTags = new ArrayList<>();
+
+    public void addBoardTag(BoardTag boardTag) {
+        this.boardTags.add(boardTag);
+        if (boardTag.getBoard() != this) {
+            boardTag.addBoard(this);
+        }
+    }
+
+    public Board(Long boardId) {
+        this.boardId = boardId;
+    }
 }

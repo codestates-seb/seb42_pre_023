@@ -1,7 +1,5 @@
 package com.codestates.comment.entity;
 
-import com.codestates.board.entity.Board;
-import com.codestates.member.entity.Member;
 import com.codestates.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
